@@ -1,0 +1,1109 @@
+{
+  "video_id": "aWlRtOlacYM",
+  "title": "Attacking a fixed network, and training a network to generate",
+  "chapter_order": 4,
+  "recording_lecture_number": 4,
+  "recording_title": "Stanford CS230 | Autumn 2025 | Lecture 4: Adversarial Robustness and Generative Models",
+  "speaker": "Kian Katanforoosh",
+  "date": "2025-10-14",
+  "status": "complete: passes 1-9, gates 6a, 6b (science-editor round 3 verdict yes, 0 blocking) and 6c passed; not committed",
+  "transcript_provenance": "Local machine transcription; not publisher captions",
+  "transcription_model": "Systran/faster-whisper-small.en",
+  "audio_sha256": "2a55b56af5c4a7801922190f3b4f2cd9fa72ea6c888fa848b17d7cea1bb033df",
+  "audio_duration_seconds": 6436.761,
+  "playlist_duration_seconds": 6437,
+  "transcript_sha256": "1ad31da8dfb260965aa4c307abbfe0a241c46a5433c3f219b8647d243c31acb6",
+  "transcript_segment_count": 202,
+  "transcript_first_start_seconds": 5.14,
+  "transcript_last_end_seconds": 6431.66,
+  "slides": {
+    "url": "https://cs230.stanford.edu/syllabus/fall_2025/4/lecture_4.pdf",
+    "sha256": "b9a44f82f1740747a84325d09d93430f67ee89777aa9b8969dfff1df33bbded5",
+    "pages": 51,
+    "alignment": "aligned with the recording except slides 36-38 (CycleGAN), which the recording does not cover and the chapter does not use",
+    "pages_rendered_and_inspected": [
+      6,
+      8,
+      10,
+      11,
+      13,
+      15,
+      16,
+      17,
+      18,
+      24,
+      29,
+      30,
+      31,
+      33,
+      35,
+      42,
+      43,
+      45,
+      46,
+      47,
+      49
+    ],
+    "pages_read_as_extracted_text_only": "all other pages",
+    "visual_findings": [
+      "Slide 6: space of inputs, real images and iguana-classified region.",
+      "Slide 8: perturbed cat image has visible colour grain; source not stated.",
+      "Slide 10: still of two printed bookshelf photographs; no labels visible; the recording presents it as a demonstration of Kurakin et al.",
+      "Slide 11: person holding the patch is not boxed; the other person is boxed.",
+      "Slide 15: Wiyatno et al. Table 3 (attack taxonomy, PDF p. 11); no claim used.",
+      "Slide 17: Wiyatno et al. Table 5 (defense taxonomy, PDF p. 53); ALP listed as circumventable by PGD with many iterations.",
+      "Slide 18: trigger square on mislabelled cats and on correctly labelled dogs.",
+      "Slide 24: two outlined regions in image space (StackGAN samples), real and generated, to be matched.",
+      "Slide 30: saturating and non-saturating costs, vertical axis -20 to 5.",
+      "Slide 31: hand drawing of log(1-x), log(-x), log x, -log x: the curve sequence behind the chain on slides 30 and 32.",
+      "Slide 33: Lucic et al. Table 1 (seven GAN losses); consistent with the chapter.",
+      "Slide 35: single codes with illustrative entries; DCGAN averages three codes per concept.",
+      "Slide 46: rendered page reproduces DDPM Algorithm 2 beside the simplified bullets.",
+      "Slide 47: pixel-space chain crossed out; latent chain after an encoder labelled VAE."
+    ],
+    "viewing_record": {
+      "initial_draft": [
+        6,
+        8,
+        10,
+        11,
+        13,
+        16,
+        18,
+        29,
+        30,
+        42,
+        43,
+        45,
+        46,
+        47,
+        49
+      ],
+      "before_round_1_fixes": [
+        15,
+        17,
+        24,
+        31,
+        33,
+        35
+      ],
+      "round_2": "no new pages viewed; the slide 31 sentence was rewritten from the mathematics of the four named curves, not from a new viewing"
+    }
+  },
+  "evidence_scheme": "Each claim not proved on the page carries one class: empirical result (paper and page), engineering check (this chapter's code or shown arithmetic), product claim, speaker judgment (with recording time). Definitions and results proved on the page carry no label. Each section opens with a provenance line: lecture / research extension / original construction.",
+  "running_case": "p_data = 0.5 N(mu, I) + 0.5 N(-mu, I) on R^{n_x}, every coordinate of mu equal to 2/sqrt(n_x), ||mu||_2 = 2; label y = 1 for the +mu cluster. Bayes logit 2 mu^T x. Used for the attack (Propositions 1-3), adversarial training, the backdoor argument, the GAN divergence of a one-cluster generator, and the DDPM forward marginal, optimal noise predictor and sampler. Original construction. The slide 13 neuron and the face-verification thread (backdoors, exercise 6) are reused as sub-examples.",
+  "sections": [
+    {
+      "section": "model",
+      "start": 5.14,
+      "end": 521.39,
+      "lecture_material": "Two topics of the lecture; adversarial attacks versus generative adversarial networks are unrelated uses of 'adversarial'. Audience examples; three periods of attacks on slide 4; more entry points for agents with retrieval.",
+      "research_extension": "None.",
+      "teaching_construction": "Formal model (logit, sigmoid, BCE and its logit gradient, four things to change); running case; Proposition 1 (Bayes classifier and accuracy 0.977). Threat-model definition and table.",
+      "evidence_class": "definition; theorem (proved); speaker judgment"
+    },
+    {
+      "section": "forging",
+      "start": 521.39,
+      "end": 1181.33,
+      "lecture_material": "Untargeted iguana objective (slide 5), gradient descent on the input, space of inputs (slide 6), targeted objective with closeness penalty (slide 7), cat/iguana example (slide 8).",
+      "research_extension": "Szegedy et al. 2013: imperceptible perturbations and transfer (pp. 1-2); penalty formulation with box constraint (p. 5).",
+      "teaching_construction": "Input gradient of one neuron; support argument; 256^3072 = 1.3e7398; Euclidean distance to boundary in the running case (2, independent of n_x).",
+      "evidence_class": "definition; theorem (shown); engineering check"
+    },
+    {
+      "section": "physical",
+      "start": 1181.33,
+      "end": 1464.38,
+      "lecture_material": "Printed adversarial images (slide 10), person-hiding patch and loss terms (slides 11-12), transfer and black-box attacks, rate limits, substitute models.",
+      "research_extension": "Kurakin et al. (pp. 1, 3); Thys et al. (pp. 1, 3); Papernot et al. (p. 1).",
+      "teaching_construction": "White-box/black-box definitions as used in the chapter.",
+      "evidence_class": "definition; empirical result; speaker judgment"
+    },
+    {
+      "section": "linearity",
+      "start": 1464.38,
+      "end": 1995.54,
+      "lecture_material": "Nonlinearity hypothesis rejected; dimensionality as the cause; slide 13 neuron; FGSM (slide 14).",
+      "research_extension": "Goodfellow, Shlens and Szegedy: linearity argument (pp. 1-2), FGSM and MNIST error rates (p. 3), logistic case (p. 4); Madry et al. PGD (pp. 2, 4).",
+      "teaching_construction": "Proposition 2 (dual norms) with proof; Figure 1; slide 13 table with l2 versus l-inf steps; correction of 'exponential impact'; Proposition 3 (robust accuracy Phi(2 - rho sqrt(n_x))) with table and Figure 2; FGSM derivation from first-order Taylor expansion.",
+      "evidence_class": "theorem (proved); engineering check; empirical result"
+    },
+    {
+      "section": "defenses",
+      "start": 1995.54,
+      "end": 2340.5,
+      "lecture_material": "White versus black box; sanitization; output filtering; non-differentiable models; labelled adversarial examples; mixed adversarial-training loss (slide 16); red teaming; RLHF; Constitutional AI; transfer explanation.",
+      "research_extension": "Goodfellow et al. alpha = 0.5 and 89.4% -> 17.9% (p. 5), sign gradient (p. 6), cross-model generalisation (p. 7); Madry et al. eq. 2.1 (p. 3); ALP (p. 1); SafetyNet (p. 1); Athalye et al. (p. 1); Bai et al. (p. 1, dated 15 Dec 2022). Wiyatno et al. Table 5 (p. 53): ALP listed as circumventable by many-iteration PGD (survey summary).",
+      "teaching_construction": "Defense table; exact inner maximum for a linear model and its l1 interpretation.",
+      "evidence_class": "theorem (proved); empirical result; product claim; speaker judgment"
+    },
+    {
+      "section": "backdoors",
+      "start": 2340.5,
+      "end": 2686.32,
+      "lecture_material": "Trigger patch (slide 18), deploy backdoored model, face-verification example (~2429-2486 s), text backdoors, defenses listed in answer to a question.",
+      "research_extension": "BadNets (pp. 1-2).",
+      "teaching_construction": "Population argument that the Bayes classifier of the poisoned distribution is the backdoored function with clean accuracy 0.977; sampling-review probability 0.905.",
+      "evidence_class": "theorem (proved); empirical result; engineering check; speaker judgment"
+    },
+    {
+      "section": "injection",
+      "start": 2686.32,
+      "end": 2975.34,
+      "lecture_material": "Prompt template and an instruction-override example; grandmother jailbreak; direct versus indirect injection; injection versus jailbreaking. A short preview at ~2486-2520 s lies inside the backdoor span.",
+      "research_extension": "Perez and Ribeiro (p. 1); Greshake et al. (p. 1); Rossi et al. (p. 2); Liu et al. (p. 14).",
+      "teaching_construction": "Channel description; design rules (least privilege, labelled parts, injected-document tests).",
+      "evidence_class": "definition; empirical result; product claim; speaker judgment"
+    },
+    {
+      "section": "generative",
+      "start": 2975.34,
+      "end": 3375.09,
+      "lecture_material": "Use cases; discriminative versus generative; self-supervised; 'parameters << data' heuristic (slide 23); distribution matching (slide 24).",
+      "research_extension": "Carlini et al. memorisation (p. 1).",
+      "teaching_construction": "Sampler versus density; induced distribution p_g; running-case target.",
+      "evidence_class": "definition; empirical result; speaker judgment"
+    },
+    {
+      "section": "gan-game",
+      "start": 3375.09,
+      "end": 3964.37,
+      "lecture_material": "Generator 100-d code to (64,64,3); discriminator; gradient flow; costs of slide 29; cold start.",
+      "research_extension": "Goodfellow et al. 2014 eq. 1 (p. 3), Proposition 1 (p. 4), Theorem 1 and eq. 6 (p. 5); tutorial zero-sum definition (p. 22).",
+      "teaching_construction": "Correction J_G = -J_D up to the real-data term; Propositions 4-5 with proofs including KL >= 0; running-case JS of a one-cluster generator 0.1947 nats, value -0.9969 versus -1.3863; separated limit 0.75 log(4/3) = 0.2158. Disjoint-support case: D* = 1 and 0 on the two sets, JS = log 2, value 0 for every generator whose support misses the data.",
+      "evidence_class": "theorem (proved); engineering check"
+    },
+    {
+      "section": "saturation",
+      "start": 3964.37,
+      "end": 4518.96,
+      "lecture_material": "Saturating cost plot (slide 30), non-saturating replacement (slides 30, 32), mode collapse. Train D more often; operations on codes (slide 35); Midjourney remark; stopping and evaluation.",
+      "research_extension": "Goodfellow et al. 2014 'same fixed point' (p. 3); tutorial Figure 16 (p. 26), non-zero-sum (p. 23), mode collapse (pp. 34-35); Lucic et al. (p. 1). Goodfellow et al. 2014 discriminator-step schedule, one step used (pp. 3-4); Radford et al. Figure 7 (p. 10).",
+      "teaching_construction": "Logit derivatives -D and -(1-D) with table; correction of the slide's equivalence chain. Non-convergence distinguished from mode collapse; slide 31 curve sequence (shift, reflection, negation; only the first and last curves are costs); slide 35 single-code simplification noted.",
+      "evidence_class": "theorem (shown); empirical result; product claim; speaker judgment"
+    },
+    {
+      "section": "why-diffusion",
+      "start": 4518.96,
+      "end": 4863.95,
+      "lecture_material": "GAN limitations (slide 41); BigGAN versus diffusion samples; denoising curriculum; attribution to Abbeel's group.",
+      "research_extension": "Dhariwal and Nichol (pp. 1, 10, 11) including the classifier-guidance confound; Sohl-Dickstein et al. (p. 1); Ho et al. FID 3.17 (p. 5). Dhariwal and Nichol p. 4: FID and recall definitions.",
+      "teaching_construction": "None.",
+      "evidence_class": "empirical result; speaker judgment"
+    },
+    {
+      "section": "forward",
+      "start": 4863.95,
+      "end": 5078.99,
+      "lecture_material": "Additive forward process and cumulative noise (slide 42); 'in practice' DDPM formula (slide 45, discussed ~5566-5648 s).",
+      "research_extension": "Ho et al. eqs. 2 and 4 (p. 2), schedule and T (p. 5); Song et al. VE/VP (p. 5).",
+      "teaching_construction": "Covariance tI of the additive process; slide 45 index error; Proposition 6 (proof by induction); Proposition 7 (alpha-bar_T <= e^-10.05); running-case marginal with covariance I; Figure 3.",
+      "evidence_class": "theorem (proved); engineering check; empirical result"
+    },
+    {
+      "section": "training",
+      "start": 5078.99,
+      "end": 5566.78,
+      "lecture_material": "Model predicts noise; reconstruction loss; training triples; t as input; data volume and flattening-loss advice (slides 43-44).",
+      "research_extension": "Ho et al. Algorithm 1 (p. 4), L_simple eq. 14 (p. 5).",
+      "teaching_construction": "Proposition 8 (conditional mean) with proof; closed-form optimal predictor with tanh; loss floor n_x alpha-bar_t = 1.794 at t = 100, mixture 1.82.",
+      "evidence_class": "theorem (proved); engineering check; speaker judgment"
+    },
+    {
+      "section": "sampling",
+      "start": 5648.51,
+      "end": 5881.33,
+      "lecture_material": "Random start, predict and subtract cumulative noise (slide 46 bullets), computational cost, conditioning.",
+      "research_extension": "Ho et al. Algorithm 2 (p. 4), variance choices (p. 3), T = 1000 (p. 5); slide 46 reproduces Algorithm 2 (rendered page).",
+      "teaching_construction": "One-shot estimate equals the posterior mean; derivation of the reverse-step mean and variance; running-case ancestral sampling results; Figure 4. One-shot collapse traced to stopping at x-hat_0; a deterministic re-noising alternative named, not developed.",
+      "evidence_class": "theorem (proved); engineering check"
+    },
+    {
+      "section": "latent",
+      "start": 5881.33,
+      "end": 6431.66,
+      "lecture_material": "Latent diffusion with encoder and decoder (slides 47-48); conditioning by concatenated prompt embedding; answer on iguana-like outputs. Temporal dimension, spatio-temporal patches as tokens, prompt conditioning, demonstration videos (slide 49).",
+      "research_extension": "Rombach et al. (pp. 1-2, 4, 5). Venue CVPR 2022 confirmed on the CVF open-access page.",
+      "teaching_construction": "Size arithmetic 196,608 versus 4,096 entries (assumed 4 channels). Token and attention-pair arithmetic under stated assumptions.",
+      "evidence_class": "empirical result; engineering check; product claim; speaker judgment"
+    },
+    {
+      "section": "implementation",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "None.",
+      "teaching_construction": "NumPy laboratory checking Propositions 1-3, 5, 6, 8 and the reverse step.",
+      "evidence_class": "engineering check"
+    },
+    {
+      "section": "limits",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "Tutorial non-convexity caveat (p. 22).",
+      "teaching_construction": "Idealisations and capabilities.",
+      "evidence_class": "original teaching construction"
+    },
+    {
+      "section": "exercises",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "None.",
+      "teaching_construction": "Six exercises with complete solutions: l1 dual norm; l2 running case; saturating/non-saturating counterexample; slide 45 indexing; loss floor; backdoor controls for the door system.",
+      "evidence_class": "original teaching construction"
+    },
+    {
+      "section": "sources",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "Primary source list with pages.",
+      "teaching_construction": "None.",
+      "evidence_class": "original teaching construction"
+    }
+  ],
+  "references": [
+    {
+      "title": "Szegedy et al. 2013, Intriguing properties of neural networks",
+      "url": "https://arxiv.org/abs/1312.6199",
+      "supports": "Imperceptible perturbations and transfer (pp. 1-2); penalty formulation of targeted attacks (p. 5)."
+    },
+    {
+      "title": "Goodfellow, Shlens, Szegedy 2014, Explaining and Harnessing Adversarial Examples",
+      "url": "https://arxiv.org/abs/1412.6572",
+      "supports": "Linearity explanation, FGSM, adversarial training weights and effect (pp. 1-7)."
+    },
+    {
+      "title": "Kurakin, Goodfellow, Bengio 2016, Adversarial examples in the physical world",
+      "url": "https://arxiv.org/abs/1607.02533",
+      "supports": "Printed adversarial images remain misclassified through a phone camera (pp. 1, 3)."
+    },
+    {
+      "title": "Thys, Van Ranst, Goedeme 2019, Fooling automated surveillance cameras",
+      "url": "https://arxiv.org/abs/1904.08653",
+      "supports": "Three-term patch loss against YOLOv2; intra-class variety (pp. 1, 3)."
+    },
+    {
+      "title": "Papernot et al. 2016, Practical Black-Box Attacks against Machine Learning",
+      "url": "https://arxiv.org/abs/1602.02697",
+      "supports": "Substitute-model black-box attack, 84.24% on MetaMind (p. 1)."
+    },
+    {
+      "title": "Madry et al. 2017, Towards Deep Learning Models Resistant to Adversarial Attacks",
+      "url": "https://arxiv.org/abs/1706.06083",
+      "supports": "Saddle-point objective and PGD (pp. 2-4)."
+    },
+    {
+      "title": "Kannan, Kurakin, Goodfellow 2018, Adversarial Logit Pairing",
+      "url": "https://arxiv.org/abs/1803.06373",
+      "supports": "Logit pairing as a distinct defense (p. 1)."
+    },
+    {
+      "title": "Lu, Issaranon, Forsyth 2017, SafetyNet",
+      "url": "https://arxiv.org/abs/1704.00103",
+      "supports": "Detector-based rejection (p. 1)."
+    },
+    {
+      "title": "Athalye, Carlini, Wagner 2018, Obfuscated Gradients Give a False Sense of Security",
+      "url": "https://arxiv.org/abs/1802.00420",
+      "supports": "7 of 9 ICLR 2018 defenses rely on obfuscated gradients; 6 circumvented completely, 1 partially (p. 1)."
+    },
+    {
+      "title": "Wiyatno et al. 2019, Adversarial Examples in Modern Machine Learning: A Review",
+      "url": "https://arxiv.org/abs/1911.05268",
+      "supports": "Survey cited on slides 15 and 17; ALP listed as circumventable by many-iteration PGD (p. 53, survey summary)."
+    },
+    {
+      "title": "Gu, Dolan-Gavitt, Garg 2017, BadNets",
+      "url": "https://arxiv.org/abs/1708.06733",
+      "supports": "Backdoored networks and street-sign backdoor (pp. 1-2)."
+    },
+    {
+      "title": "Perez, Ribeiro 2022, Ignore Previous Prompt",
+      "url": "https://arxiv.org/abs/2211.09527",
+      "supports": "Goal hijacking and prompt leaking (p. 1)."
+    },
+    {
+      "title": "Greshake et al. 2023, Indirect Prompt Injection",
+      "url": "https://arxiv.org/abs/2302.12173",
+      "supports": "Indirect prompt injection through retrieved data (p. 1)."
+    },
+    {
+      "title": "Liu et al. 2023, Prompt Injection attack against LLM-integrated Applications",
+      "url": "https://arxiv.org/abs/2306.05499",
+      "supports": "31 of 36 applications susceptible (p. 14)."
+    },
+    {
+      "title": "Rossi et al. 2024, An Early Categorization of Prompt Injection Attacks",
+      "url": "https://arxiv.org/abs/2402.00898",
+      "supports": "Direct versus indirect injection; hot-wiring example (p. 2)."
+    },
+    {
+      "title": "Bai et al. 2022, Constitutional AI",
+      "url": "https://arxiv.org/abs/2212.08073",
+      "supports": "Harmlessness training without human harm labels; date 15 Dec 2022 (p. 1)."
+    },
+    {
+      "title": "Carlini et al. 2023, Extracting Training Data from Diffusion Models",
+      "url": "https://arxiv.org/abs/2301.13188",
+      "supports": "Diffusion models memorise and emit training images (p. 1)."
+    },
+    {
+      "title": "Goodfellow et al. 2014, Generative Adversarial Nets",
+      "url": "https://arxiv.org/abs/1406.2661",
+      "supports": "Value function, non-saturating cost, k-step schedule, optimal discriminator, JS identity (pp. 3-5)."
+    },
+    {
+      "title": "Goodfellow 2016, NIPS 2016 Tutorial: Generative Adversarial Networks",
+      "url": "https://arxiv.org/abs/1701.00160",
+      "supports": "Zero-sum definition, non-convex caveat, cost-response figure, mode collapse (pp. 22-35)."
+    },
+    {
+      "title": "Radford, Metz, Chintala 2015, DCGAN",
+      "url": "https://arxiv.org/abs/1511.06434",
+      "supports": "Vector arithmetic on face codes (p. 10, Figure 7)."
+    },
+    {
+      "title": "Lucic et al. 2017, Are GANs Created Equal?",
+      "url": "https://arxiv.org/abs/1711.10337",
+      "supports": "Similar scores with enough tuning (p. 1)."
+    },
+    {
+      "title": "Sohl-Dickstein et al. 2015, Deep Unsupervised Learning using Nonequilibrium Thermodynamics",
+      "url": "https://arxiv.org/abs/1503.03585",
+      "supports": "Origin of diffusion probabilistic models (p. 1)."
+    },
+    {
+      "title": "Ho, Jain, Abbeel 2020, Denoising Diffusion Probabilistic Models",
+      "url": "https://arxiv.org/abs/2006.11239",
+      "supports": "Forward process, marginal, L_simple, Algorithms 1-2, schedule (pp. 2-5)."
+    },
+    {
+      "title": "Song et al. 2021, Score-Based Generative Modeling through SDEs",
+      "url": "https://arxiv.org/abs/2011.13456",
+      "supports": "Variance-exploding versus variance-preserving processes (p. 5)."
+    },
+    {
+      "title": "Dhariwal, Nichol 2021, Diffusion Models Beat GANs on Image Synthesis",
+      "url": "https://arxiv.org/abs/2105.05233",
+      "supports": "Guidance trades diversity for fidelity; more modes and recall; Figure 6 FIDs (pp. 1, 10, 11)."
+    },
+    {
+      "title": "Rombach et al. 2021 (CVPR 2022), High-Resolution Image Synthesis with Latent Diffusion Models",
+      "url": "https://arxiv.org/abs/2112.10752",
+      "supports": "Latent autoencoder, downsampling factor, conditioning by concatenation or cross-attention (pp. 1-5)."
+    }
+  ],
+  "research_ledger": [
+    {
+      "id": "1312.6199",
+      "page": 2,
+      "quote": "applying an imperceptible non-random perturbation to a test image, it is possible to arbitrarily change the network's prediction",
+      "claim": "imperceptible perturbations change predictions",
+      "status": "page verified"
+    },
+    {
+      "id": "1312.6199",
+      "page": 1,
+      "quote": "the same perturbation can cause a different network, that was trained on a different subset of the dataset, to misclassify the same input",
+      "claim": "transfer",
+      "status": "page verified"
+    },
+    {
+      "id": "1312.6199",
+      "page": 5,
+      "quote": "Minimize c|r| + lossf(x + r, l) subject to x + r in [0, 1]m",
+      "claim": "penalty formulation of the targeted attack",
+      "status": "page verified"
+    },
+    {
+      "id": "1412.6572",
+      "page": 1,
+      "quote": "Linear behavior in high-dimensional spaces is sufficient to cause adversarial examples",
+      "claim": "linearity explanation",
+      "status": "page verified"
+    },
+    {
+      "id": "1412.6572",
+      "page": 2,
+      "quote": "the activation will grow by epsilon m n ... many infinitesimal changes to the input that add up to one large change to the output",
+      "claim": "dimension argument",
+      "status": "page verified"
+    },
+    {
+      "id": "1412.6572",
+      "page": 2,
+      "quote": "intentionally designed to behave in very linear ways",
+      "claim": "ReLU/maxout designed to be linear",
+      "status": "page verified"
+    },
+    {
+      "id": "1412.6572",
+      "page": 3,
+      "quote": "eta = epsilon sign(grad_x J(theta, x, y)). We refer to this as the fast gradient sign method",
+      "claim": "FGSM definition",
+      "status": "page verified"
+    },
+    {
+      "id": "1412.6572",
+      "page": 3,
+      "quote": "using epsilon = .25, we cause a shallow softmax classifier to have an error rate of 99.9% ... a maxout network misclassifies 89.4%",
+      "claim": "MNIST FGSM error rates",
+      "status": "page verified"
+    },
+    {
+      "id": "1412.6572",
+      "page": 4,
+      "quote": "the sign of the gradient is just -sign(w) ... minimize E zeta(y(epsilon ||w||1 - w^T x - b))",
+      "claim": "logistic case and adversarial logistic regression",
+      "status": "page verified"
+    },
+    {
+      "id": "1412.6572",
+      "page": 5,
+      "quote": "J~ = alpha J(theta,x,y) + (1 - alpha) J(theta, x + epsilon sign(grad J), y). In all of our experiments, we used alpha = 0.5 ... error rate fell to 17.9%",
+      "claim": "adversarial training weights and effect",
+      "status": "page verified"
+    },
+    {
+      "id": "1412.6572",
+      "page": 6,
+      "quote": "Because the derivative of the sign function is zero or undefined everywhere",
+      "claim": "adversarial training does not anticipate the attack",
+      "status": "page verified"
+    },
+    {
+      "id": "1412.6572",
+      "page": 7,
+      "quote": "consistent with linear behavior being a major cause of cross-model generalization",
+      "claim": "transfer explanation",
+      "status": "page verified"
+    },
+    {
+      "id": "1607.02533",
+      "page": 1,
+      "quote": "a large fraction of adversarial examples are classified incorrectly even when perceived through the camera ... A clean image (b) is recognized correctly as a 'washer'",
+      "claim": "physical-world attack",
+      "status": "page verified"
+    },
+    {
+      "id": "1904.08653",
+      "page": 1,
+      "quote": "all of these approaches target classes that contain almost no intra-class variety (e.g. stop signs)",
+      "claim": "intra-class variety",
+      "status": "page verified"
+    },
+    {
+      "id": "1904.08653",
+      "page": 3,
+      "quote": "L = alpha Lnps + beta Ltv + Lobj ... factors alpha and beta which are determined empirically",
+      "claim": "three-term patch loss",
+      "status": "page verified"
+    },
+    {
+      "id": "1602.02697",
+      "page": 1,
+      "quote": "their DNN misclassifies 84.24% of the adversarial examples crafted with our substitute",
+      "claim": "black-box substitute attack",
+      "status": "page verified"
+    },
+    {
+      "id": "1706.06083",
+      "page": 3,
+      "quote": "min theta rho(theta), where rho(theta) = E max delta in S L(theta, x + delta, y) (2.1)",
+      "claim": "saddle-point objective",
+      "status": "page verified"
+    },
+    {
+      "id": "1706.06083",
+      "page": 4,
+      "quote": "FGSM ... a simple one-step scheme for maximizing the inner part ... projected gradient descent (PGD)",
+      "claim": "FGSM as one step; PGD",
+      "status": "page verified"
+    },
+    {
+      "id": "1706.06083",
+      "page": 2,
+      "quote": "projected gradient descent (PGD) as a universal 'first-order adversary'",
+      "claim": "PGD strongest first-order attack",
+      "status": "page verified"
+    },
+    {
+      "id": "1803.06373",
+      "page": 1,
+      "quote": "logit pairing, a method that encourages logits for pairs of examples to be similar",
+      "claim": "ALP distinct",
+      "status": "page verified"
+    },
+    {
+      "id": "1704.00103",
+      "page": 1,
+      "quote": "SafetyNet consists of a conventional classifier ... with an RBF-SVM that uses discrete codes",
+      "claim": "detector defense",
+      "status": "page verified"
+    },
+    {
+      "id": "1802.00420",
+      "page": 1,
+      "quote": "7 of 9 defenses relying on obfuscated gradients. Our new attacks successfully circumvent 6 completely, and 1 partially",
+      "claim": "obfuscated gradients",
+      "status": "page verified"
+    },
+    {
+      "id": "1911.05268",
+      "page": 1,
+      "quote": "Adversarial Examples in Modern Machine Learning: A Review",
+      "claim": "identity of slide citation only",
+      "status": "page verified"
+    },
+    {
+      "id": "1708.06733",
+      "page": 1,
+      "quote": "state-of-the-art performance on the user's training and validation samples, but behaves badly on specific attacker-chosen inputs ... drop in accuracy of 25% on average when the backdoor trigger is present",
+      "claim": "BadNets",
+      "status": "page verified"
+    },
+    {
+      "id": "2211.09527",
+      "page": 1,
+      "quote": "two types of attacks - goal hijacking and prompt leaking",
+      "claim": "direct injection goals",
+      "status": "page verified"
+    },
+    {
+      "id": "2302.12173",
+      "page": 1,
+      "quote": "blur the line between data and instructions ... strategically injecting prompts into data likely to be retrieved",
+      "claim": "indirect injection",
+      "status": "page verified"
+    },
+    {
+      "id": "2306.05499",
+      "page": 14,
+      "quote": "36 real-world LLM-integrated applications, we discover that 31 of these applications are susceptible",
+      "claim": "prevalence in tested applications",
+      "status": "page verified"
+    },
+    {
+      "id": "2402.00898",
+      "page": 2,
+      "quote": "ChatGPT is asked to provide instructions on how to hot wire a car ... 'direct' prompt injection ... 'indirect' prompt injection",
+      "claim": "direct/indirect taxonomy and example",
+      "status": "page verified"
+    },
+    {
+      "id": "2212.08073",
+      "page": 1,
+      "quote": "training a harmless AI assistant through self-improvement, without any human labels identifying harmful outputs ... arXiv:2212.08073v1 15 Dec 2022",
+      "claim": "Constitutional AI method and date",
+      "status": "page verified"
+    },
+    {
+      "id": "2301.13188",
+      "page": 1,
+      "quote": "diffusion models memorize individual images from their training data ... we extract over a thousand training examples",
+      "claim": "memorisation counterexample",
+      "status": "page verified"
+    },
+    {
+      "id": "1406.2661",
+      "page": 3,
+      "quote": "Rather than training G to minimize log(1 - D(G(z))) we can train G to maximize log D(G(z)). This objective function results in the same fixed point of the dynamics of G and D but provides much stronger gradients early in learning",
+      "claim": "non-saturating cost",
+      "status": "page verified"
+    },
+    {
+      "id": "1406.2661",
+      "page": 3,
+      "quote": "we alternate between k steps of optimizing D and one step of optimizing G",
+      "claim": "k-step schedule",
+      "status": "page verified"
+    },
+    {
+      "id": "1406.2661",
+      "page": 4,
+      "quote": "We used k = 1, the least expensive option ... Proposition 1. For G fixed, the optimal discriminator D is D*G(x) = pdata(x)/(pdata(x)+pg(x))",
+      "claim": "k = 1; optimal discriminator",
+      "status": "page verified"
+    },
+    {
+      "id": "1406.2661",
+      "page": 5,
+      "quote": "C(G) = -log(4) + 2 JSD(pdata || pg) (6)",
+      "claim": "JS identity and global optimum",
+      "status": "page verified"
+    },
+    {
+      "id": "1701.00160",
+      "page": 22,
+      "quote": "The simplest version of the game is a zero-sum game ... J(G) = -J(D). (10) ... these results, which depend on convexity, do not apply",
+      "claim": "zero-sum definition; non-convex caveat",
+      "status": "page verified"
+    },
+    {
+      "id": "1701.00160",
+      "page": 23,
+      "quote": "the game is no longer zero-sum, and cannot be described with a single value function",
+      "claim": "non-saturating game",
+      "status": "page verified"
+    },
+    {
+      "id": "1701.00160",
+      "page": 26,
+      "quote": "Figure 16: The cost that the generator receives ... Minimax, Non-saturating heuristic, Maximum likelihood cost",
+      "claim": "cost-response figure",
+      "status": "page verified"
+    },
+    {
+      "id": "1701.00160",
+      "page": 34,
+      "quote": "Mode collapse ... the generator learns to map several different input z values to the same output point ... partial mode collapse is common",
+      "claim": "mode collapse definition",
+      "status": "page verified"
+    },
+    {
+      "id": "1701.00160",
+      "page": 35,
+      "quote": "Simultaneous gradient descent does not clearly privilege min max over max min ... mode collapse does not seem to be caused by any particular cost function",
+      "claim": "mode collapse mechanism",
+      "status": "page verified"
+    },
+    {
+      "id": "1511.06434",
+      "page": 10,
+      "quote": "Figure 7: Vector arithmetic for visual concepts. For each column, the Z vectors of samples are averaged (image: man with glasses - man without glasses + woman without glasses = woman with glasses)",
+      "claim": "latent arithmetic",
+      "status": "page verified (rendered page inspected)"
+    },
+    {
+      "id": "1711.10337",
+      "page": 1,
+      "quote": "most models can reach similar scores with enough hyperparameter optimization and random restarts",
+      "claim": "GAN loss comparison",
+      "status": "page verified"
+    },
+    {
+      "id": "1503.03585",
+      "page": 1,
+      "quote": "systematically and slowly destroy structure in a data distribution through an iterative forward diffusion process",
+      "claim": "origin of diffusion models",
+      "status": "page verified"
+    },
+    {
+      "id": "2006.11239",
+      "page": 2,
+      "quote": "q(xt|xt-1) := N(xt; sqrt(1-beta_t) xt-1, beta_t I) (2) ... q(xt|x0) = N(xt; sqrt(abar_t) x0, (1 - abar_t) I) (4)",
+      "claim": "forward step and marginal",
+      "status": "page verified"
+    },
+    {
+      "id": "2006.11239",
+      "page": 3,
+      "quote": "both sigma_t^2 = beta_t and sigma_t^2 = beta~_t had similar results",
+      "claim": "variance choice",
+      "status": "page verified"
+    },
+    {
+      "id": "2006.11239",
+      "page": 4,
+      "quote": "Algorithm 1 Training ... Algorithm 2 Sampling ... x_{t-1} = 1/sqrt(alpha_t)(x_t - (1-alpha_t)/sqrt(1-abar_t) eps_theta(x_t,t)) + sigma_t z",
+      "claim": "training and sampling algorithms",
+      "status": "page verified"
+    },
+    {
+      "id": "2006.11239",
+      "page": 5,
+      "quote": "We set T = 1000 ... increasing linearly from beta1 = 10^-4 to betaT = 0.02 ... Lsimple (14) ... Ours (Lsimple) 9.46 3.17",
+      "claim": "schedule, loss, CIFAR-10 FID",
+      "status": "page verified"
+    },
+    {
+      "id": "2011.13456",
+      "page": 5,
+      "quote": "we hereafter refer to Eq. (9) as the Variance Exploding (VE) SDE, and Eq. (11) the Variance Preserving (VP) SDE",
+      "claim": "VE/VP naming",
+      "status": "page verified"
+    },
+    {
+      "id": "2105.05233",
+      "page": 1,
+      "quote": "classifier guidance: a simple, compute-efficient method for trading off diversity for fidelity",
+      "claim": "guidance confound",
+      "status": "page verified"
+    },
+    {
+      "id": "2105.05233",
+      "page": 10,
+      "quote": "maintaining a higher coverage of the distribution as measured by recall ... more modes than the GAN, such as zoomed ostrich heads, single flamingos, different orientations of cheeseburgers",
+      "claim": "diversity comparison",
+      "status": "page verified"
+    },
+    {
+      "id": "2105.05233",
+      "page": 11,
+      "quote": "Figure 6: Samples from BigGAN-deep with truncation 1.0 (FID 6.95, left) vs samples from our diffusion model with guidance (FID 4.59, middle)",
+      "claim": "Figure 6 FIDs",
+      "status": "page verified"
+    },
+    {
+      "id": "2112.10752",
+      "page": 4,
+      "quote": "z in R^{h x w x c} ... the encoder downsamples the image by a factor f = H/h = W/w ... We condition LDMs either via concatenation or by a more general cross-attention mechanism",
+      "claim": "autoencoder, factor, conditioning",
+      "status": "page verified"
+    },
+    {
+      "id": "2112.10752",
+      "page": 5,
+      "quote": "downsampling factors f in {1, 2, 4, 8, 16, 32} ... small downsampling factors ... slow training progress, whereas overly large values of f cause stagnating fidelity",
+      "claim": "choice of factor",
+      "status": "page verified"
+    },
+    {
+      "id": "2112.10752",
+      "page": 2,
+      "quote": "a general-purpose conditioning mechanism based on cross-attention ... text-to-image",
+      "claim": "cross-attention for text",
+      "status": "page verified"
+    },
+    {
+      "id": "1911.05268",
+      "page": 53,
+      "quote": "ALP [183] R Circumventable by PGD [145] with many iterations [184]",
+      "claim": "ALP limitation (survey summary, cited study not checked)",
+      "status": "page verified"
+    },
+    {
+      "id": "2105.05233",
+      "page": 4,
+      "quote": "FID provides a symmetric measure of the distance between two image distributions in the Inception-V3 latent space ... diversity as the fraction of data samples which fall into the sample manifold (recall)",
+      "claim": "FID and recall definitions",
+      "status": "page verified"
+    },
+    {
+      "id": "cvf-cvpr2022-rombach",
+      "page": null,
+      "quote": "CVPR 2022 Open Access Repository: High-Resolution Image Synthesis With Latent Diffusion Models; Robin Rombach, Andreas Blattmann, Dominik Lorenz, Patrick Esser, Bjorn Ommer",
+      "claim": "Rombach et al. venue",
+      "status": "verified on https://openaccess.thecvf.com/content/CVPR2022/html/Rombach_High-Resolution_Image_Synthesis_With_Latent_Diffusion_Models_CVPR_2022_paper.html (2026-09-28)"
+    },
+    {
+      "id": "openai-sora-documentation",
+      "page": null,
+      "quote": null,
+      "claim": "cube-shaped spacetime patches as tokens",
+      "status": "unverified; graded product claim as of the recording date 2025-10-14; the report page returned HTTP 403 on 2026-09-28"
+    }
+  ],
+  "unverified_claims": [
+    "Sora documentation description of spacetime patches: product claim as of 2025-10-14; page request returned HTTP 403 on 2026-09-28.",
+    "Sora 2, Veo 3 capabilities (slide 49); product claims.",
+    "Midjourney uses GANs for fine-tuning (~4424-4453 s); product claim.",
+    "Anthropic red-teaming practice (~2281-2310 s); product claim.",
+    "Grandmother jailbreak 'used to work' but now blocked (~2789-2815 s); product claim.",
+    "Synthetic hospital data gives 'same performance or close' (~3050-3076 s); speaker judgment, no study named.",
+    "Library-to-prison predictions on slide 10 (~1181-1219 s); narration only, not visible on the still; Kurakin et al. Figure 1 shows a washer example.",
+    "Source of the slide 8 cat/iguana image pair; not stated on the slide.",
+    "Rate limit of 'three' queries per minute (~1435-1464 s); transcription unclear, not used."
+  ],
+  "slide_discrepancies_recorded": [
+    "Slide 4/5/7/14: Goodfellow et al. dated 2015 (ICLR); arXiv December 2014.",
+    "Slide 10: Kurakin et al. dated 2017 (ICLR workshop); arXiv 2016.",
+    "Slide 13: step x + 0.2w is the l2-optimal direction, not FGSM; ||delta||_inf = 0.6 against coordinates 0-3.",
+    "Slide 16: Constitutional AI dated 2025; arXiv 15 Dec 2022.",
+    "Slide 29: J(G) = -J(D) only up to the real-data term.",
+    "Slides 30/32: the equivalence chain between saturating and non-saturating costs is not an equivalence of objectives.",
+    "Slides 30/34: NIPS 2016 tutorial dated 2014.",
+    "Slide 33: Lucic et al. dated 2018 (NeurIPS); arXiv November 2017.",
+    "Slide 42: additive process has covariance tI; not DDPM.",
+    "Slide 45: index off by one between the step and alpha-bar.",
+    "Slide 46: bullet description differs from the reproduced Algorithm 2 on the same page.",
+    "Slide 49: T used for frames; chapter uses n_fr.",
+    "Slides 36-38 (CycleGAN): not in the recording; not used; slide 38's J_cycle carries leading minus signs and sums both players' costs."
+  ],
+  "asr_uncertainties": [
+    "'Christian Zegedi' = Christian Szegedy",
+    "'fast gradient sine' = fast gradient sign",
+    "'tempered' = tampered",
+    "'chrysantropy' = cross-entropy",
+    "'Darival and Nicole' = Dhariwal and Nichol",
+    "'Peter Abil' / 'Andrew Eng' = Pieter Abbeel / Andrew Ng",
+    "'DALI' = DALL-E; 'me joining' / 'Mid-Journey' = Midjourney; 'Vio' = Veo",
+    "'branch injection' = prompt injection; 'front engineering' = prompt engineering",
+    "'Chagipiti' = ChatGPT; 'and Tropic' = Anthropic",
+    "'256 pixels on a 32 by 32 by 3' = 256 intensity levels per value",
+    "'labor for iguana' = label for iguana; 'the moral' = the model; 'overfeeding' = overfitting",
+    "'call start problem' = cold start problem",
+    "'W transpose x plus v' = w^T x + b",
+    "'fourth example' / 'forge example' = forged example",
+    "'training parting' = training part; 'Gates department' = Gates (computer science) building",
+    "'x star is x plus epsilon w' uses x* for the adversarial example; the book writes x_adv"
+  ],
+  "symbol_ledger": [
+    {
+      "symbol": "x, n_x, y, y-hat, u, sigma, softmax, theta, f_theta, L, J(theta), m, eta, K, k",
+      "first_section": "model",
+      "definition": "Input and its dimension, label, prediction, logit, sigmoid, softmax, parameters, network, per-example loss (BCE), cost, number of examples, step size, classes, class index."
+    },
+    {
+      "symbol": "mu, N(mu, I), I, p_data, Phi, w (= 2 mu), chi",
+      "first_section": "running-case",
+      "definition": "Running-case cluster mean, Gaussian, identity, data distribution, standard normal CDF, Bayes weight vector. chi: an auxiliary standard Gaussian vector (also chi_t, the per-step forward noise); recorded in NOTATION.md section 5; xi is the power-law exponent."
+    },
+    {
+      "symbol": "y_tgt, x_cat, lambda_tgt",
+      "first_section": "forging",
+      "definition": "Target class one-hot vector, image to stay close to, penalty coefficient of the targeted attack."
+    },
+    {
+      "symbol": "delta, rho, x_adv, ||.||_1, ||.||_2, ||.||_inf, sign",
+      "first_section": "linearity",
+      "definition": "Perturbation, budget, adversarial example, norms, elementwise sign."
+    },
+    {
+      "symbol": "lambda_adv",
+      "first_section": "defenses",
+      "definition": "Weight of the adversarial term in slide 16's loss (distinct from lambda_tgt)."
+    },
+    {
+      "symbol": "x_trig, p_poi, n_rev",
+      "first_section": "backdoors",
+      "definition": "Trigger coordinate, poisoned fraction, number of reviewed examples."
+    },
+    {
+      "symbol": "G, D, z, n_z, p_z, p_g",
+      "first_section": "generative",
+      "definition": "Generator, discriminator, latent code and dimension, latent prior, generated distribution."
+    },
+    {
+      "symbol": "n_real, n_gen, J_D, J_G, J(D,G), D*, M, KL, JS, X_data, X_g",
+      "first_section": "gan-game",
+      "definition": "Minibatch sizes (slide: m_real, m_gen), discriminator cost, generator cost, value (Goodfellow: V), optimal discriminator, mixture, divergences in nats. Disjoint supports in the density-hypothesis example."
+    },
+    {
+      "symbol": "T, t, x_0, x_t, beta_t, alpha_t, alpha-bar_t, chi_t, epsilon, q",
+      "first_section": "forward",
+      "definition": "Diffusion steps, step index, clean and noisy samples, schedule, per-step forward noise (auxiliary Gaussian), standardised noise, forward process; product dummy t'."
+    },
+    {
+      "symbol": "epsilon_theta, epsilon*, epsilon-hat (any predictor), J_simple (paper: L_simple)",
+      "first_section": "training",
+      "definition": "Noise-prediction network, optimal predictor (conditional mean), DDPM simple loss."
+    },
+    {
+      "symbol": "x-hat_0, beta-tilde_t, epsilon-tilde",
+      "first_section": "sampling",
+      "definition": "One-shot estimate, posterior variance, fresh reverse noise (the paper writes its scale with sigma_t; the chapter names it in words)."
+    },
+    {
+      "symbol": "n_H, n_W, n_down",
+      "first_section": "latent",
+      "definition": "Image height and width, downsampling factor (paper: f)."
+    },
+    {
+      "symbol": "n_fr, n_ch",
+      "first_section": "video",
+      "definition": "Number of frames (slide: T), channels."
+    },
+    {
+      "symbol": "(2y-1)u",
+      "first_section": "defenses",
+      "definition": "Margin of a binary prediction; positive exactly when correct."
+    }
+  ],
+  "code_check": {
+    "file": "embedded block in section 'implementation' (identical to the scratch file that was executed)",
+    "command": "python -I <file> in a fresh process",
+    "python": "3.13.5",
+    "numpy": "2.2.6",
+    "result": "exit 0; all assertions passed; stdout: l-inf attack rho=0.05 (clean, attacked, formula) n_x=2: (0.976, 0.972, 0.973), n_x=3072: (0.975, 0.226, 0.22); JS = 0.1947 nats; abar_T = 4.036e-05; fraction in + mode = 0.4924; max |cov - (I + mu mu^T)| = 0.024; largest one-shot |x0_hat| = 0.116; eps-loss floor at t=100 = 1.822 vs single-Gaussian 1.794; runtime about 2 s (up to about 55 s observed under heavy machine load)",
+    "pep8": "pycodestyle: no issues"
+  },
+  "pass_log": [
+    {
+      "pass": "1 coverage",
+      "result": "Transcript read sequentially in full (5.14-6431.66 s, 202 segments); all 51 slide pages read as extracted text; 18 major sections mapped with spans above."
+    },
+    {
+      "pass": "2 prose",
+      "result": "Full-depth draft written section by section in recording order; running case introduced before formalisation and reused in 9 sections."
+    },
+    {
+      "pass": "3 mathematics",
+      "result": "8 numbered propositions with proofs (Bayes classifier; dual norms; robust accuracy; optimal discriminator; JS identity incl. KL >= 0; forward marginal; alpha-bar_T bound; conditional-mean predictor) plus derived FGSM, adversarial logistic loss, backdoor Bayes classifier, optimal noise predictor, loss floor, one-shot posterior mean and reverse step: 15 derivations. Symbol ledger checked against NOTATION.md."
+    },
+    {
+      "pass": "4 research",
+      "result": "26 arXiv PDFs downloaded to the private papers folder; every cited claim located on its page (research_ledger). Sora report could not be opened (403)."
+    },
+    {
+      "pass": "5 implementation",
+      "result": "One NumPy program; executed in a fresh process; output recorded; PEP8 clean."
+    },
+    {
+      "pass": "6 exercises",
+      "result": "Six exercises: derivation, computation with assumption check, counterexample, index derivation, diagnosis, design; all numeric answers computed."
+    },
+    {
+      "pass": "6a visual check",
+      "result": "Rendered and inspected slide pages 6, 8, 10, 11, 13, 16, 18, 29, 30, 42, 43, 45, 46, 47, 49 and DCGAN p. 10. Findings: slide 8 perturbation visible; slide 10 still shows no labels; slide 11 patch-holder not detected; slide 18 trigger also on correctly labelled dogs; slide 30 plot range; slide 46 contains DDPM Algorithm 2."
+    },
+    {
+      "pass": "6c citation pages",
+      "result": "All cited claims page-verified; see research_ledger."
+    },
+    {
+      "pass": "6a completion",
+      "result": "Slide pages 15, 17, 24, 31, 33 and 35 viewed; findings in slides.visual_findings."
+    },
+    {
+      "pass": "6b round 1",
+      "result": "Report applied: 3 blocking, 23 style, 6 structural, 2 citations. Code rerun in a fresh process after B1; output unchanged; Figure 3 now drawn from the same run as the printed output."
+    },
+    {
+      "pass": "6b round 2",
+      "result": "Report applied: 2 blocking, 7 style, 3 structural. Only named text changed. Code rerun with python -I in a fresh process: exit 0, output byte-identical to round 1."
+    },
+    {
+      "pass": "6b round 3",
+      "result": "Verdict yes, 0 blocking defects. Gate 6b passed."
+    },
+    {
+      "pass": "7 prose",
+      "result": "Round-3 S1 and S2 applied. Read-aloud pass: 12 sentences of 50-72 words split and 3 paragraphs split (the costs chain / Lucic result; mode collapse definition / mechanism; one-shot mean / what a sampler must keep). No claim added or removed. Remaining paragraphs over 190 words: the disjoint-support derivation (one argument) and the exercise 6 solution (one design answer)."
+    },
+    {
+      "pass": "8 parity",
+      "result": "Diagnostics in parity_audit against CS231N L14 and AA203 L3; no missing intellectual component found; no repair required."
+    },
+    {
+      "pass": "9 validation",
+      "result": "build_book.py --course cs230-deep-learning-notes: ok (content digest preserved, assets refreshed from _shared). validate_books.py --course cs230-deep-learning-notes --browser: static passed (0 failures, 0 warnings, 55 local links, 18 timestamps in bounds), browser passed (chapter 0 MathJax errors, 828 math nodes, no horizontal overflow at 1280 and 390 px, controls present, TOC populated, print expands solutions, theme/text/solution toggles and clipboard fallback pass; index search passes). Embedded code extracted from the final HTML, byte-identical to the recorded program, run with python -I: exit 0, output identical to the record; pycodestyle clean. Privacy scan of 15 text files: no absolute or home paths, no _private_sources reference outside .gitignore, no credentials or keys, no e-mail addresses, no media files; 0 eight-word overlaps with the transcript. Hits limited to .gitignore exclusion patterns and audio filenames in the pre-existing source-manifest.json metadata."
+    }
+  ],
+  "notation_decisions": [
+    "xi (NOTATION: power-law exponent) replaced by chi for auxiliary Gaussian vectors; chi is not used elsewhere in NOTATION.md.",
+    "Proposition 4 proof written with p_data(x), p_g(x) and D(x) directly; no placeholder letters (b is the bias, h the activation, P the waveform power).",
+    "Proposition 8 proof uses epsilon-hat for an arbitrary predictor (g is the nonlinearity).",
+    "Goodfellow alpha weights, GAN k, and a Delta-u change are written in words (alpha DDPM-only, k class index, Delta triplet margin).",
+    "Paper letters quoted with attribution once: Szegedy c|r|, Madry S, slide L_new, slide m_real/m_gen, Ho sigma_t (one sentence), Rombach f (mapped to n_down).",
+    "Round 1: s' replaced by t' as the product dummy (NOTATION.md section 5).",
+    "Round 1: derivative primes written d sigma/du (NOTATION.md rule 6).",
+    "Round 1: epsilon-prime in the Proposition 6 proof replaced by chi.",
+    "Round 1: KL proof written in the ratio q/p (t is the step index).",
+    "Round 1: tanh identity written without a dummy letter.",
+    "Round 1: DDPM sigma_t named in words; L_simple written J_simple.",
+    "Round 1: total-variation formula with p_{i,j} removed.",
+    "Round 1: rows for chi, Phi, M, X_data/X_g, beta-tilde, J_simple, n_down, lambda_tgt/adv, x_trig, p_poi, n_rev, n_real/n_gen added to NOTATION.md section 5."
+  ],
+  "privacy_note": "No verbatim recording sentences; recording statements are paraphrased with timestamps. Single words from the transcription are quoted only as ASR spellings.",
+  "production_notes_removed_from_text": [
+    "ASR spelling Zegedy for Szegedy (see asr_uncertainties).",
+    "ASR spelling 'sine' for sign (see asr_uncertainties).",
+    "Per-slide 'inspected' markers; the rendered pages are listed in slides.pages_rendered_and_inspected and the source note.",
+    "Sora report request refused (HTTP 403); see research_ledger."
+  ],
+  "editor_round_1": {
+    "report": "_editorial/cs230/reviews/lecture-04-round1.md",
+    "verdict": "yes-after-revision",
+    "blocking": "B1, B2, B3 fixed with the editor replacement text (B2 sets renamed X_data, X_g because A is the amplitude scale).",
+    "style": "S1-S23 fixed; S12 uses the rendered slide 24 instead of the recording description; S15 written without a new symbol; S23 venue verified on CVF.",
+    "structural": "N1 gan-practice folded into saturation (h3 gan-remarks); N2 video folded into latent (h3 video); N3 threats folded into model, Szegedy paragraph moved to forging; N4 Figure 2 removed and figures renumbered; N5 NOTATION.md rows added; N6 non-convergence named."
+  },
+  "editor_round_2": {
+    "report": "_editorial/cs230/reviews/lecture-04-round2.md",
+    "verdict": "yes-after-revision",
+    "blocking": "B1 (slide 31 monotonicity) and B2 (gallery claim now attributed as speaker judgment, ~4488-4518 s) fixed with the editor replacement text.",
+    "style": "S1 r -> rho_2 in exercise 2(c); S2 evidence class appended to the ALP sentence; S3 density on R^12,288; S4-S7 cuts applied.",
+    "structural": "N1 cuts applied (S4-S7); N2 no further cut named; N3 viewing record added under slides.viewing_record."
+  },
+  "parity_audit": {
+    "method": "Same counter for all three chapters: article between content markers, SVG, code and all MathJax removed; sections exclude exercises and sources/boundary sections for the per-section statistics.",
+    "diagnostics": {
+      "cs230_L4": {
+        "prose_words_article": 14877,
+        "h2_sections": 19,
+        "section_words_median_excl_exercises_sources": 722,
+        "section_words_min": 323,
+        "section_words_max": 1177,
+        "h3_subsections": 21,
+        "display_equations": 27,
+        "inline_math_spans": 801,
+        "external_source_links_in_body": 72,
+        "paper_links_in_body": 53,
+        "distinct_papers_linked": 26,
+        "code_blocks": 2,
+        "figures": 3,
+        "tables": 5,
+        "exercises": 6,
+        "solution_words_median": 126.5,
+        "solution_words_min": 79,
+        "evidence_label_mentions": 51,
+        "propositions_proved": 8
+      },
+      "cs231n_L14": {
+        "prose_words_article": 2881,
+        "h2_sections": 13,
+        "section_words_median_excl_exercises_sources": 234,
+        "section_words_min": 36,
+        "section_words_max": 274,
+        "h3_subsections": 0,
+        "display_equations": 7,
+        "inline_math_spans": 124,
+        "external_source_links_in_body": 18,
+        "paper_links_in_body": 8,
+        "distinct_papers_linked": 8,
+        "code_blocks": 1,
+        "figures": 0,
+        "tables": 0,
+        "exercises": 6,
+        "solution_words_median": 55.0,
+        "solution_words_min": 40,
+        "evidence_label_mentions": 0,
+        "propositions_proved": 0
+      },
+      "aa203_L3": {
+        "prose_words_article": 3518,
+        "h2_sections": 12,
+        "section_words_median_excl_exercises_sources": 268.5,
+        "section_words_min": 143,
+        "section_words_max": 383,
+        "h3_subsections": 0,
+        "display_equations": 21,
+        "inline_math_spans": 227,
+        "external_source_links_in_body": 16,
+        "paper_links_in_body": 1,
+        "distinct_papers_linked": 1,
+        "code_blocks": 1,
+        "figures": 0,
+        "tables": 0,
+        "exercises": 6,
+        "solution_words_median": 66.0,
+        "solution_words_min": 52,
+        "evidence_label_mentions": 0,
+        "propositions_proved": 0
+      }
+    },
+    "qualitative": {
+      "questions_answered_per_central_section": "Each of the 15 central sections states its question in the opening paragraph, defines its terms before use, states assumptions beside claims, proves or cites its central result with a page, gives a numerical check (table, engineering check or code), states a limit, and ties back to the running case or the slide-13 neuron.",
+      "differences_from_exemplars": [
+        "Prose is about 5.2 times CS231N L14 (14,877 vs 2,881 words) and 4.2 times AA203 L3 (3,518). The extra length carries 8 proved propositions (exemplars: 0 numbered), 27 display equations (7 and 21), 26 distinct papers cited with pages (8 and 1), 51 evidence-label mentions (0 and 0), 3 computed figures (0 and 0) and 5 tables (0 and 0).",
+        "The CS230 brief requires an evidence audit (lecture vs research vs construction; five evidence classes) that the exemplars do not carry; the per-section provenance lines and graded claims account for part of the length.",
+        "Minimum section length 323 words (exemplars 36 and 143): no section is a definition plus a caveat.",
+        "Solution median 126.5 words (exemplars 55 and 66); every solution shows the reasoning, and the numeric answers were computed.",
+        "One embedded program plus one recorded-output block, as in the exemplars (one program each)."
+      ],
+      "repairs_needed": "None found. The editor (round 3) named no further cut; a shorter chapter would drop content.",
+      "length_judgment": "Treated as a diagnostic. The length follows from the subject (two unrelated halves: adversarial robustness and generative models) and from the evidence-audit contract, not from padding."
+    }
+  },
+  "editor_round_3": {
+    "report": "_editorial/cs230/reviews/lecture-04-round3.md",
+    "verdict": "yes",
+    "blocking": 0,
+    "style": "S1 (ALP sentence grade) and S2 (gallery span cited once) applied in pass 7."
+  }
+}

@@ -1,0 +1,392 @@
+{
+  "course": "CS230",
+  "term": "Autumn 2025",
+  "slug": "cs230-deep-learning-notes",
+  "playlist": "PLoROMvodv4rNRRGdS0rBbXOUGA0wjdh1X",
+  "format": "HTML",
+  "publication": "local only",
+  "status": "audio 9/9 acquired; local machine transcription 9/9; chapters not drafted",
+  "lectures": [
+    {
+      "id": "_NLHFoVNlbg",
+      "title": "Stanford CS230 | Autumn 2025 | Lecture 1: Introduction to Deep Learning",
+      "duration": 3617,
+      "url": "https://www.youtube.com/watch?v=_NLHFoVNlbg",
+      "chapter_order": 1,
+      "chapter_status": "not drafted",
+      "transcript_status": "local machine transcription complete; not publisher captions",
+      "recording_lecture_number": 1,
+      "audio_status": "downloaded",
+      "audio_filename": "audio.webm",
+      "audio_sha256": "cd8d98221029958f742a2893c55c33d532151d7382796072eb3ace346469f87f",
+      "audio_bytes": 47155274,
+      "audio_language": "en-US",
+      "audio_format": "251-1",
+      "official_linked_slides": [
+        {
+          "url": "https://cs230.stanford.edu/syllabus/fall_2024/lecture_1.pdf",
+          "sha256": "98a93db30a220a65580146b40893b203530264b24cecbdfcf062afb0b44e3e4c",
+          "pages": 29,
+          "edition_path": "fall_2024",
+          "alignment": "requires transcript comparison; official linked older resources"
+        }
+      ],
+      "slides_status": "official linked resources acquired",
+      "audio_duration_seconds": 3616.701,
+      "audio_duration_difference_from_playlist_seconds": -0.29899999999997817,
+      "transcript_provenance": {
+        "provenance": "local machine transcription; not publisher captions",
+        "model": "Systran/faster-whisper-small.en",
+        "language": "en",
+        "audio_sha256": "cd8d98221029958f742a2893c55c33d532151d7382796072eb3ace346469f87f",
+        "audio_duration": 3616.682125,
+        "segment_count": 121,
+        "last_segment_end": 3611.38,
+        "endpoint_fraction": 0.9985339809204272,
+        "audio_hash_matches": true
+      },
+      "transcript_sha256": "119b467863a954fb3efbe9b0c0c3dc985b66775b33d2956ae256589ded6038e8"
+    },
+    {
+      "id": "DNCn1BpCAUY",
+      "title": "Stanford CS230 | Autumn 2025 | Lecture 2: Supervised, Self-Supervised, & Weakly Supervised Learning",
+      "duration": 5988,
+      "url": "https://www.youtube.com/watch?v=DNCn1BpCAUY",
+      "chapter_order": 2,
+      "chapter_status": "not drafted",
+      "transcript_status": "local machine transcription complete; not publisher captions",
+      "recording_lecture_number": 2,
+      "audio_status": "downloaded",
+      "audio_filename": "audio.webm",
+      "audio_sha256": "e6d729599edac53fc49a7c82383b9eaa7932cb1ca124c1ed69b1429cce8ee278",
+      "audio_bytes": 84218686,
+      "audio_language": "en-US",
+      "audio_format": "251-10",
+      "official_linked_slides": [
+        {
+          "url": "https://cs230.stanford.edu/syllabus/fall_2025/2/lecture_2.pdf",
+          "sha256": "6ec048f16fae63b6862f1c197bb3c676be405e7a2837af3a443f22bed7c0e5a3",
+          "pages": 35,
+          "edition_path": "fall_2025",
+          "alignment": "official syllabus link; transcript comparison pending"
+        }
+      ],
+      "slides_status": "official linked resources acquired",
+      "audio_duration_seconds": 5987.101,
+      "audio_duration_difference_from_playlist_seconds": -0.899000000000342,
+      "transcript_provenance": {
+        "provenance": "local machine transcription; not publisher captions",
+        "model": "Systran/faster-whisper-small.en",
+        "language": "en",
+        "audio_sha256": "e6d729599edac53fc49a7c82383b9eaa7932cb1ca124c1ed69b1429cce8ee278",
+        "audio_duration": 5987.0933125,
+        "segment_count": 196,
+        "last_segment_end": 5981.71,
+        "endpoint_fraction": 0.9991008470690175,
+        "audio_hash_matches": true
+      },
+      "transcript_sha256": "f06fca3f57b5f25b7fc1492c5ea684c528e6367abeb5eca5a34e795b26d7cae9"
+    },
+    {
+      "id": "MGqQuQEUXhk",
+      "title": "Stanford CS230 | Autumn 2025 | Lecture 3: Full Cycle of a DL project",
+      "duration": 4025,
+      "url": "https://www.youtube.com/watch?v=MGqQuQEUXhk",
+      "chapter_order": 3,
+      "chapter_status": "not drafted",
+      "transcript_status": "local machine transcription complete; not publisher captions",
+      "recording_lecture_number": 3,
+      "audio_status": "downloaded",
+      "audio_filename": "audio.m4a",
+      "audio_sha256": "f0657fa7ae0eea204b4bc12bdcb64f99f95ecbc9fbcd435e0bf2ad60176b3502",
+      "audio_bytes": 65083335,
+      "audio_language": "en-US",
+      "audio_format": "140-17",
+      "official_linked_slides": [],
+      "slides_status": "no slide link on official syllabus",
+      "audio_duration_seconds": 4024.29678,
+      "audio_duration_difference_from_playlist_seconds": -0.7032199999998738,
+      "transcript_provenance": {
+        "provenance": "local machine transcription; not publisher captions",
+        "model": "Systran/faster-whisper-small.en",
+        "language": "en",
+        "audio_sha256": "f0657fa7ae0eea204b4bc12bdcb64f99f95ecbc9fbcd435e0bf2ad60176b3502",
+        "audio_duration": 4024.2968125,
+        "segment_count": 126,
+        "last_segment_end": 4018.99,
+        "endpoint_fraction": 0.9986813068848409,
+        "audio_hash_matches": true
+      },
+      "transcript_sha256": "d6c8f351615f16d6ea1a6c598eb41cf4ac8a4721f7b06ce9f7b7ee1336826a86"
+    },
+    {
+      "id": "aWlRtOlacYM",
+      "title": "Stanford CS230 | Autumn 2025 | Lecture 4: Adversarial Robustness and Generative Models",
+      "duration": 6437,
+      "url": "https://www.youtube.com/watch?v=aWlRtOlacYM",
+      "chapter_order": 4,
+      "chapter_status": "not drafted",
+      "transcript_status": "local machine transcription complete; not publisher captions",
+      "recording_lecture_number": 4,
+      "audio_status": "downloaded",
+      "audio_filename": "audio.webm",
+      "audio_sha256": "2a55b56af5c4a7801922190f3b4f2cd9fa72ea6c888fa848b17d7cea1bb033df",
+      "audio_bytes": 93741501,
+      "audio_language": "en-US",
+      "audio_format": "251-11",
+      "official_linked_slides": [
+        {
+          "url": "https://cs230.stanford.edu/syllabus/fall_2025/4/lecture_4.pdf",
+          "sha256": "b9a44f82f1740747a84325d09d93430f67ee89777aa9b8969dfff1df33bbded5",
+          "pages": 51,
+          "edition_path": "fall_2025",
+          "alignment": "official syllabus link; transcript comparison pending"
+        }
+      ],
+      "slides_status": "official linked resources acquired",
+      "audio_duration_seconds": 6436.761,
+      "audio_duration_difference_from_playlist_seconds": -0.238999999999578,
+      "transcript_provenance": {
+        "provenance": "local machine transcription; not publisher captions",
+        "model": "Systran/faster-whisper-small.en",
+        "language": "en",
+        "audio_sha256": "2a55b56af5c4a7801922190f3b4f2cd9fa72ea6c888fa848b17d7cea1bb033df",
+        "audio_duration": 6436.736,
+        "segment_count": 202,
+        "last_segment_end": 6431.66,
+        "endpoint_fraction": 0.9992114015550738,
+        "audio_hash_matches": true
+      },
+      "transcript_sha256": "1ad31da8dfb260965aa4c307abbfe0a241c46a5433c3f219b8647d243c31acb6"
+    },
+    {
+      "id": "4E27qlfYw0A",
+      "title": "Stanford CS230 | Autumn 2025 | Lecture 5: Deep Reinforcement Learning",
+      "duration": 6301,
+      "url": "https://www.youtube.com/watch?v=4E27qlfYw0A",
+      "chapter_order": 5,
+      "chapter_status": "not drafted",
+      "transcript_status": "local machine transcription complete; not publisher captions",
+      "recording_lecture_number": 5,
+      "audio_status": "downloaded",
+      "audio_filename": "audio.webm",
+      "audio_sha256": "c68d3b14b3344af3fb263b1fee276e038fd775c0fcaef2e18cfb3688001c547c",
+      "audio_bytes": 92128095,
+      "audio_language": "en-US",
+      "audio_format": "251-20",
+      "official_linked_slides": [
+        {
+          "url": "https://cs230.stanford.edu/syllabus/fall_2025/5/lecture_5.pdf",
+          "sha256": "c10fa0483f37665f2e30c237a62edc5b65bba1b49352da6d3757cc11270d65b1",
+          "pages": 55,
+          "edition_path": "fall_2025",
+          "alignment": "official syllabus link; transcript comparison pending"
+        }
+      ],
+      "slides_status": "official linked resources acquired",
+      "audio_duration_seconds": 6300.921,
+      "audio_duration_difference_from_playlist_seconds": -0.07899999999972351,
+      "transcript_provenance": {
+        "provenance": "local machine transcription; not publisher captions",
+        "model": "Systran/faster-whisper-small.en",
+        "language": "en",
+        "audio_sha256": "c68d3b14b3344af3fb263b1fee276e038fd775c0fcaef2e18cfb3688001c547c",
+        "audio_duration": 6300.9066875,
+        "segment_count": 217,
+        "last_segment_end": 6295.79,
+        "endpoint_fraction": 0.9991879442509202,
+        "audio_hash_matches": true
+      },
+      "transcript_sha256": "56d5ba80812918272fff0af96b3712f2daa17084a84d3faad6349f74669a9293"
+    },
+    {
+      "id": "s6JVGzABKho",
+      "title": "Stanford CS230 | Autumn 2025 | Lecture 6: AI Project Strategy",
+      "duration": 4518,
+      "url": "https://www.youtube.com/watch?v=s6JVGzABKho",
+      "chapter_order": 6,
+      "chapter_status": "not drafted",
+      "transcript_status": "local machine transcription complete; not publisher captions",
+      "recording_lecture_number": 6,
+      "audio_status": "downloaded",
+      "audio_filename": "audio.webm",
+      "audio_sha256": "46eb16bb82c96e4ce317a8f673dc2e4103bb57daaa68dfcaacb04648941f6bb5",
+      "audio_bytes": 62378599,
+      "audio_language": "en-US",
+      "audio_format": "251-20",
+      "official_linked_slides": [
+        {
+          "url": "https://cs230.stanford.edu/syllabus/fall_2024/lecture5_guest.pdf",
+          "sha256": "148b395cb5ef8676bec69185c2350006e63e59b9921123313accbad477b9d909",
+          "pages": 60,
+          "edition_path": "fall_2024",
+          "alignment": "requires transcript comparison; official linked older resources"
+        },
+        {
+          "url": "https://cs230.stanford.edu/syllabus/fall_2024/lecture_5.pdf",
+          "sha256": "5cd66edb95e4fc289d1c5d7ed85caf75076da621df95b6e0ec1ee4cf73eee836",
+          "pages": 6,
+          "edition_path": "fall_2024",
+          "alignment": "requires transcript comparison; official linked older resources"
+        }
+      ],
+      "slides_status": "official older linked decks; topic/edition conflict",
+      "audio_duration_seconds": 4517.901,
+      "audio_duration_difference_from_playlist_seconds": -0.09900000000016007,
+      "transcript_provenance": {
+        "provenance": "local machine transcription; not publisher captions",
+        "model": "Systran/faster-whisper-small.en",
+        "language": "en",
+        "audio_sha256": "46eb16bb82c96e4ce317a8f673dc2e4103bb57daaa68dfcaacb04648941f6bb5",
+        "audio_duration": 4517.888,
+        "segment_count": 145,
+        "last_segment_end": 4512.75,
+        "endpoint_fraction": 0.9988627429453762,
+        "audio_hash_matches": true
+      },
+      "transcript_sha256": "815db5b1e423e271a6788accdcaaa01d1033b5eaa86dfdcf76b77304229e531a"
+    },
+    {
+      "id": "k1njvbBmfsw",
+      "title": "Stanford CS230 | Autumn 2025 | Lecture 8: Agents, Prompts, and RAG",
+      "duration": 6594,
+      "url": "https://www.youtube.com/watch?v=k1njvbBmfsw",
+      "chapter_order": 7,
+      "chapter_status": "not drafted",
+      "transcript_status": "local machine transcription complete; not publisher captions",
+      "recording_lecture_number": 8,
+      "audio_status": "downloaded",
+      "audio_filename": "audio.webm",
+      "audio_sha256": "f2354b0140813327e5b52b16d187eb5d30279fb9cc19cf457597b2131854abb4",
+      "audio_bytes": 99616557,
+      "audio_language": "en",
+      "audio_format": "251",
+      "official_linked_slides": [
+        {
+          "url": "https://cs230.stanford.edu/syllabus/fall_2025/7/lecture_7.pdf",
+          "sha256": "67d2cdc87741f87dfbb591a0efffb1c708d9d929812f60b91a090ee2ccdc741f",
+          "pages": 41,
+          "edition_path": "fall_2025",
+          "alignment": "official syllabus link; transcript comparison pending"
+        }
+      ],
+      "slides_status": "official linked resources acquired",
+      "audio_duration_seconds": 6593.861,
+      "audio_duration_difference_from_playlist_seconds": -0.1390000000001237,
+      "transcript_provenance": {
+        "provenance": "local machine transcription; not publisher captions",
+        "model": "Systran/faster-whisper-small.en",
+        "language": "en",
+        "audio_sha256": "f2354b0140813327e5b52b16d187eb5d30279fb9cc19cf457597b2131854abb4",
+        "audio_duration": 6593.8346875,
+        "segment_count": 245,
+        "last_segment_end": 6588.53,
+        "endpoint_fraction": 0.9991955079629072,
+        "audio_hash_matches": true
+      },
+      "transcript_sha256": "10b19357b066fefa96e442dfcaf49a879727c878796d35628e2063f8cca8fd3f"
+    },
+    {
+      "id": "AuZoDsNmG_s",
+      "title": "Stanford CS230 | Autumn 2025 | Lecture 9: Career Advice in AI",
+      "duration": 6309,
+      "url": "https://www.youtube.com/watch?v=AuZoDsNmG_s",
+      "chapter_order": 8,
+      "chapter_status": "not drafted",
+      "transcript_status": "local machine transcription complete; not publisher captions",
+      "recording_lecture_number": 9,
+      "audio_status": "downloaded",
+      "audio_filename": "audio.webm",
+      "audio_sha256": "e7827af0e0cbdfe72c872c7613bc08dd48a0e5b3c04f2c48d70496031af7d59d",
+      "audio_bytes": 85196976,
+      "audio_language": "en-US",
+      "audio_format": "251-18",
+      "official_linked_slides": [
+        {
+          "url": "https://cs230.stanford.edu/syllabus/fall_2025/8/lecture_8.pdf",
+          "sha256": "2a2e7fb6b58e2765843dd72e7d3309df29f0165ca8c3d6661e32e15c8cf1d5a6",
+          "pages": 3,
+          "edition_path": "fall_2025",
+          "alignment": "official syllabus link; transcript comparison pending"
+        },
+        {
+          "url": "https://cs230.stanford.edu/syllabus/fall_2025/8/lecture_8_guest.pdf",
+          "sha256": "1f956a5951a08033085554c6f9eee31c97e7de7db80b6bca57ffb7208ac0bdc2",
+          "pages": 30,
+          "edition_path": "fall_2025",
+          "alignment": "official syllabus link; transcript comparison pending"
+        }
+      ],
+      "slides_status": "official linked resources acquired",
+      "audio_duration_seconds": 6308.301,
+      "audio_duration_difference_from_playlist_seconds": -0.6989999999996144,
+      "transcript_provenance": {
+        "provenance": "local machine transcription; not publisher captions",
+        "model": "Systran/faster-whisper-small.en",
+        "language": "en",
+        "audio_sha256": "e7827af0e0cbdfe72c872c7613bc08dd48a0e5b3c04f2c48d70496031af7d59d",
+        "audio_duration": 6308.288,
+        "segment_count": 235,
+        "last_segment_end": 6302.16,
+        "endpoint_fraction": 0.9990285795448781,
+        "audio_hash_matches": true
+      },
+      "transcript_sha256": "028e6590e10f8e4732344fb603e93d5193ef6b869c1ca59d415b0723ad2890ee"
+    },
+    {
+      "id": "Ozb1AR_F5MU",
+      "title": "Stanford CS230 | Autumn 2025 | Lecture 10: What\u2019s Going On Inside My Model?",
+      "duration": 6414,
+      "url": "https://www.youtube.com/watch?v=Ozb1AR_F5MU",
+      "chapter_order": 9,
+      "chapter_status": "not drafted",
+      "transcript_status": "local machine transcription complete; not publisher captions",
+      "recording_lecture_number": 10,
+      "audio_status": "downloaded",
+      "audio_filename": "audio.webm",
+      "audio_sha256": "0942ec363de6ae470217db2fb7074764d9302d5219e3778240b11a9793ddabe2",
+      "audio_bytes": 87696754,
+      "audio_language": "en-US",
+      "audio_format": "251-6",
+      "official_linked_slides": [
+        {
+          "url": "https://cs230.stanford.edu/syllabus/fall_2025/10/lecture_10.pdf",
+          "sha256": "302ece720435ff07079d56de221823a64f6996ee12f451d25a2350ff099b03ae",
+          "pages": 50,
+          "edition_path": "fall_2025",
+          "alignment": "official syllabus link; transcript comparison pending"
+        }
+      ],
+      "slides_status": "official linked resources acquired",
+      "audio_duration_seconds": 6413.201,
+      "audio_duration_difference_from_playlist_seconds": -0.7989999999999782,
+      "transcript_provenance": {
+        "provenance": "local machine transcription; not publisher captions",
+        "model": "Systran/faster-whisper-small.en",
+        "language": "en",
+        "audio_sha256": "0942ec363de6ae470217db2fb7074764d9302d5219e3778240b11a9793ddabe2",
+        "audio_duration": 6413.184,
+        "segment_count": 202,
+        "last_segment_end": 6407.47,
+        "endpoint_fraction": 0.9991090229127997,
+        "audio_hash_matches": true
+      },
+      "transcript_sha256": "310336cc5ec5c9aec06ed2cac85f2362b632da574b80504e838907cac346d79f"
+    }
+  ],
+  "official_course": "https://cs230.stanford.edu/syllabus/",
+  "scope_notes": [
+    "Nine in-person recordings: lecture numbers 1-6 and 8-10.",
+    "Official syllabus labels Lecture7 on 2025-11-04 as Democracy day: NO CLASS.",
+    "Separate Coursera modules and TA sections are outside the requested playlist.",
+    "Official /lecture/ page contains Fall2018 recordings and is not the authority for these videos.",
+    "Lecture6 schedule title and old slide links conflict with recording title; recording transcript remains the content authority."
+  ],
+  "source_acquisition_updated_utc": "2026-09-28T14:11:33.569523+00:00",
+  "source_acquisition_summary": {
+    "audio_acquired": 9,
+    "transcripts_acquired": 9,
+    "recordings_expected": 9,
+    "raw_sources_in_repository": false
+  }
+}
