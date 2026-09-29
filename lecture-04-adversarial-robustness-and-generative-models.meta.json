@@ -6,7 +6,7 @@
   "recording_title": "Stanford CS230 | Autumn 2025 | Lecture 4: Adversarial Robustness and Generative Models",
   "speaker": "Kian Katanforoosh",
   "date": "2025-10-14",
-  "status": "complete: passes 1-9, gates 6a, 6b (science-editor round 3 verdict yes, 0 blocking) and 6c passed; not committed",
+  "status": "complete: passes 1-9, gates 6a, 6b (science-editor round 3 verdict yes, 0 blocking) and 6c passed; committed in fa08c6b",
   "transcript_provenance": "Local machine transcription; not publisher captions",
   "transcription_model": "Systran/faster-whisper-small.en",
   "audio_sha256": "2a55b56af5c4a7801922190f3b4f2cd9fa72ea6c888fa848b17d7cea1bb033df",

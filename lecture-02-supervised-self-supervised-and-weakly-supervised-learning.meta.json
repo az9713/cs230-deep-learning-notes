@@ -1,0 +1,868 @@
+{
+ "video_id": "DNCn1BpCAUY",
+ "title": "Where supervision comes from, and what the loss makes of it",
+ "chapter_order": 2,
+ "recording_lecture_number": 2,
+ "recording_title": "Stanford CS230 | Autumn 2025 | Lecture 2: Supervised, Self-Supervised, & Weakly Supervised Learning",
+ "speaker": "Kian Katanforoosh",
+ "date": "2025-09-30",
+ "status": "complete: passes 1-9, gates 6a, 6b (science-editor round 4 verdict yes, 0 blocking) and 6c passed; committed with chapters 1 and 3",
+ "transcript_provenance": "Local machine transcription; not publisher captions",
+ "transcription_model": "Systran/faster-whisper-small.en",
+ "audio_sha256": "e6d729599edac53fc49a7c82383b9eaa7932cb1ca124c1ed69b1429cce8ee278",
+ "audio_duration_seconds": 5987.093,
+ "playlist_duration_seconds": 5988,
+ "transcript_sha256": "f06fca3f57b5f25b7fc1492c5ea684c528e6367abeb5eca5a34e795b26d7cae9",
+ "transcript_sha256_file": "transcript.machine.txt (matches source-manifest.json)",
+ "transcript_segment_count": 196,
+ "transcript_first_start_seconds": 5.17,
+ "transcript_last_end_seconds": 5981.71,
+ "slides": {
+  "url": "https://cs230.stanford.edu/syllabus/fall_2025/2/lecture_2.pdf",
+  "sha256": "6ec048f16fae63b6862f1c197bb3c676be405e7a2837af3a443f22bed7c0e5a3",
+  "title_on_cover": "CS230: Lecture 2, Key AI Concepts Through Case Studies",
+  "pages": 35,
+  "alignment": "aligned with the recording; the planned adversarial-examples part was not reached (~5973-5981 s) and moves to chapter 4",
+  "pages_rendered_and_inspected": [
+   5,
+   6,
+   7,
+   9,
+   10,
+   14,
+   17,
+   18,
+   19,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   30,
+   31,
+   33,
+   34
+  ],
+  "pages_rendered_not_viewed": [],
+  "pages_read_as_extracted_text_only": "all other pages",
+  "visual_findings": [
+   "Slide 6: logistic neuron, inputs divided by 255, output 0.73 > 0.5 -> \"it's a cat\"; no input values that produce 0.73.",
+   "Slide 7: titled Multi-class but draws three independent sigmoid neurons with outputs 0.12 (dog), 0.73 (cat), 0.04 (giraffe), sum 0.89: the multi-label design.",
+   "Slide 10: edge, part and face grids with no citation; layer-2 and layer-3 grids match the faces column of Lee et al. 2009 Figure 3 (PDF p. 7, rendered and compared).",
+   "Slide 14: day/night: 10,000 images, (64,64,3), sigmoid, shallow CNN, BCE.",
+   "Slide 17: three waveforms, clip labels 1/0/1, then 51-digit per-step strings with a single 1 in clips 1 and 3.",
+   "Slide 18: two per-step output schemes (single 1; run of 1s), sequential sigmoid and BCE, RNN.",
+   "Slide 19: three pools (positive, negative, background), automated labelling, two architectures (Fourier+LSTM; Fourier+CONV+BN+GRU+BN).",
+   "Slide 23: 128-d illustrative vectors, distance 0.4, \"0.4 < threshold\"; the six printed entries have norm 1.44 (not unit norm).",
+   "Slide 25: vote on three candidate losses without margin; option A is anchor-positive minus anchor-negative.",
+   "Slide 26: triplet loss with +alpha and no hinge; large 0 overlaid on the encodings.",
+   "Slide 27: k-NN for identification, k-means for clustering; illustrative 2-D k-means plot with 3 centroids.",
+   "Slide 30: SimCLR Figure 4 (augmentations) reproduced; box claims billions of unlabelled images.",
+   "Slide 33: captioned cat photo; weak supervision defined as naturally occurring pairing.",
+   "Slide 34: ImageBind Figure 2 with images at the hub of the modality graph.",
+   "Slide 5: circles Input, Architecture, Output and Loss; lists Activation function, Optimizer, Hyperparameters, ... under Things that can change.",
+   "Slide 9: one hidden layer of three units and output 0.73 > 0.5 (Cat); no claim in the chapter depends on it.",
+   "Slide 21: card photograph (Bertrand) as data, camera photograph at (412, 412, 3) as input, output y = 1 or 0.",
+   "Slide 22: pixel-by-pixel distance with a threshold; issues: background lighting, make-up or beard, outdated ID photo.",
+   "Slide 24: use public face datasets; similar and different encodings; anchor, positive, negative with minimize and maximize encoding distance arrows.",
+   "Slide 31: bar chart of an illustrative next-token distribution for I poured myself a cup of ___ (coffee 0.6, tea 0.2, water 0.15, juice 0.05), absent from the extracted text and without a source; the chart overlaps the right half of the five green bullets on the rendered page. Citation dated 2017."
+  ],
+  "viewing_record": {
+   "initial_draft": [
+    6,
+    7,
+    10,
+    14,
+    17,
+    18,
+    19,
+    23,
+    25,
+    26,
+    27,
+    30,
+    33,
+    34
+   ],
+   "round_1": [
+    5,
+    9,
+    21,
+    22,
+    24,
+    31
+   ],
+   "paper_figures_viewed": [
+    "Lee et al. 2009 p. 7 Figure 3"
+   ]
+  }
+ },
+ "evidence_scheme": "Each claim not proved on the page carries one class: empirical result (paper and page), engineering check (this chapter's code or shown arithmetic), product claim, speaker judgment (with recording time). Definitions and results proved on the page carry no label. Each section opens with a provenance line: lecture / research extension / original construction.",
+ "running_case": "Dining-hall face verification. Photo x in R^16 = face block (4 coords) mu_j + x_w, mu_j ~ N(0, Var_b I), x_w ~ N(0, Var_w I), Var_b = 1, Var_w = 0.09; lighting block (6) and scene block (6) ~ N(0, I), all redrawn per photo. Linear encoder f(x) = Wx/||Wx||, W in R^{4x16}. Trigger-word thread (slide 17 labels) developed second and handed to chapter 6.",
+ "sections": [
+  {
+   "section": "model",
+   "start": 5.17,
+   "end": 771.71,
+   "lecture_material": "Lecture plan; model = architecture + parameters; training loop and what can change (slide 5); loss design and YOLO remark; logistic neuron (slide 6); three outputs (slide 7); one-hot and multi-hot labels.",
+   "research_extension": "Redmon et al. 2015: loss design reasons (p. 3), eq. 3 (p. 4).",
+   "teaching_construction": "Supervision-source table; BCE from Bernoulli likelihood; Proposition 1 (gradient at logit); Proposition 2 (softmax and sigmoid heads); multi-hot softmax computation (2 log 2).",
+   "evidence_class": "definition; theorem (proved); empirical result; speaker judgment"
+  },
+  {
+   "section": "layers",
+   "start": 771.71,
+   "end": 1130.67,
+   "lecture_material": "Layer notation; depth and capacity; edge-part-face hierarchy (slide 10); feature engineering vs learning; encoding vs embedding (slide 11).",
+   "research_extension": "Lee et al. 2009: layer hierarchy (p. 2), unsupervised training (p. 6), Figure 3 (p. 7).",
+   "teaching_construction": "Proposition 3 (backpropagation) and finite-difference check; operational definition of an embedding.",
+   "evidence_class": "definition; theorem (proved); engineering check; empirical result; speaker judgment"
+  },
+  {
+   "section": "day-night",
+   "start": 1130.67,
+   "end": 2055.36,
+   "lecture_material": "Task definition and hard cases; data; resolution via human test (64x64x3); colour; output; sigmoid; shallow CNN; BCE; iteration speed; lessons (slides 14-15).",
+   "research_extension": "None.",
+   "teaching_construction": "Input counts 12,288 and 509,232 (ratio 41.4); first-layer weight counts for an assumed width of 100.",
+   "evidence_class": "definition; engineering check; speaker judgment"
+  },
+  {
+   "section": "trigger",
+   "start": 2055.36,
+   "end": 3311.28,
+   "subsections": [
+    {
+     "id": "synthesis",
+     "start": 2953.01
+    }
+   ],
+   "lecture_material": "Cascade in voice assistants; task (slide 16); data distribution; labelling experiment (slide 17); per-step sigmoid and BCE (slide 18); skew and run-of-ones hack; three pools and automated labelling; real test set; architecture search and expert advice (slides 19-20).",
+   "research_extension": "None.",
+   "teaching_construction": "Per-step loss and gradient; Proposition 4 (constant baseline); slide 17 numbers (p+ = 1/51, 98.0 %, 0.0965 nats); run of 5 ones (90.2 %, 0.321 nats); count n_bgc n_pos n_neg (n_neg - 1) = 1.0e13 with assumed 100 backgrounds.",
+   "evidence_class": "definition; theorem (proved); engineering check; speaker judgment"
+  },
+  {
+   "section": "verification",
+   "start": 3311.28,
+   "end": 3823.04,
+   "subsections": [
+    {
+     "id": "running-case",
+     "start": null
+    }
+   ],
+   "lecture_material": "Dining-hall task (slide 21), 412x412x3; pixel comparison and failures (slide 22); encoding, distance 0.4, threshold (slide 23; transcript 0.5); threshold direction.",
+   "research_extension": "None.",
+   "teaching_construction": "FAR/FRR/EER definitions; running-case model; pixel EER 0.352; Proposition 5 (closed-form FAR/FRR for the face block) with proof; table; Figure 1.",
+   "evidence_class": "definition; theorem (proved); engineering check"
+  },
+  {
+   "section": "triplet",
+   "start": 3823.04,
+   "end": 4382.51,
+   "lecture_material": "Why a vector; public face datasets (slide 24); triplets; vote (slide 25); loss with alpha (slide 26); margin hint; negatives only in training; FaceNet reference.",
+   "research_extension": "Schroff et al. 2015: unit sphere, eqs. 1-3 (p. 3), margin 0.2, collapse and semi-hard negatives (p. 4), 99.63 % (p. 1), Table 5 (p. 7).",
+   "teaching_construction": "Proposition 6 (gradients), Proposition 7 (collapse, unboundedness, bound Delta-4, scale); training of the running-case encoder (EER 0.087 vs 0.397 random); Figure 2.",
+   "evidence_class": "definition; theorem (proved); engineering check; empirical result"
+  },
+  {
+   "section": "identification",
+   "start": 4382.51,
+   "end": 4826.16,
+   "lecture_material": "Identification vs verification; database of encodings; nearest neighbours; three-neighbour agreement; rejection of unenrolled people; k-means clustering on a phone (slides 27-28).",
+   "research_extension": "None.",
+   "teaching_construction": "Proposition 8 (false matches grow with N_id); 1 - 0.999^10000 = 0.99995; identification accuracy 0.616 / 0.403 / 0.091 for N_id = 10 / 100 / 1000; k-means objective and monotone steps.",
+   "evidence_class": "definition; theorem (proved); engineering check; speaker judgment; product claim"
+  },
+  {
+   "section": "contrastive",
+   "start": 4826.16,
+   "end": 5217.65,
+   "lecture_material": "Encoders without labels; audience proposals; rotated and patched views; SimCLR; shift from triplets to pairs (slide 30).",
+   "research_extension": "Chen et al. 2020: NT-Xent and batch negatives (p. 2), 16,382 negatives (p. 3), no single augmentation and shortcut (p. 5), projection head (pp. 2, 6), Table 5 and batch size (p. 7), 76.5 % (p. 1, Table 6 p. 7).",
+   "teaching_construction": "Collapse reading of the spoken positive-only version; NT-Xent as categorical cross-entropy and its gradient; running-case experiment: full augmentation EER 0.088, lighting-only EER 0.394 with 84 % of W on the scene block.",
+   "evidence_class": "definition; theorem (derived); engineering check; empirical result; speaker judgment"
+  },
+  {
+   "section": "next-token",
+   "start": 5217.65,
+   "end": 5654.51,
+   "subsections": [
+    {
+     "id": "other-modalities",
+     "start": 5550.16
+    }
+   ],
+   "lecture_material": "Next-token prediction as self-supervision; five completions, the bar chart of an illustrative next-token distribution (coffee 0.6, tea 0.2, water 0.15, juice 0.05) and emergent behaviours (slide 31); audio, video, protein masking (slide 32).",
+   "research_extension": "Radford et al. 2018 (eq. 1 p. 3, BooksCorpus p. 4); Wei et al. 2022 (pp. 1-2); Schaeffer et al. 2023 (pp. 1, 4).",
+   "teaching_construction": "Proposition 9 (cross-entropy minimised by the conditional distribution; KL >= 0 proved); Proposition 9 applied to the slide 31 chart numbers; exact-match values 0.001, 0.107, 0.349, 0.599, 0.904.",
+   "evidence_class": "definition; theorem (proved); engineering check; empirical result; speaker judgment"
+  },
+  {
+   "section": "weak",
+   "start": 5654.51,
+   "end": 5981.71,
+   "lecture_material": "Captioned images; weak supervision (slide 33); natural pairs from the audience; ImageBind and demo (slide 34); shared spaces; text as central pivot (slide 35).",
+   "research_extension": "Radford et al. 2021 (CLIP: pp. 1, 4, 5); Girdhar et al. 2023 (ImageBind: pp. 1, 2, 4).",
+   "teaching_construction": "Rows/columns of the CLIP similarity matrix as two NT-Xent problems; triangle-inequality bound on emergent alignment.",
+   "evidence_class": "definition; theorem (triangle inequality); empirical result; speaker judgment"
+  },
+  {
+   "section": "implementation",
+   "start": null,
+   "end": null,
+   "lecture_material": "None.",
+   "research_extension": "None.",
+   "teaching_construction": "NumPy laboratory.",
+   "evidence_class": "engineering check"
+  },
+  {
+   "section": "limits",
+   "start": null,
+   "end": null,
+   "lecture_material": "None.",
+   "research_extension": "FaceNet p. 4; SimCLR p. 5.",
+   "teaching_construction": "Idealisations and their failure modes.",
+   "evidence_class": "original construction"
+  },
+  {
+   "section": "exercises",
+   "start": null,
+   "end": null,
+   "lecture_material": "Slide 17 labels, slide 25/26 loss, ~3794-3823 s threshold remark.",
+   "research_extension": "SimCLR p. 5 (exercise 5).",
+   "teaching_construction": "Six exercises with worked solutions.",
+   "evidence_class": "theorem; engineering check"
+  }
+ ],
+ "references": [
+  {
+   "title": "Redmon et al. 2015, You Only Look Once",
+   "url": "https://arxiv.org/abs/1506.02640",
+   "supports": "Loss design reasons (p. 3); eq. 3 (p. 4)."
+  },
+  {
+   "title": "Lee, Grosse, Ranganath, Ng 2009, Convolutional Deep Belief Networks for Scalable Unsupervised Learning of Hierarchical Representations (ICML)",
+   "url": "https://web.eecs.umich.edu/~honglak/icml09-ConvolutionalDeepBeliefNetworks.pdf",
+   "supports": "Layer hierarchy (p. 2); unsupervised training (p. 6); Figure 3 (p. 7). DOI not given: no record checked."
+  },
+  {
+   "title": "Schroff, Kalenichenko, Philbin 2015, FaceNet",
+   "url": "https://arxiv.org/abs/1503.03832",
+   "supports": "pp. 1, 3, 4, 7."
+  },
+  {
+   "title": "Chen, Kornblith, Norouzi, Hinton 2020, SimCLR",
+   "url": "https://arxiv.org/abs/2002.05709",
+   "supports": "pp. 1, 2, 3, 5, 6, 7."
+  },
+  {
+   "title": "Radford, Narasimhan, Salimans, Sutskever 2018, Improving Language Understanding by Generative Pre-Training",
+   "url": "https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf",
+   "supports": "pp. 1, 3, 4, 9-10; year from PDF metadata."
+  },
+  {
+   "title": "Wei et al. 2022, Emergent Abilities of Large Language Models",
+   "url": "https://arxiv.org/abs/2206.07682",
+   "supports": "pp. 1-2."
+  },
+  {
+   "title": "Schaeffer, Miranda, Koyejo 2023, Are Emergent Abilities of Large Language Models a Mirage?",
+   "url": "https://arxiv.org/abs/2304.15004",
+   "supports": "pp. 1, 4."
+  },
+  {
+   "title": "Radford et al. 2021, CLIP",
+   "url": "https://arxiv.org/abs/2103.00020",
+   "supports": "pp. 1, 4, 5."
+  },
+  {
+   "title": "Girdhar et al. 2023, ImageBind",
+   "url": "https://arxiv.org/abs/2305.05665",
+   "supports": "pp. 1, 2, 4."
+  }
+ ],
+ "papers_downloaded_not_cited": [
+  "arxiv-1807.03748 (Oord et al., CPC/InfoNCE): downloaded, not used in the text"
+ ],
+ "research_ledger": [
+  {
+   "id": "arxiv-1506.02640",
+   "page": 3,
+   "quote": "We use sum-squared error because it is easy to optimize",
+   "claim": "YOLO: sum-squared error chosen for ease of optimisation",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-1506.02640",
+   "page": 3,
+   "quote": "We set λcoord = 5 and λnoobj = .5",
+   "claim": "YOLO: loss weights 5 and 0.5",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-1506.02640",
+   "page": 3,
+   "quote": "we predict the square root of the bounding box width and height",
+   "claim": "YOLO: square roots of box sizes",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-1506.02640",
+   "page": 4,
+   "quote": "loss function:",
+   "claim": "YOLO: full loss (eq. 3) on p. 4",
+   "status": "page verified"
+  },
+  {
+   "id": "lee-2009-cdbn",
+   "page": 2,
+   "quote": "The first, second, and third layers of our network learn edge detectors, object parts, and objects respectively",
+   "claim": "CDBN layer hierarchy",
+   "status": "page verified"
+  },
+  {
+   "id": "lee-2009-cdbn",
+   "page": 6,
+   "quote": "using unlabeled images from single Caltech-101 categories",
+   "claim": "CDBN upper layers trained without labels",
+   "status": "page verified"
+  },
+  {
+   "id": "lee-2009-cdbn",
+   "page": 7,
+   "quote": "Figure 3. Columns 1-4: the second layer bases (top) and the third layer bases (bottom) learned from specific object categories",
+   "claim": "Figure 3, faces column (matches slide 10)",
+   "status": "page verified"
+  },
+  {
+   "id": "lee-2009-cdbn",
+   "page": 1,
+   "quote": "Appearing in Proceedings of the 26 th International Conference on Machine Learning, Montreal, Canada, 2009",
+   "claim": "venue and year",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-1503.03832",
+   "page": 1,
+   "quote": "achieves a new record accuracy of 99.63%",
+   "claim": "FaceNet LFW accuracy",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-1503.03832",
+   "page": 3,
+   "quote": "we constrain this embedding to live on the d-dimensional hypersphere",
+   "claim": "unit-sphere constraint",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-1503.03832",
+   "page": 3,
+   "quote": "where α is a margin that is enforced between positive and negative pairs",
+   "claim": "margin; triplet constraint eq. 1 and hinged loss eq. 3",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-1503.03832",
+   "page": 3,
+   "quote": "a deep CNN followed by L2 normalization, which results in the face embedding",
+   "claim": "Figure 2: embedding is the normalised last layer",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-1503.03832",
+   "page": 4,
+   "quote": "The margin α is set to 0.2",
+   "claim": "margin 0.2",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-1503.03832",
+   "page": 4,
+   "quote": "it can result in a collapsed model (i.e. f(x) = 0)",
+   "claim": "collapse with hardest negatives",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-1503.03832",
+   "page": 4,
+   "quote": "We call these negative exemplars semi-hard",
+   "claim": "semi-hard negatives",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-1503.03832",
+   "page": 7,
+   "quote": "64 86.8% ± 1.7 128 87.9% ± 1.9 256 87.7% ± 1.9 512 85.6% ± 2.0",
+   "claim": "Table 5 embedding dimensions",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-1503.03832",
+   "page": 7,
+   "quote": "statistically insignificant",
+   "claim": "dimension differences insignificant",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2002.05709",
+   "page": 1,
+   "quote": "achieves 76.5% top-1 accuracy",
+   "claim": "SimCLR linear evaluation",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2002.05709",
+   "page": 1,
+   "quote": "matching the performance of a supervised ResNet-50",
+   "claim": "matches supervised ResNet-50",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2002.05709",
+   "page": 2,
+   "quote": "we treat the other 2(N −1) augmented examples within a minibatch as negative examples",
+   "claim": "batch negatives",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2002.05709",
+   "page": 2,
+   "quote": "we term it NT-Xent (the normalized temperature-scaled cross entropy loss)",
+   "claim": "NT-Xent eq. 1 and name",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2002.05709",
+   "page": 2,
+   "quote": "we throw away the projection head g(·) and use encoder f(·) and representation h for downstream tasks",
+   "claim": "projection head",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2002.05709",
+   "page": 3,
+   "quote": "A batch size of 8192 gives us 16382 negative examples per positive pair",
+   "claim": "negatives at batch 8192",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2002.05709",
+   "page": 5,
+   "quote": "no single transformation suffices to learn good representations, even though the model can almost perfectly identify the positive pairs",
+   "claim": "no single augmentation suffices",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2002.05709",
+   "page": 5,
+   "quote": "Neural nets may exploit this shortcut to solve the predictive task",
+   "claim": "colour-histogram shortcut",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2002.05709",
+   "page": 6,
+   "quote": "the hidden layer before the projection head is a better representation than the layer after",
+   "claim": "representation before projection head better (>10%)",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2002.05709",
+   "page": 7,
+   "quote": "Yes 0.05 1.0 90.5 59.7 0.1 4.5 87.8 64.4 0.5 8.2 68.2 60.7 1 8.3 59.1 58.0 No 10 0.5 91.7 57.2 100 0.5 92.1 57.0",
+   "claim": "Table 5 normalisation and temperature",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2002.05709",
+   "page": 7,
+   "quote": "larger batch sizes provide more negative examples, facilitating convergence",
+   "claim": "batch size",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2002.05709",
+   "page": 7,
+   "quote": "SimCLR (ours) ResNet-50 (4×) 375 76.5",
+   "claim": "Table 6: 76.5 with ResNet-50 (4x)",
+   "status": "page verified"
+  },
+  {
+   "id": "radford-2018-gpt",
+   "page": 3,
+   "quote": "we use a standard language modeling objective to maximize the following likelihood",
+   "claim": "GPT-1 objective eq. 1",
+   "status": "page verified"
+  },
+  {
+   "id": "radford-2018-gpt",
+   "page": 4,
+   "quote": "It contains over 7,000 unique unpublished books",
+   "claim": "BooksCorpus",
+   "status": "page verified"
+  },
+  {
+   "id": "radford-2018-gpt",
+   "page": 1,
+   "quote": "generative pre-training of a language model on a diverse corpus of unlabeled text, followed by discriminative fine-tuning",
+   "claim": "pretraining then fine-tuning",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2206.07682",
+   "page": 1,
+   "quote": "We consider an ability to be emergent if it is not present in smaller models but is present in larger models",
+   "claim": "emergence definition",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2206.07682",
+   "page": 1,
+   "quote": "emergent abilities cannot be predicted simply by extrapolating the performance of smaller models",
+   "claim": "unpredictability",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2206.07682",
+   "page": 2,
+   "quote": "An ability is emergent if it is not present in smaller models but is present in larger models",
+   "claim": "definition, p. 2",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2304.15004",
+   "page": 1,
+   "quote": "emergent abilities appear due the researcher’s choice of metric rather than due to fundamental changes in model behavior with scale",
+   "claim": "metric argument",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2304.15004",
+   "page": 4,
+   "quote": "If the probability each token is correct is independent",
+   "claim": "exact match as power of per-token probability",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2304.15004",
+   "page": 4,
+   "quote": "While the independence assumption is not true",
+   "claim": "independence assumption not true (footnote)",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2103.00020",
+   "page": 1,
+   "quote": "on a dataset of 400 million (image, text) pairs collected from the internet",
+   "claim": "CLIP data",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2103.00020",
+   "page": 4,
+   "quote": "CLIP is trained to predict which of the N × N possible (image, text) pairings across a batch actually occurred",
+   "claim": "CLIP batch construction",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2103.00020",
+   "page": 4,
+   "quote": "We optimize a symmetric cross entropy loss over these similarity scores",
+   "claim": "symmetric cross-entropy",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2103.00020",
+   "page": 5,
+   "quote": "initialized to the equivalent of 0.07",
+   "claim": "temperature initialisation",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2103.00020",
+   "page": 5,
+   "quote": "We use a very large minibatch size of 32,768",
+   "claim": "batch size",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2305.05665",
+   "page": 1,
+   "quote": "only image-paired data is sufficient to bind the modalities together",
+   "claim": "image binding",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2305.05665",
+   "page": 1,
+   "quote": "The emergent capabilities improve with the strength of the image encoder",
+   "claim": "depends on image encoder",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2305.05665",
+   "page": 2,
+   "quote": "just aligning each modality’s embedding to image embeddings leads to an emergent alignment across all of the modalities",
+   "claim": "emergent alignment",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2305.05665",
+   "page": 2,
+   "quote": "combines it with naturally occurring paired data such as (video, audio), (image, depth)",
+   "claim": "naturally paired data",
+   "status": "page verified"
+  },
+  {
+   "id": "arxiv-2305.05665",
+   "page": 4,
+   "quote": "The image and text encoders are kept frozen during the IMAGEBIND training",
+   "claim": "frozen image and text encoders",
+   "status": "page verified"
+  },
+  {
+   "id": "radford-2018-gpt",
+   "page": "metadata; pp. 9-10",
+   "quote": "PDF creationDate D:20180608191434Z; references dated 2018 (e.g. ACL 2018, ICLR 2018)",
+   "claim": "report is from 2018, not 2017 (slide 31); first page carries no date",
+   "status": "verified by PDF metadata and references; OpenAI web page returned HTTP 403 on 2026-09-28"
+  },
+  {
+   "id": "arxiv-2002.05709",
+   "page": 2,
+   "quote": "new state-of-the-art in self-supervised and semi-supervised learning on ImageNet ILSVRC-2012",
+   "claim": "SimCLR experiments use ImageNet ILSVRC-2012",
+   "status": "page verified"
+  }
+ ],
+ "unverified_claims": [
+  "Voice-assistant cascade and energy rationale (~2084-2157 s): speaker judgment about deployed products.",
+  "Border-control identification systems (~4409-4446 s): speaker description, not checked.",
+  "Phone photo clustering by centroids (~4689-4796 s): product claim, not checked.",
+  "Data-collection anecdotes: German roommates (~2328-2359 s), millions of clips in an afternoon (~3090-3151 s), 1,000 positives and 10,000 negatives (~3119-3151 s): speaker judgment.",
+  "\"1000x more data\" for clip-level labels (~2710-2741 s): speaker judgment.",
+  "64x64x3 found by testing friends (~1612-1673 s); colour matters (~1673-1701 s): speaker judgment.",
+  "Slide 30 claim that the triplet-to-pairs shift is why models train on billions of unlabelled images: speaker judgment.",
+  "Face verification emerges from contrastive training on scraped photos (~5329-5352 s): speaker judgment.",
+  "Slide 31 bullets on facts, semantics and reasoning from next-token prediction: speaker judgment."
+ ],
+ "slide_discrepancies_recorded": [
+  "Slide 7: titled Multi-class; draws independent sigmoids (multi-label), outputs sum to 0.89.",
+  "Slide 10: no citation; layers 2-3 match Lee et al. 2009 Figure 3 faces column (unsupervised CDBN, not a supervised face classifier).",
+  "Slide 23: illustrative encodings not unit norm (six printed entries norm 1.44); distance 0.4 not recomputable; transcript threshold 0.5.",
+  "Slides 24 and 28: \"maximize encoding distance\" to the negative; FaceNet maximises it only up to the margin (hinge).",
+  "Slide 25: candidate losses without margin; slide 26: loss with +alpha but no hinge and no normalisation (FaceNet eq. 3 has both).",
+  "Slide 31: GPT-1 report dated 2017; PDF created 2018-06-08 and cites 2018 papers.",
+  "Slide 35: text as central pivot; ImageBind binds through images (paper p. 1; slide 34 figure shows image hub).",
+  "Slide 35 vs slide 33: weak supervision defined as imperfect or automatically generated labels vs naturally occurring pairs; chapter uses slide 33."
+ ],
+ "asr_uncertainties": [
+  "'Keon Katan-Fourouche' = Kian Katanforoosh",
+  "'you only loop once' = You Only Look Once; the phrase 'when we built the algorithm called YOLO' (~496-518 s) is not read as an authorship claim; YOLO is Redmon et al.",
+  "'Sinclair' = SimCLR",
+  "'Shrott et al.' = Schroff et al.",
+  "'Image Bind' = ImageBind",
+  "'weekly supervised' = weakly supervised",
+  "'next-to-come' = next-token",
+  "'date augmentation' = data augmentation",
+  "'a toe encoders' = autoencoders",
+  "'phase verification' = face verification",
+  "'Ihanun' (~3179-3206 s): a speech researcher, identity not verified; not named in the chapter",
+  "'Pomerigio/Promo Digio' (~2678-2710 s): the target word of the experiment, probably Italian 'pomeriggio'; not used in the chapter",
+  "Poll count for option A (~4217 s) lost; counts not quoted",
+  "'ANCH is encoding' (~4138-4156 s) = 'Enc' is encoding",
+  "'Porg' (~5304 s) = pour",
+  "'Done in Daskia' (~1446 s) unclear; not used"
+ ],
+ "symbol_ledger": [
+  {
+   "symbol": "f_theta, theta, n_theta, D, m, x^(i), y^(i), L (loss), J, eta",
+   "first_section": "model",
+   "definition": "Network, parameters, dataset, example count, examples, per-example loss, cost, step size."
+  },
+  {
+   "symbol": "x, n_x, w, b, u, sigma, y-hat, K, k, u_k, softmax, 1[.]",
+   "first_section": "model",
+   "definition": "Input and dimension, neuron weights, logit, sigmoid, prediction, classes, indicator."
+  },
+  {
+   "symbol": "L (layers), l, W^[l], b^[l], n^[l], u^[l], h^[l], g, g', odot",
+   "first_section": "layers",
+   "definition": "Layered network; odot = entrywise product (proposed)."
+  },
+  {
+   "symbol": "n_seq, t, y_t, p_+, binary entropy (in words), n_on, n_pos, n_neg, n_bgc",
+   "first_section": "trigger",
+   "definition": "Per-step labels, prevalence, binary entropy (written out, no symbol), run length, pool sizes (n_on, n_pos, n_neg, n_bgc proposed)."
+  },
+  {
+   "symbol": "n_e, d(.,.), c, FAR(c), FRR(c), EER",
+   "first_section": "verification",
+   "definition": "Encoding dimension, distance, threshold, error rates, equal error rate (EER proposed)."
+  },
+  {
+   "symbol": "x_face, x_w, x_lit, x_scene, mu_j, Var_b, Var_w, Var_tot, I, chi (auxiliary standard Gaussian in the proof of Proposition 5)",
+   "first_section": "running-case",
+   "definition": "Running-case blocks and variances (proposed rows); chi as in NOTATION section 5."
+  },
+  {
+   "symbol": "x^a, x^p, x^n, h^a, h^p, h^n, Delta, [.]_+, h = u/||u|| (normalised encoding of network output u)",
+   "first_section": "triplet",
+   "definition": "Triplet, its encodings (h with roman labels, proposed), margin, hinge."
+  },
+  {
+   "symbol": "N_id, n_nb, n_clu",
+   "first_section": "identification",
+   "definition": "Enrolled identities, neighbours, clusters (n_clu proposed)."
+  },
+  {
+   "symbol": "n_batch, pos(i), cos(.,.), tau, hat y_ij",
+   "first_section": "contrastive",
+   "definition": "Batch size, partner index, cosine similarity, temperature, softmax weight as a prediction (pos(i), hat y_ij proposed)."
+  },
+  {
+   "symbol": "v_t, V, n_voc, n_ctx, p(v), p_tok",
+   "first_section": "next-token",
+   "definition": "Tokens, vocabulary, context window, next-token distribution, per-token probability (p_tok proposed)."
+  },
+  {
+   "symbol": "x_au, x_tx, x_im, f_au, f_tx, f_im",
+   "first_section": "weak",
+   "definition": "Modality inputs and encoders (proposed)."
+  }
+ ],
+ "code_check": {
+  "file": "embedded block in section 'implementation' (identical to the scratch file that was executed)",
+  "command": "python -I <file> in a fresh process",
+  "python": "3.13.5",
+  "numpy": "2.2.6",
+  "result": "exit 0; all assertions passed; stdout: slide 17 clip: p+ = 0.0196 | acc(all 0) = 0.9804 | best constant BCE = 0.0965 || face block, c = 1: FRR 0.2349 FAR 0.0226 || EER (rate, c): pixels (0.352, 5.213) face block (0.056, 1.279) || EER (rate, c): face block on the unit sphere (0.081, 0.755) || EER (rate, c): random (0.397, 1.28) || EER (rate, c): triplet (0.087, 0.761) || EER (rate, c): contrastive, full (0.088, 0.75) || EER (rate, c): contrastive, lighting only (0.394, 1.29) || share of norm of W: face block, triplet 0.998 | scene block, lighting only 0.836 || 1-NN identification accuracy by N_id: {10: 0.616, 100: 0.403, 1000: 0.091}; wall time 18.3 s or less depending on machine and load, fastest measured 1.4 s (pass 8 check)",
+  "pep8": "pycodestyle: no issues",
+  "gradient_checks": "central differences at step 1e-6: BCE and softmax logits, one backpropagated W1 entry (tol 1e-7), one entry of the triplet and NT-Xent gradients on inputs from a separate generator (seed 1), tol 1e-6; all pass",
+  "extraction_check": "code extracted from the final HTML is byte-identical to lab.py; printed output identical to the recorded block"
+ },
+ "figures": [
+  {
+   "id": "fig-far-frr",
+   "data": "closed form of Proposition 5",
+   "generator": "scratch figs.py importing the lab program"
+  },
+  {
+   "id": "fig-distances",
+   "data": "4,000 pairs of each kind drawn after the current (round-2) lab run; triplet encoder Wt from the same run",
+   "generator": "private scratch script running the embedded lab program; regenerated in round 2; means: pixels 4.872 vs 5.660, encoder 0.411 vs 1.375. Round 3 recipe: run the embedded program to its end; from its generator (seed 0, state at the end of the run) draw with distances(): first pixel pairs (4,000 same-person, 4,000 different-people), then triplet-encoder pairs (4,000 of each kind, encoder Wt); 30 equal bins over 0-8.4 (pixels) and 0-2.0 (encoder), edges numpy.linspace(0, range, 31); height of a bin = its count divided by the largest bin count of the two curves in that panel (peak counts 457 and 556), drawn 180 px tall; pairs beyond the range are not drawn: pixels 2 same-person and 20 different-people beyond 8.4, encoder 0 beyond 2.0. Regenerated in round 3 with this recipe; the round-2 SVG had used a range of max(0.995-quantiles) and per-curve density, which moved the polylines by 4.5 to 15.5 px"
+  }
+ ],
+ "pass_log": [
+  {
+   "pass": "1 coverage",
+   "result": "Transcript read sequentially in full (5.17-5981.71 s, 196 segments); all 35 slide pages read as extracted text; 10 recording sections mapped with spans above."
+  },
+  {
+   "pass": "2 prose",
+   "result": "Full-depth draft in recording order; dining-hall case posed in the lead, formalised at verification and reused in triplet, identification, contrastive and exercises; trigger-word thread with slide 17 labels."
+  },
+  {
+   "pass": "3 mathematics",
+   "result": "9 numbered propositions with proofs (BCE gradient; softmax/sigmoid heads; backpropagation; constant baseline; closed-form FAR/FRR; triplet gradients; hinge/margin/sphere; false-match growth; next-token CE minimiser with KL >= 0) plus derived BCE likelihood, per-step loss, NT-Xent gradient, normalisation projection, triangle bound. Symbols checked against NOTATION.md; new rows in notation-proposals/ch02.md."
+  },
+  {
+   "pass": "4 research",
+   "result": "10 PDFs downloaded to the private papers folder (9 cited); 50 ledger entries, 48 quotes machine-checked on their pages after ligature/whitespace normalisation, 2 by record."
+  },
+  {
+   "pass": "5 implementation",
+   "result": "One NumPy program (188 lines, including central-difference checks of all four gradients); executed with python -I in a fresh process; output recorded; PEP8 clean."
+  },
+  {
+   "pass": "6 exercises",
+   "result": "Six exercises: derivation, computation with assumption check, counterexample, operating points, diagnosis, design; all numbers computed."
+  },
+  {
+   "pass": "6a visual check",
+   "result": "Rendered and viewed slide pages 6, 7, 10, 14, 17, 18, 19, 23, 25, 26, 27, 30, 33, 34 and Lee et al. 2009 p. 7. Findings in slides.visual_findings."
+  },
+  {
+   "pass": "6c citation pages",
+   "result": "All cited claims page-verified; see research_ledger."
+  },
+  {
+   "pass": "privacy and overlap",
+   "result": "Sliding 8-word overlaps of the stripped body text: 0 with the transcript; 7 with the slide text, all inside paper titles (FaceNet, SimCLR, ImageBind); one paraphrase of the slide 30 box was rewritten after this check. No local paths, private-source names or user names in the HTML or this file."
+  },
+  {
+   "pass": "author checks",
+   "result": "validate_books.static_checks in memory: 0 failures for this file; 12 timestamps in bounds and correctly formatted; rigorous-explainer checks (checktex and check_code did not detect the backslash-parenthesis math delimiters and code-block markup of this page, so the delimiter balance of static_checks and a separate pycodestyle run stand in for them): check_links 0 broken, check_svg 0 hard, check_prose 0, check_proofs 0 unproved, verify_dom 0 mjx-merror, check_overlap 0, check_frame 0; Playwright (local Chrome) at 1280 and 390 px: 0 mjx-merror, 504 math nodes, 0 horizontal overflow, 1 h1, 2 figures, TOC populated."
+  },
+  {
+   "pass": "6b round 1",
+   "result": "Report applied (yes-after-revision; 2 blocking, 26 style, 3 structural). B1: unit-sphere oracle EER added to the program before the prints; program value 0.081 (editor 0.084 with 20,000 pairs), prose uses 0.081; gap 0.025 of 0.031. B2: infimum proved in place. S1-S26 applied; S23 states the measured range 1.8-18.3 s; S24 caption states the per-panel density scale that the figure actually uses (the report text, a shared count axis, would have been false for this figure); S19 uses the slide 31 chart numbers and says the slide gives no source for them. N1 cuts applied; N2 six pages viewed and recorded; N3 pointer now reads extends. Code rerun with python -I: exit 0, output gains one line, all other lines identical."
+  },
+  {
+   "pass": "6b round 2",
+   "result": "Report applied (yes-after-revision; 1 blocking, 2 style, 1 structural). B1: literal backslash-n between the exercises provenance note and the next paragraph removed; remaining backslash-n occurrences are the TeX commands nabla and ne only. S1: repeated factor 6.3 removed from the Proposition 5 lead-in. S2: display lead-in split; mapping sentence moved after the display. N1: Figure 2 regenerated from the current program. Code rerun with python -I: exit 0, output identical to the recorded block."
+  },
+  {
+   "pass": "6b round 3",
+   "result": "Report applied (yes-after-revision; 1 blocking, 5 style, 1 structural). B1: next-token provenance line now lists the slide 31 bar chart under Lecture and 'its application to the slide's chart' under Original construction; sections[8] lecture_material and teaching_construction changed to match. S1: NT-Xent display ends with a full stop. S2: wall-time range 1.6 s to 18.3 s (text and code_check). S3: Figure 2 caption states the 22 pixel pairs beyond 8.4 (2 same-person, 20 different-people). S4: figures[1].data says round-2. S5: unit-sphere oracle check named in the triplet provenance line. N1: Figure 2 regenerated with a fixed recipe (30 bins over 0-8.4 and 0-2.0, count heights scaled to the panel's largest bin), recorded in figures[1].generator; the regenerated SVG is byte-identical to the recipe's output; means and out-of-range counts recomputed and equal to the caption and the report. Code unchanged; rerun with python -I: exit 0, 2.0 s, 10 printed lines identical to the recorded block, pycodestyle clean. static_checks in memory: 0 failures, 12 timestamps; Playwright (local Chrome) at 1280 and 390 px: 0 mjx-merror, 504 math nodes, 0 horizontal overflow, 1 h1, 2 figures, TOC 14 links. Prose words 14,081."
+  },
+  {
+   "pass": "6b round 4",
+   "result": "Verdict yes (0 blocking, 1 style, 0 structural). S1 applied in pass 7."
+  },
+  {
+   "pass": "7 prose",
+   "result": "Round-4 S1: Figure 2 caption now says 'number of pairs per bin, scaled to the largest bin of each panel', matching the recipe. Light pass: lead says the running case tests the first two of the three losses (the cross-modal loss is not run on it); 'Its derivative' -> 'The derivative of the sigmoid' (ambiguous antecedent); trigger-word accuracy sentence split into three, content unchanged; identification closing sentence states the measured 9.1 % at 1,000 people instead of the unmeasured 'usable at a door'; slide 30 grade written '(speaker judgment)' instead of a double semicolon; wall-time sentence reworded to '18.3 s of wall time or less ...; the fastest measured run took 1.4 s', because fresh runs of 1.5 s and 1.4 s fell below the stated 1.6 s floor. No proposition, printed number or code changed."
+  },
+  {
+   "pass": "8 parity",
+   "result": "Diagnostics in parity_audit against the chapter 4 pilot; one gap found and repaired: the implementation section did not map the program's parts to the chapter's results (the pilot's does). Added one paragraph naming the four numbered parts, what each checks, and the normalisation factor used by trip_grad and nt_grad. Checks after passes 7-8: static_checks 0 failures, 12 timestamps; python -I exit 0, 1.5 s and 1.4 s in two runs, output identical, pycodestyle clean; Playwright 1280 and 390 px: 0 mjx-merror, 508 math nodes, 0 overflow, 1 h1, 2 figures, TOC 14."
+  }
+ ],
+ "parity_audit": {
+  "method": "Same counter for both chapters (reproduces the pilot's recorded counts for L4: 14,877 words, 27 displays, 801 inline spans, 53 paper links, 26 distinct papers, solutions median 126.5 / min 79, 51 evidence labels, 8 propositions): article between content markers, SVG, code and all MathJax removed; section statistics over central sections (exercises, limits and sources excluded).",
+  "diagnostics": {
+   "cs230_L2": {"prose_words_article": 14242, "h2_sections": 14, "central_sections": 11, "section_words_median": 992, "section_words_min": 497, "section_words_max": 1570, "h3_subsections": 14, "display_equations": 12, "inline_math_spans": 496, "paper_links_in_body": 18, "distinct_papers_linked": 9, "code_blocks": 2, "figures": 2, "tables": 2, "exercises": 6, "solution_words_median": 176.5, "solution_words_min": 160, "evidence_label_mentions": 47, "propositions_proved": 9},
+   "cs230_L4": {"prose_words_article": 14877, "h2_sections": 19, "central_sections": 16, "section_words_median": 768, "section_words_min": 323, "section_words_max": 1177, "h3_subsections": 21, "display_equations": 27, "inline_math_spans": 801, "paper_links_in_body": 53, "distinct_papers_linked": 26, "code_blocks": 2, "figures": 3, "tables": 5, "exercises": 6, "solution_words_median": 126.5, "solution_words_min": 79, "evidence_label_mentions": 51, "propositions_proved": 8}
+  },
+  "qualitative": {
+   "questions_answered_per_central_section": "Each of the 10 lecture sections opens with its question, defines terms before use, states the assumptions beside the claim, proves or cites its central result with a page, gives a numerical check (table, figure, engineering check or code), states a limit, and ties to the running case or the trigger-word thread; day-night and weak have no proposition by subject (a task specification and a cited method) and carry shown arithmetic and a triangle-inequality bound instead.",
+   "running_case": "Dining-hall face model posed in the lead, formalised in verification, trained in triplet, reused in identification, contrastive, the laboratory and exercises 3-6; next-token and weak sections do not use it (text and cross-modal pairs), and the lead now says so.",
+   "differences_from_pilot": [
+    "12 display equations against 27: chapter 2 carries its derivations inline (9 proved propositions against 8); no consequential step lacks its explanation.",
+    "9 distinct papers against 26: the recording cites fewer works; every cited paper is used on a page in the argument, none only listed.",
+    "Solution median 176.5 words against 126.5; every solution shows its reasoning and computed numbers.",
+    "2 figures and 2 tables against 3 and 5; each carries an argument (FAR/FRR curves, distance histograms, supervision-source map, Proposition 5 table)."
+   ],
+   "repairs_made": "Implementation section: added the walk-through of the program's four parts (the pilot's 'The program does four things' paragraph has no counterpart before pass 8).",
+   "length_judgment": "Treated as a diagnostic. 14,242 against 14,877 words; the length follows from nine proved results, the evidence audit and two running threads."
+  }
+ },
+ "notation_decisions": [
+  "Slide a^[l] -> h^[l]; Enc(.) -> f_theta(.); alpha -> Delta; L -> calligraphic L; GPT-1 context size k -> n_ctx; CLIP N -> n_batch.",
+  "Backprop error signal written as nabla_{u^[l]} L (no delta; delta is the perturbation).",
+  "Running-case variances written Var_b, Var_w, Var_tot (named quantities, rule 2); no placeholder v.",
+  "k-means cluster count n_clu; k stays the class index.",
+  "Angle on the unit circle (exercise 3) written varphi_n (proposed); proofs use no local dummy letters that collide with NOTATION (q, r, s, z, e, gamma, kappa, H, P avoided)."
+ ],
+ "editor_round_1": {
+  "report": "_editorial/cs230/reviews/lecture-02-supervised-self-supervised-and-weakly-supervised-learning-round1.md",
+  "verdict": "yes-after-revision",
+  "blocking": "B1, B2 fixed (B1 with the program value 0.081 instead of the editor 0.084)",
+  "style": "S1-S26 fixed; S23 and S24 worded from measurement (see pass_log)",
+  "structural": "N1 cuts applied, N2 viewing record completed, N3 satisfied by B2"
+ },
+ "privacy_note": "No verbatim recording sentences; recording statements are paraphrased with timestamps. Slide sentences paraphrased except short labels (e.g. \"0.4 < threshold\"). Single words from the transcription appear only in asr_uncertainties.",
+ "production_notes_removed_from_text": [
+  "ASR spellings kept out of reader text (see asr_uncertainties)."
+ ],
+ "word_count": {
+  "prose_words_math_svg_code_removed": 14242,
+  "method": "article between content markers; SVG, pre blocks and \\( \\) / \\[ \\] math removed; tags stripped; whitespace split"
+ }
+}

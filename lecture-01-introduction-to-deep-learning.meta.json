@@ -1,0 +1,866 @@
+{
+  "video_id": "_NLHFoVNlbg",
+  "title": "Learning curves, capacity, and the decision to collect more data",
+  "chapter_order": 1,
+  "recording_lecture_number": 1,
+  "recording_title": "Stanford CS230 | Autumn 2025 | Lecture 1: Introduction to Deep Learning",
+  "speaker": "Andrew Ng",
+  "date": "2025-09-23",
+  "status": "complete: passes 1-9, gates 6a, 6b (science-editor round 2 verdict yes, 0 blocking) and 6c passed; committed with chapters 2 and 3",
+  "transcript_provenance": "Local machine transcription; not publisher captions",
+  "transcription_model": "Systran/faster-whisper-small.en",
+  "audio_sha256": "cd8d98221029958f742a2893c55c33d532151d7382796072eb3ace346469f87f",
+  "audio_duration_seconds": 3616.701,
+  "playlist_duration_seconds": 3617,
+  "transcript_sha256": "119b467863a954fb3efbe9b0c0c3dc985b66775b33d2956ae256589ded6038e8",
+  "transcript_segment_count": 121,
+  "transcript_first_start_seconds": 5.2,
+  "transcript_last_end_seconds": 3611.38,
+  "slides": {
+    "url": "https://cs230.stanford.edu/syllabus/fall_2024/lecture_1.pdf",
+    "sha256": "98a93db30a220a65580146b40893b203530264b24cecbdfcf062afb0b44e3e4c",
+    "pages": 29,
+    "alignment": "not aligned: Fall 2024 logistics deck by Kian Katanforoosh (course logistics, programming assignments, past projects); the recording is Andrew Ng's overview talk with whiteboard drawings and an 'AI Trends' slide set that is not in this deck. Only pages 4 (titles of the five online courses C1-C5) and 5 (a week as online videos plus one lecture) are used, as course-structure facts graded product claim.",
+    "pages_rendered_and_inspected": [],
+    "pages_read_as_extracted_text_only": "all 29 pages; only pages 4 and 5 are used",
+    "visual_findings": [],
+    "recording_frames_viewed": {
+      "method": "720p video-only stream downloaded privately to the private sources folder for this recording; single frames extracted with ffmpeg; contact sheets sampled every 15 s over 2185-3140 s and every 30 s over 3140-3616 s. Frames and video stay outside the repository.",
+      "frames_seconds": [
+        205,
+        230,
+        260,
+        290,
+        300,
+        330,
+        440,
+        490,
+        540,
+        610,
+        650,
+        700,
+        1230,
+        1250,
+        1300,
+        1395,
+        1425,
+        1460,
+        1545,
+        1600,
+        1790,
+        1825,
+        2190,
+        2215,
+        2240,
+        2290,
+        2310,
+        2440,
+        2470,
+        2600,
+        2700,
+        3000,
+        3030,
+        3060
+      ],
+      "frames_used_in_text": [
+        290,
+        330,
+        700,
+        1300,
+        1825,
+        2290,
+        2470,
+        3030
+      ],
+      "findings": [
+        "290/330 s: whiteboard plot; vertical axis labelled 'performance', horizontal axis 'Data'; curves from a common origin; labels 'Small NN' and 'Large NN'; no scale, no numbers, no crossing curves.",
+        "700 s: stacked boxes bottom to top 'CS fundamentals', 'Machine Learning', 'Deep Learning', 'Gen AI', with a brace beside the middle layers.",
+        "1300 s (and enlarged crop): arrows 'Gen AI' -> 'Text'; 'Deep Learning' -> 'Audio', 'Image', 'Structured data'; course numbers written 'CS129', '229', '230' (resolves the ASR item 'CS129').",
+        "1825 s: board list C1 NNs and DL, C2 Improve NNs, C3 Strategies for ML projects, C4 ConvNets, C5 Sequence models.",
+        "2185-2290 s: title slide 'AI Trends, Andrew Ng'; the lecturer then speaks at the board.",
+        "2470 s: slide '2. Fast prototyping': 'Build Prototypes' marked '10x faster!', 'Write/maintain production software' marked '30-50% faster?'; bullets on less integration with legacy data and infrastructure, lower requirements on reliability, scalability or security when prototyping, and building 20 prototypes to see what works. No source on the slide.",
+        "Sheet 2185-3140 s: later build of the same slide: 'Move fast and break things.' struck through, 'Move fast and be responsible.'",
+        "Sheet 2185-3140 s: slide '1. AI coding assistance - making coding pervasive': punch cards -> keyboard, assembly -> modern languages, text editor -> IDE, AI coding assistance (Windsurf, Cursor); 'As coding becomes easier, people should code a lot more!'",
+        "3030 s: slide 'Getting computers to do what you want' with images 'From: Generative AI for Everyone' (resolves the ASR item 'Generative Air for Everyone').",
+        "Sheet 3140-3616 s: no slides; question period at the board."
+      ]
+    },
+    "viewing_record": {
+      "initial_draft": [
+        205,
+        230,
+        260,
+        290,
+        300,
+        330,
+        440,
+        490,
+        540,
+        610,
+        650,
+        700,
+        1230,
+        1250,
+        1300,
+        1395,
+        1425,
+        1460,
+        1545,
+        1600,
+        1790,
+        1825,
+        2190,
+        2215,
+        2240,
+        2290,
+        2310,
+        2440,
+        2470,
+        2600,
+        2700,
+        3000,
+        3030,
+        3060
+      ],
+      "initial_draft_note": "recording frame times in seconds (the deck is not aligned, so no deck page was rendered); plus contact sheets over 2185-3140 s and 3140-3616 s"
+    }
+  },
+  "papers_rendered_pages": {
+    "arxiv-1712.00409": [
+      6,
+      10,
+      11
+    ],
+    "arxiv-2001.08361": [
+      4,
+      5
+    ],
+    "reason": "claims depend on figure content: Hestness Figure 1 axis range 2^20-2^27 tokens and the two fits (p. 6); Figure 5 model-size curves (p. 10); Figure 6 labelled a sketch (p. 11); Kaplan Figure 4 left panel levels (p. 5)."
+  },
+  "evidence_scheme": "Each claim not proved on the page carries one class: empirical result (paper and page), engineering check (this chapter's code or shown arithmetic), product claim (a company's or institution's statement about its own product, price or course, including course-structure statements in the recording), speaker judgment (with recording time). Definitions and results proved on the page carry no label. Each section opens with a provenance line: lecture / research extension / original construction.",
+  "running_case": "y in {0,1} with probability 1/2 each; x = (2y-1) mu + chi in R^16, every coordinate of mu equal to 1/2 (||mu||_2 = 2), chi ~ N(0, I). Three least-squares linear classifiers read the first n_feat in {1, 4, 16} coordinates (2, 5, 17 parameters) and predict 1 when b + w.x > 1/2. Floors Phi(-||mu_{1:n_feat}||_2) = 0.3085, 0.1587, 0.0228 (Proposition 2). Used for ERM optimism (Proposition 1), learning curves and the capacity floor (Proposition 3, Figure 1), forecasting from four sizes (Figure 2), the gradient-descent step-size threshold (Proposition 4), a noise increase in use (code-and-data: 0-1 risk Phi(-sqrt 2) = 0.0786 against 0.0228), and exercises 4-5. Original construction. The face-verification door (thread 1) is previewed only (process section).",
+  "sections": [
+    {
+      "section": "model",
+      "start": 5.2,
+      "end": 172.51,
+      "lecture_material": "Flipped format (online videos, in-person discussion); aim of reaching near state of the art in applying deep learning; progress in AI over 10-15 years came from scaling; deep learning absorbs data.",
+      "research_extension": "Goodfellow, Bengio, Courville 2016: i.i.d. assumption and expected test vs training error (p. 109), risk (p. 272, eq. 8.2), ERM and surrogate losses (p. 273, eq. 8.3).",
+      "teaching_construction": "Formal model (x, y, p_data, D, f_theta, L, J, R, R_01, generalisation gap); Proposition 1 with proof; running case; Proposition 2 with proof; floor table; Proposition 1 numbers at m = 40. Exact 0-1 and squared-loss risks of an arbitrary rule (b, w) (round 1, B2).",
+      "evidence_class": "definition; theorem (proved); engineering check; product claim; speaker judgment"
+    },
+    {
+      "section": "scaling",
+      "start": 172.51,
+      "end": 425.44,
+      "lecture_material": "Whiteboard plot of performance against data (older algorithms plateau; small, medium, large networks keep improving); speech recognition example; Stanford GPU/CUDA work about 15 years earlier; first GPU machine built by Ian Goodfellow in a dorm; Baidu and OpenAI scaling papers; predictability drove data-centre investment.",
+      "research_extension": "Hestness et al. 2017 (pp. 1, 2, 4, 5, 6, 10, 11): power-law learning curves, exponents -0.07 to -0.35, power law plus constant for fixed size, NMT fits, DS2 plateaus by model size, sketch of regions, irreducible region not reached. Kaplan et al. 2020 (pp. 3, 4, 5, 6, 10, 11, 17): eqs. 1.1, 1.2, 1.5, Table 2 constants of eq. 1.5, ranges, factor 0.95, loss in nats, limits of eq. 1.5, trends must level off. Raina, Madhavan, Ng 2009 (pp. 1, 2, 7): 70x speed-up, weeks to a day, CUDA, acknowledgment of Ian Goodfellow's help assembling the hardware. Goodfellow et al. p. 114: fixed-capacity models asymptote above the Bayes error.",
+      "teaching_construction": "Learning-curve definition; mapping of Hestness and Kaplan letters; Kaplan floor derivation; limits 4.21 and 2.38 (Table 2) against 4.31 and 2.44 (eq. 1.1); Proposition 3 with proof; data-budget numbers 2, 10.1, 225, 0.936; Figure 1; local exponents.",
+      "evidence_class": "definition; theorem (proved); empirical result; engineering check; speaker judgment"
+    },
+    {
+      "section": "map",
+      "start": 425.44,
+      "end": 721.87,
+      "lecture_material": "Board stack CS fundamentals -> ML -> DL -> Gen AI; fundamentals matter with AI coding assistants; deep learning and neural networks interchangeable ('better brand'); transformer behind most generative AI; prompting not enough for many applications; course coverage. Subsection genai (2128.34-2187.15 s): definition of generative AI in answer to a question.",
+      "research_extension": "None.",
+      "teaching_construction": "Reading of the stack as a curriculum map, not a taxonomy, in terms of the formal model; definition of a large language model.",
+      "evidence_class": "definition; product claim; speaker judgment"
+    },
+    {
+      "section": "builders",
+      "start": 721.87,
+      "end": 1131.92,
+      "lecture_material": "Prerequisites; CS129, CS229, CS230 as entry points; CS229 and CS230 together; transformer coverage; few train frontier models, many build applications; pretraining and fine-tuning; course practical rather than mathematical.",
+      "research_extension": "None.",
+      "teaching_construction": "Pretraining and fine-tuning as two ERM problems with different data and starting points.",
+      "evidence_class": "definition; product claim; speaker judgment"
+    },
+    {
+      "section": "data-types",
+      "start": 1131.92,
+      "end": 1392.43,
+      "lecture_material": "Applications newly possible; generative AI strong for text; deep learning directly for audio, image, video, structured data; structured vs unstructured data; a few dollars per million tokens when prototyping; bills grow with usage; fine-tuning smaller models bent the cost curve; numbers withheld.",
+      "research_extension": "None.",
+      "teaching_construction": "Structured and unstructured inputs in the model's notation; break-even arithmetic with assumed prices (5.6 months).",
+      "evidence_class": "definition; engineering check; product claim; speaker judgment"
+    },
+    {
+      "section": "process",
+      "start": 1401.07,
+      "end": 1821.71,
+      "lecture_material": "Five online courses C1-C5; networks from scratch in Python; hyperparameters as parameters that control parameters; late-night tuning; strategy; face-recognition door as a multi-component system; random choice of work, six months of data collection, GPU purchase anecdote; simulation exercises; ConvNets and sequence models.",
+      "research_extension": "Goodfellow et al. p. 118: hyperparameters not adapted by the learning algorithm. Fall 2024 deck p. 4: the same five course titles.",
+      "teaching_construction": "Gradient descent; Proposition 4 with proof; running-case Hessian eigenvalues 2 and 10, sample threshold 0.2009, convergence at 0.9x and divergence at 1.1x; learning-curve diagnostic for the data decision.",
+      "evidence_class": "definition; theorem (proved); engineering check; product claim; speaker judgment"
+    },
+    {
+      "section": "enough-data",
+      "start": 1821.71,
+      "end": 2128.34,
+      "lecture_material": "Applications across fields; how to know whether one has enough data; about 50,000 distinct faces for face recognition from scratch; for a new problem train on a little data first; 100 examples may suffice, a hundred billion may not.",
+      "research_extension": "Hestness et al. p. 12 (small-data exploration, accuracy cliffs), p. 13 (human error as a bound on irreducible error).",
+      "teaching_construction": "Forecasting procedure; three fits (floor known, zero, estimated) on sizes 40-320; forecast table; measured errors at forecast sizes; Figure 2; crossing of the zero-floor fit at m = 350.",
+      "evidence_class": "engineering check; empirical result; speaker judgment"
+    },
+    {
+      "section": "prototypes",
+      "start": 2187.57,
+      "end": 2453.36,
+      "lecture_material": "Poll on AI coding tools; coding by hand; 'AI Trends' slide on fast prototyping ('10x faster!', '30-50% faster?'); sandboxed prototypes; database-migration anecdote; build 20 prototypes; proofs of concept that never ship.",
+      "research_extension": "None.",
+      "teaching_construction": "Proposition 5 with proof (independent and common-cause portfolios); numbers 0.878, 22, 10, 0.615, bound 0.7 under the assumption p_succ = 0.1, p_com = 0.3.",
+      "evidence_class": "theorem (proved); engineering check; speaker judgment"
+    },
+    {
+      "section": "code-and-data",
+      "start": 2453.36,
+      "end": 2651.95,
+      "lecture_material": "Output depends on code and data; builder controls only the code; speech-recognition surprises (accent, speed, car noise, background speakers); users' reactions; fast feedback; slide 'Move fast and be responsible'; extinction-risk talk called hype.",
+      "research_extension": "None.",
+      "teaching_construction": "Statement in the formal model (code fixes f_theta, L, optimiser; data fix J; R under the deployment distribution); pointer to chapters 3 and 6. Pass 8: running-case noise increase in use (noise standard deviation sqrt 2 per coordinate, class means unchanged): the limit rule mu^T x > 0 errs with Phi(-sqrt 2) = 0.0786 against 0.0228, and the Bayes rule of the shifted distribution is the same rule, so retraining cannot lower it; a mean shift off the direction of mu changes the Bayes rule.",
+      "evidence_class": "engineering check; speaker judgment"
+    },
+    {
+      "section": "careers",
+      "start": 2651.95,
+      "end": 3611.38,
+      "lecture_material": "Advice not to learn to code called bad advice; history of easier coding; hiring anecdotes; fundamentals and the art-history example. Subsection questions (3224.02-3611.38 s): productivity ranking, generative-AI skills list, CS229 vs CS230, machine learning as empirical. Cut in round 1 (N1), kept only in unverified_claims: COBOL recollection, unemployment statement, GPU-programming niche, encouragement to build, interviewing, several courses.",
+      "research_extension": "None.",
+      "teaching_construction": "None.",
+      "evidence_class": "speaker judgment"
+    },
+    {
+      "section": "implementation",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "None.",
+      "teaching_construction": "NumPy program implementing Propositions 1-5 on the running case, with assertions. Pass 8: prose states which assertions test the direction of a claim and which hold a printed number in a band chosen for the seeded run.",
+      "evidence_class": "engineering check"
+    },
+    {
+      "section": "limits",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "Hestness et al. p. 4; Kaplan et al. pp. 5, 17.",
+      "teaching_construction": "Limits of the formal model, running case, scaling measurements and decision arithmetic; list of unchecked claims; what the reader can now do.",
+      "evidence_class": "original construction"
+    },
+    {
+      "section": "exercises",
+      "start": null,
+      "end": null,
+      "lecture_material": "Exercise 6 uses the advice at 2025-2082 s.",
+      "research_extension": "Hestness et al. pp. 4, 6, 12, 13.",
+      "teaching_construction": "Six exercises with worked solutions: test-set precision, forecasting with published fits, correlated portfolio counterexample, local log-log slope, learning-rate speed, design of a learning-curve experiment.",
+      "evidence_class": "theorem (proved); engineering check"
+    },
+    {
+      "section": "sources",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "Primary source list with pages.",
+      "teaching_construction": "None.",
+      "evidence_class": "original construction"
+    }
+  ],
+  "references": [
+    {
+      "title": "Goodfellow, Bengio, Courville 2016, Deep Learning (MIT Press), online HTML edition at deeplearningbook.org",
+      "url": "https://www.deeplearningbook.org/",
+      "supports": "Generalisation and test error (p. 108); i.i.d. assumption and expected test vs training error (p. 109); Bayes error and fixed-capacity models (p. 114); hyperparameters (p. 118); risk (p. 272, eq. 8.2); ERM and surrogate losses (p. 273, eq. 8.3)."
+    },
+    {
+      "title": "Hestness et al. 2017, Deep Learning Scaling is Predictable, Empirically",
+      "url": "https://arxiv.org/abs/1712.00409",
+      "supports": "Power-law learning curves, exponents, fixed-size floors, translation fits, speech plateaus, learning-curve regions, small-data exploration, human error as a bound (pp. 1, 2, 4, 5, 6, 10, 11, 12, 13)."
+    },
+    {
+      "title": "Kaplan et al. 2020, Scaling Laws for Neural Language Models",
+      "url": "https://arxiv.org/abs/2001.08361",
+      "supports": "Eqs. 1.1, 1.2, 1.5, one-variable constants, ranges, the factor 0.95, loss in nats, Figure 4, Table 2 constants of eq. 1.5, levelling off (pp. 3, 4, 5, 6, 10, 11, 17)."
+    },
+    {
+      "title": "Raina, Madhavan, Ng 2009, Large-scale Deep Unsupervised Learning using Graphics Processors (ICML)",
+      "url": "https://ai.stanford.edu/~ang/papers/icml09-LargeScaleUnsupervisedDeepLearningGPU.pdf",
+      "supports": "70x speed-up and weeks to a day (p. 1); CUDA (p. 2); acknowledgment of help assembling the hardware (p. 7)."
+    }
+  ],
+  "research_ledger": [
+    {
+      "id": "GBC-2016",
+      "page": 108,
+      "quote": "we want the generalization error, also called the test error, to be low as well",
+      "claim": "generalisation error = test error",
+      "status": "verified by record: online HTML edition at deeplearningbook.org, which reproduces the printed pages and their page numbers"
+    },
+    {
+      "id": "GBC-2016",
+      "page": 109,
+      "quote": "the examples in each dataset are independent from each other, and that the training set and test set are identically distributed",
+      "claim": "i.i.d. assumption",
+      "status": "verified by record: online HTML edition at deeplearningbook.org, which reproduces the printed pages and their page numbers"
+    },
+    {
+      "id": "GBC-2016",
+      "page": 109,
+      "quote": "Under this process, the expected test error is greater than or equal to the expected value of training error.",
+      "claim": "inequality stated without proof",
+      "status": "verified by record: online HTML edition at deeplearningbook.org, which reproduces the printed pages and their page numbers"
+    },
+    {
+      "id": "GBC-2016",
+      "page": 114,
+      "quote": "Any fixed parametric model with less than optimal capacity will asymptote to an error value that exceeds the Bayes error.",
+      "claim": "fixed-capacity floor above Bayes error",
+      "status": "verified by record: online HTML edition at deeplearningbook.org, which reproduces the printed pages and their page numbers"
+    },
+    {
+      "id": "GBC-2016",
+      "page": 118,
+      "quote": "The values of hyperparameters are not adapted by the learning algorithm itself",
+      "claim": "hyperparameter definition",
+      "status": "verified by record: online HTML edition at deeplearningbook.org, which reproduces the printed pages and their page numbers"
+    },
+    {
+      "id": "GBC-2016",
+      "page": 272,
+      "quote": "J*(theta) = E(x,y)~pdata L(f(x; theta), y). (8.2) ... This quantity is known as the risk.",
+      "claim": "risk definition",
+      "status": "verified by record: online HTML edition at deeplearningbook.org, which reproduces the printed pages and their page numbers"
+    },
+    {
+      "id": "GBC-2016",
+      "page": 273,
+      "quote": "The training process based on minimizing this average training error is known as empirical risk minimization.",
+      "claim": "ERM definition (eq. 8.3)",
+      "status": "verified by record: online HTML edition at deeplearningbook.org, which reproduces the printed pages and their page numbers"
+    },
+    {
+      "id": "GBC-2016",
+      "page": 273,
+      "quote": "many useful loss functions, such as 0-1 loss, have no useful derivatives (the derivative is either zero or undefined everywhere)",
+      "claim": "why a surrogate loss is trained",
+      "status": "verified by record: online HTML edition at deeplearningbook.org, which reproduces the printed pages and their page numbers"
+    },
+    {
+      "id": "1712.00409",
+      "page": 1,
+      "quote": "power-law exponents -- the \"steepness\" of the learning curve -- yet to be explained by theoretical work",
+      "claim": "exponents unexplained",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 2,
+      "quote": "we find empirically that beta_g usually settles between -0.07 and -0.35",
+      "claim": "measured exponent range",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 2,
+      "quote": "beta_g = -0.5 or -1 is the scaling exponent",
+      "claim": "theory's exponents",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 2,
+      "quote": "four application domains: machine translation, language modeling, image classification, and speech recognition",
+      "claim": "domains",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 2,
+      "quote": "They are different from training and validation curves, which measure number of training iterations a model needs to learn a particular data set.",
+      "claim": "learning vs training curves (footnote 1)",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 2,
+      "quote": "Improved model architectures and optimizers can improve the power-law intercept, but not the exponent",
+      "claim": "architectures shift, not steepen",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 4,
+      "quote": "subdivide T into shard sizes that span 2-3 orders of magnitude in steps of roughly 2x",
+      "claim": "measured ranges",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 4,
+      "quote": "V must be sufficiently large to approximate true generalization error with low variance",
+      "claim": "validation-set size (exercise 1)",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 5,
+      "quote": "gamma is the error when the model family has exhausted its capacity",
+      "claim": "power law plus constant",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 6,
+      "quote": "eps208(m) = 41.2 m^-0.36 + 0.39; eps512(m) = 21.5 m^-0.30 + 0.32 (Figure 1, axis 2^20 to 2^27 tokens on the rendered page)",
+      "claim": "NMT fixed-size fits",
+      "status": "page verified; page rendered"
+    },
+    {
+      "id": "1712.00409",
+      "page": 6,
+      "quote": "if we project forward, beta_g would be approximately -0.128",
+      "claim": "composite exponent",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 6,
+      "quote": "optimization becomes more difficult and models run out of capacity, so the empirical error tends away from the power-law trend",
+      "claim": "limit of forecasting (exercise 2)",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 10,
+      "quote": "the 1.7M parameter model's accuracy plateaus starting at around 170 hours of audio, and the 6M parameter model plateaus around 860 hours of audio",
+      "claim": "speech plateaus by model size",
+      "status": "page verified; page rendered"
+    },
+    {
+      "id": "1712.00409",
+      "page": 10,
+      "quote": "Larger models (e.g., 87M parameters) show generalization error close to the best-fit trend up to larger data set sizes",
+      "claim": "large model near trend",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 10,
+      "quote": "beta_g = -0.299 +/- 0.7% (Figure 5 left: eps(m) = 1.36 m^-0.30 and 0.95 m^-0.30)",
+      "claim": "speech exponent 0.30",
+      "status": "page verified; page rendered"
+    },
+    {
+      "id": "1712.00409",
+      "page": 11,
+      "quote": "Figure 6: Sketch of power-law learning curves",
+      "claim": "regions figure is a sketch",
+      "status": "page verified; page rendered"
+    },
+    {
+      "id": "1712.00409",
+      "page": 11,
+      "quote": "we have yet to reach the irreducible error region for real applications in this study",
+      "claim": "irreducible region not reached",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 11,
+      "quote": "model architecture improvements such as model depth only shift learning curves down, but might not improve the power-law exponent",
+      "claim": "architectures shift curves down",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 12,
+      "quote": "models with poor optimizer parameterization or model priors/initialization show accuracy cliffs",
+      "claim": "small-data exploration caution",
+      "status": "page verified"
+    },
+    {
+      "id": "1712.00409",
+      "page": 13,
+      "quote": "One approach might be to estimate the human error rate for the task.",
+      "claim": "human error as a bound on irreducible error",
+      "status": "page verified"
+    },
+    {
+      "id": "2001.08361",
+      "page": 3,
+      "quote": "performance must flatten out eventually before reaching zero loss",
+      "claim": "no floor term; must flatten",
+      "status": "page verified"
+    },
+    {
+      "id": "2001.08361",
+      "page": 4,
+      "quote": "alpha_N ~ 0.076, N_c ~ 8.8 x 10^13 (non-embedding parameters) (1.1); alpha_D ~ 0.095, D_c ~ 5.4 x 10^13 (tokens) (1.2)",
+      "claim": "constants",
+      "status": "page verified; page rendered"
+    },
+    {
+      "id": "2001.08361",
+      "page": 5,
+      "quote": "These relations hold across eight orders of magnitude in Cmin, six orders of magnitude in N, and over two orders of magnitude in D.",
+      "claim": "ranges of the fits",
+      "status": "page verified; page rendered"
+    },
+    {
+      "id": "2001.08361",
+      "page": 5,
+      "quote": "doubling the number of parameters yields a loss that is smaller by a factor 2^-alpha_N = 0.95",
+      "claim": "factor 0.95",
+      "status": "page verified"
+    },
+    {
+      "id": "2001.08361",
+      "page": 5,
+      "quote": "The precise numerical values of Nc, Cmin_c, and Dc depend on the vocabulary size and tokenization and hence do not have a fundamental meaning.",
+      "claim": "constants have no fundamental meaning",
+      "status": "page verified"
+    },
+    {
+      "id": "2001.08361",
+      "page": 5,
+      "quote": "L(N, D) = [(Nc/N)^(alpha_N/alpha_D) + Dc/D]^alpha_D (1.5); Figure 4 left: smallest model (393.2K) levels near 4.3, 708M reaches about 2.4, below the lowest tick of 2.5, at the largest dataset (read from the rendered figure)",
+      "claim": "joint fit and fixed-size plateaus",
+      "status": "page verified; page rendered"
+    },
+    {
+      "id": "2001.08361",
+      "page": 6,
+      "quote": "L - the cross entropy loss in nats",
+      "claim": "units",
+      "status": "page verified"
+    },
+    {
+      "id": "2001.08361",
+      "page": 10,
+      "quote": "Conversely, fixing N and sending D -> infinity the loss must approach L(N).",
+      "claim": "eq. 1.5 built to have the fixed-N limit",
+      "status": "page verified"
+    },
+    {
+      "id": "2001.08361",
+      "page": 11,
+      "quote": "Parameter alpha_N alpha_D N_c D_c / Value 0.076 0.103 6.4 x 10^13 1.8 x 10^13 / Table 2 Fits to L(N,D) [...] the parameters differ very slightly from those obtained in Section 3, as here we are fitting the full L(N,D) rather than just L(N,inf) or L(inf,D)",
+      "claim": "constants of the joint fit (eq. 1.5)",
+      "status": "page verified"
+    },
+    {
+      "id": "2001.08361",
+      "page": 17,
+      "quote": "Our trends must eventually level off, though, since natural language has non-zero entropy.",
+      "claim": "trends must level off",
+      "status": "page verified"
+    },
+    {
+      "id": "raina-icml-2009",
+      "page": 1,
+      "quote": "Our implementation of DBN learning is up to 70 times faster than a dual-core CPU implementation for large models. For example, we are able to reduce the time required to learn a four-layer DBN with 100 million free parameters from several weeks to around a single day.",
+      "claim": "GPU speed-up",
+      "status": "page verified"
+    },
+    {
+      "id": "raina-icml-2009",
+      "page": 2,
+      "quote": "We illustrate the principles of GPU computing using Nvidia's CUDA programming model",
+      "claim": "CUDA",
+      "status": "page verified"
+    },
+    {
+      "id": "raina-icml-2009",
+      "page": 7,
+      "quote": "to Ethan Dreyfuss, Ian Goodfellow and Quoc Le for help with assembling the hardware",
+      "claim": "partial corroboration of the dorm-machine anecdote",
+      "status": "page verified (PDF page 7)"
+    },
+    {
+      "id": "cs230-fall2024-lecture1-deck",
+      "page": 4,
+      "quote": "C1: Neural Networks and Deep Learning ... C5: Sequence Models",
+      "claim": "titles of the five online courses",
+      "status": "page verified (extracted slide text)"
+    },
+    {
+      "id": "cs230-fall2024-lecture1-deck",
+      "page": 5,
+      "quote": "One week in the life of a CS230 student: Watch videos on Coursera ... Zoom lecture (every Tuesday)",
+      "claim": "weekly structure: videos plus one lecture",
+      "status": "page verified (extracted slide text)"
+    }
+  ],
+  "unverified_claims": [
+    "Older algorithms (logistic regression, decision trees) plateau as data grows; speech example with tens of thousands of hours (~204-295 s): speaker judgment; Hestness et al. did not test older algorithms.",
+    "First GPU machine built by Ian Goodfellow as an undergraduate in his dorm room (~318-343 s): speaker judgment; Raina et al. p. 7 corroborates only his help assembling the hardware.",
+    "Predictability of scaling drove data-centre investment (~401-425 s): speaker judgment.",
+    "Deep learning succeeded partly as the better brand (~518-572 s): speaker judgment.",
+    "A few dollars per million tokens when prototyping (~1277-1302 s): product claim as of 2025-09-23.",
+    "Fine-tuning smaller models bent the cost curve; bills larger than wanted (~1302-1392 s): speaker judgment, numbers withheld by the speaker.",
+    "About 50,000 distinct faces is a good amount for face recognition from scratch (~1998-2025 s): speaker judgment.",
+    "Slide figures '10x faster!' for prototypes and '30-50% faster?' for production software (frame ~2470 s): speaker judgment, no source on the slide.",
+    "Coding agent wiped the database of a five-user test application (~2307-2334 s): speaker anecdote.",
+    "Unemployment of recent computer-science graduates has risen (~2743-2799 s): speaker judgment, labour statistics not checked.",
+    "COBOL expected to make programmers unnecessary (~2713-2743 s): speaker recollection, source not located.",
+    "Hiring and productivity rankings (~2827-2943 s, ~3224-3315 s): speaker judgment.",
+    "Course-structure statements (flipped format, entry courses, overlap of CS229 and CS230, transformer coverage, math-light, five online courses): product claim (the course's description of itself); the Fall 2024 deck pp. 4-5 agrees on the five course titles and the weekly structure."
+  ],
+  "slide_discrepancies_recorded": [
+    "Linked deck (fall_2024/lecture_1.pdf) is a Fall 2024 logistics deck by Kian Katanforoosh; the recording is Andrew Ng's overview talk. Only pp. 4-5 used.",
+    "The 'AI Trends' slides shown in the recording (fast prototyping, AI coding assistance, getting computers to do what you want) are not in the linked deck; their content was taken from video frames.",
+    "In the recording the slide numbered '2. Fast prototyping' is shown before the slide numbered '1. AI coding assistance'."
+  ],
+  "asr_uncertainties": [
+    "'Cruder' / 'CRU there' = CUDA (Raina et al. p. 2 confirms CUDA)",
+    "'Ian Goodfellow' (dorm GPU machine): name plausible; Raina et al. p. 7 names him among helpers with the hardware",
+    "'Cloud Code' = Claude Code; 'OPI codecs' / 'CodeX' = OpenAI Codex; 'Windsor' = Windsurf; 'Kerasite', 'Genis AI' unclear tool names (not used)",
+    "'tragedy', 'ChargeGPD', 'GIGP' = ChatGPT; 'Metalamer' = Meta Llama; 'OM', 'OAM', 'LM' = LLM; 'Gen-EI', 'Gen.A' = Gen AI",
+    "'CS129': confirmed by the whiteboard frame at ~1300 s ('CS129', '229', '230')",
+    "'239' = CS229 (~3495, ~3539-3569 s); 'CS1.11' (~3336 s) unclear introductory course number (not used)",
+    "'2035' (~721 s) misspoken or misheard 2025 (not used)",
+    "'Tommy Nelson' art collaborator: spelling not verified; name omitted from the chapter",
+    "'Generative Air for Everyone' = Generative AI for Everyone (slide frame ~3030 s)",
+    "'2002 skill set' (~2799, ~2899 s) vs '2022 skill set' (~2943 s): a faster-whisper medium.en re-transcription of 2925-2975 s also gives 2022; no year used in the chapter",
+    "'fresh college grad that doesn't know AI' (~3257-3285 s): a faster-whisper medium.en re-transcription of 3240-3290 s gives 'does know AI', consistent with the hiring story; the chapter uses 'recent graduates who know AI'",
+    "'Ken' = Kian (co-instructor); 'Jen and I' (~691 s) probably 'Kian and I' (not used)",
+    "'major in your AI', 'mid-journey' = Midjourney (not named in the chapter); 'journey algorithms' = GenAI algorithms",
+    "'Price' (~872 s) = prize; 'Sego' (~91 s) unclear platform name (not used); 'large two chess' (~1821 s) = large toolset (not used)"
+  ],
+  "symbol_ledger": [
+    {
+      "symbol": "x, n_x, y, p_data, D (calligraphic), x^(i), y^(i), m, f_theta, theta, n_theta, y-hat, L (calligraphic), J(theta), R(theta), theta-hat, generalisation gap",
+      "first_section": "model",
+      "definition": "Input and its dimension, label, data distribution, training set, i-th example, number of examples, model, parameters and their number, prediction, per-example loss, cost, population risk, ERM solution."
+    },
+    {
+      "symbol": "R_01(theta), 1[.]",
+      "first_section": "model",
+      "definition": "0-1 risk of the rule f_theta(x) > 1/2; indicator."
+    },
+    {
+      "symbol": "theta*",
+      "first_section": "model",
+      "definition": "Minimiser of R over R^{n_theta} (Proposition 1); in the running case (b*, w*)."
+    },
+    {
+      "symbol": "mu, chi, N(0, I), I, n_feat, x_{1:n_feat}, mu_{1:n_feat}, b, w, b*, w*, Phi",
+      "first_section": "running-case",
+      "definition": "Running-case mean (coordinates 1/2), standard Gaussian noise, identity, number of inputs a model reads, first coordinates, bias, weight vector, population minimisers, standard normal distribution function."
+    },
+    {
+      "symbol": "Err(m), Err_irr, Lambda, xi",
+      "first_section": "scaling",
+      "definition": "Learning curve (expected 0-1 risk after m examples), floor, scale, exponent."
+    },
+    {
+      "symbol": "N_param, N_tok, R_fit, xi_param, xi_tok, N_param^c, N_tok^c",
+      "first_section": "scaling",
+      "definition": "Kaplan et al.'s parameter count (non-embedding), training tokens, fitted test loss, exponents and scale constants (their N, D, L, alpha_N, alpha_D, N_c, D_c)."
+    },
+    {
+      "symbol": "Err_208(N_tok), Err_512(N_tok)",
+      "first_section": "scaling",
+      "definition": "Chapter-local labelled instances of Err naming Hestness et al.'s two translation models with 208 and 512 hidden units per layer (their eps_208, eps_512); also in exercise 2."
+    },
+    {
+      "symbol": "Err_tgt, m_tgt",
+      "first_section": "scaling",
+      "definition": "Target error; training-set size that reaches it (Proposition 3(c))."
+    },
+    {
+      "symbol": "eta, t, theta_t, x-tilde^(i), nabla^2 J, eig_max, eig_j",
+      "first_section": "process",
+      "definition": "Learning rate, iteration index, iterate, input with 1 prepended, Hessian of J, its largest and j-th eigenvalue."
+    },
+    {
+      "symbol": "n_try, p_succ, p_com",
+      "first_section": "prototypes",
+      "definition": "Number of attempts, success probability of one attempt, probability that a shared premise fails."
+    },
+    {
+      "symbol": "n_test",
+      "first_section": "exercises",
+      "definition": "Number of test examples (exercise 1)."
+    },
+    {
+      "symbol": "eig_min",
+      "first_section": "exercises",
+      "definition": "Smallest eigenvalue of a symmetric matrix; companion of eig_max (exercise 5(d))."
+    }
+  ],
+  "code_check": {
+    "file": "embedded block in section 'implementation' (byte-identical to the scratch file that was executed)",
+    "command": "python -I <file> in a fresh process",
+    "python": "3.13.5",
+    "numpy": "2.2.6",
+    "result": "exit 0; all assertions passed; stdout identical to the output block on the page: floors 0.3085, 0.1587, 0.0228; Err for 16 inputs 0.0723 ... 0.023; mean J, R*, mean R at m=40 = (0.0284, 0.05, 0.088); local exponents 1.4 ... 1.08; fits (xi, Lam) = (1.2877, 5.5073), (0.4843, 0.3882), (1.4090, 8.7388); forecasts 428, 288, 485 for 0.025 with measured errors 0.0255, 0.0269, 0.0251; zero-floor fit forecasts 375 for 0.022 and crosses the floor at m = 350; eig_max 9.955, threshold 0.2009, distances 9.0e-16 and 1.1e+23; portfolio 0.8784 and 0.6149; runtime 1.8-3.0 s across the pass 7-8 reruns. Pass 8: code unchanged; rerun with python -I in a fresh process after the last edit, exit 0, stdout identical to the printed block",
+    "failure_path": "fit raises ValueError('need m >= n_feat + 1 for a unique minimiser') for m = 16 with 16 inputs; succeeds for m = 17 (checked separately)",
+    "pep8": "pycodestyle: no issues"
+  },
+  "pass_log": [
+    {
+      "pass": "1 coverage",
+      "result": "Transcript read sequentially in full (5.20-3611.38 s, 121 segments); linked deck read as extracted text (29 pages, not aligned); 10 major sections mapped in recording order with spans above, plus implementation, limits, exercises and sources."
+    },
+    {
+      "pass": "2 prose",
+      "result": "Full-depth draft section by section in recording order; running case introduced in the first section and reused in the scaling, process, enough-data and data-types sections and in exercises 4-5."
+    },
+    {
+      "pass": "3 mathematics",
+      "result": "5 numbered propositions with proofs (ERM optimism; floor of each running-case model; reading a power-law learning curve; step-size threshold of a quadratic cost; portfolio of attempts) plus derivations of the Kaplan fixed-size floor and the data budget 2^(1/xi). Symbol ledger checked against NOTATION.md; new symbols proposed in _editorial/cs230/notation-proposals/ch01.md."
+    },
+    {
+      "pass": "4 research",
+      "result": "3 arXiv/ICML PDFs downloaded to the private papers folder (1712.00409, 2001.08361, Raina et al. 2009) and 2 chapters of the Goodfellow-Bengio-Courville HTML edition saved there; every cited claim located on its page (research_ledger)."
+    },
+    {
+      "pass": "5 implementation",
+      "result": "One NumPy program; executed in a fresh process; output recorded; PEP8 clean; figures generated from the same program's numbers."
+    },
+    {
+      "pass": "6 exercises",
+      "result": "Six exercises: derivation with computation, computation with assumption check on published fits, counterexample, derivation diagnosing a fitting method, derivation and computation on learning rates, design; all numbers computed."
+    },
+    {
+      "pass": "6a visual check",
+      "result": "Deck not aligned, so recording frames were viewed instead (see slides.recording_frames_viewed); Hestness pp. 6, 10, 11 and Kaplan pp. 4, 5 rendered and viewed because claims depend on figure content."
+    },
+    {
+      "pass": "6c citation check",
+      "result": "All page-level claims located: GBC 8 (HTML edition, verified by record), Hestness 20, Kaplan 10 (Table 2 added in round 1), Raina 3, deck 2."
+    },
+    {
+      "pass": "6b round 1",
+      "result": "Report applied: 2 blocking (B1, B2 with the editor text), 12 style, 3 structural (N2 not applied by lead decision). See editor_round_1."
+    },
+    {
+      "pass": "6b round 2",
+      "result": "Verdict yes, 0 blocking defects, 4 style edits (S13-S16), 1 structural note (N4, metadata). Gate 6b passed."
+    },
+    {
+      "pass": "7 prose",
+      "result": "S13-S16 applied with the round-2 text; S13's inserted sentence replaces the old leading clause 'and the Hessian ... does not depend on theta' so the clause appears once, and the display before it now ends with a full stop. Light pass: 7 long sentences split (aim/claim at 142-204 s; the local-exponent paragraph, two sentences; data-types coordinates; math-light answer; forecast finding 1; Proposition 4 limit; learning-curve diagnostic), 4 paragraphs split (Proposition 1 limits; Proposition 4 limit; database anecdote; Proposition 5 interpretation). Precision rewrites: 'far from 0.07-0.35' -> 'each at least 2.5 times 0.35'; 'factor of five' now shows 2 against 10.1 (Proposition 3(b)); '10% too large ... gives no answer' -> '10% above the threshold ... the iterates diverge'; 'more data will not help' -> 'can lower the error by at most Err(m) - Err_irr'; 'which a real team never has' -> 'cannot compute without knowing p_data'; 'no amount of care on the fitted range' -> 'the fitted range cannot settle'. Attribution: course aim at 142-204 s labelled product claim; 'production software gets more careful use' re-attributed to the lecturer (speaker judgment, 2334-2363 s, transcript checked). No proposition, number or code changed. N4: eig_min and Err_208/Err_512 added to symbol_ledger."
+    },
+    {
+      "pass": "8 parity",
+      "result": "Diagnostics in parity_audit against the chapter 4 pilot, one counter for both. Two gaps repaired: (1) code-and-data had no numerical check and no running-case return; added the running-case noise increase in use (0.0786 against 0.0228, Bayes rule unchanged, mean-shift limit), labelled engineering check by shown arithmetic, provenance line updated; (2) the implementation prose did not say what the assertion tolerances mean (the pilot does); added one paragraph separating direction checks from bands chosen for the seeded run, each band read from the code. Scaling (2,096 words, 2 h3) inspected: one argument (sketch, measurements, Proposition 3); the TOC lists h2 only, so an added h3 would not aid navigation; no change. Code rerun identical; static_checks and a chapter-only Playwright check at 1280 and 390 px passed."
+    }
+  ],
+  "notation_decisions": [
+    "Hestness et al.'s eps(m) = alpha m^beta_g + gamma mapped once to Err(m) = Err_irr + Lambda m^-xi (NOTATION section 2).",
+    "Kaplan et al.'s N, D, L, alpha_N, alpha_D, N_c, D_c written N_param, N_tok, R_fit, xi_param, xi_tok, N_param^c, N_tok^c and attributed once; D is the discriminator and L the layer count.",
+    "Running-case feature count written n_feat (k is the class index); the score is written f_theta(x) (s is the RL state).",
+    "Eigenvalues written eig_max, eig_j (lambda is the penalty coefficient; kappa is Cohen's kappa).",
+    "The input with a constant 1 prepended is x-tilde^(i) (a is the RL action).",
+    "No residual symbol in the proof of Proposition 2 (e would collide with Euler's number); no substitution variable v in the proof of Proposition 3(d).",
+    "The step count in exercise 5 is t (k is the class index).",
+    "Common-cause probability p_com (rule 5 scalar probability).",
+    "chi used in the definition of the running case as well as in proofs (NOTATION section 5 row says 'inside a proof'); proposed extension in ch01.md."
+  ],
+  "privacy_note": "No verbatim recording sentences; recording statements are paraphrased with timestamps. Short phrases are quoted only from slides and whiteboard frames. The downloaded video, frames and re-transcribed audio segments stay in the private sources and scratch folders.",
+  "production_notes_removed_from_text": [
+    "ASR spellings (see asr_uncertainties) are not in the reader text.",
+    "The re-transcription of two audio segments with a larger model is recorded here, not in the text."
+  ],
+  "parity_audit": {
+    "method": "One counter for both chapters, run in pass 8 on the final files: article between the content markers; SVG, script, style, pre and code elements removed; \\( \\) and \\[ \\] math removed; tags stripped, entities unescaped; words matched by \\b[\\w'-]+\\b. Section statistics exclude exercises and sources. External links counted as http(s) anchors in the article before the sources section, excluding YouTube timestamps. The pilot's recorded values (14,877 words, 72 body links) came from a different counter; the differences are tokenisation and link-counting rules, not content.",
+    "diagnostics": {
+      "cs230_L1": {
+        "prose_words_article": 12494,
+        "h2_sections": 14,
+        "section_words": {
+          "model": 1558,
+          "scaling": 2096,
+          "map": 600,
+          "builders": 414,
+          "data-types": 507,
+          "process": 1052,
+          "enough-data": 848,
+          "prototypes": 703,
+          "code-and-data": 646,
+          "careers": 492,
+          "implementation": 526,
+          "limits": 502,
+          "exercises": 1586,
+          "sources": 323
+        },
+        "section_words_median_excl_exercises_sources": 623.0,
+        "section_words_min": 414,
+        "section_words_max": 2096,
+        "h3_subsections": 8,
+        "display_equations": 15,
+        "inline_math_spans": 445,
+        "external_source_links_in_body": 5,
+        "distinct_sources_linked": 4,
+        "code_blocks": 2,
+        "figures": 2,
+        "tables": 2,
+        "exercises": 6,
+        "solution_words": [144, 154, 99, 155, 199, 298],
+        "solution_words_median": 154.5,
+        "solution_words_min": 99,
+        "evidence_label_mentions": 75,
+        "propositions_proved": 5
+      },
+      "cs230_L4_pilot": {
+        "prose_words_article": 14759,
+        "h2_sections": 19,
+        "section_words_median_excl_exercises_sources": 727,
+        "section_words_min": 323,
+        "section_words_max": 1178,
+        "h3_subsections": 21,
+        "display_equations": 27,
+        "inline_math_spans": 801,
+        "external_source_links_in_body": 27,
+        "distinct_sources_linked": 26,
+        "code_blocks": 2,
+        "figures": 3,
+        "tables": 5,
+        "exercises": 6,
+        "solution_words": [95, 125, 113, 69, 143, 225],
+        "solution_words_median": 119.0,
+        "solution_words_min": 69,
+        "evidence_label_mentions": 51,
+        "propositions_proved": 8
+      }
+    },
+    "qualitative": {
+      "questions_answered_per_central_section": "model, scaling, process, enough-data and prototypes each state their question, define terms before use, prove a numbered proposition, check it on the running case or by shown arithmetic, and state its limit. data-types and builders restate lecture claims in the formal model with one construction each (break-even arithmetic; pretraining and fine-tuning as two ERM problems). code-and-data now carries a running-case computation (pass 8). map and careers are lecture-record sections with attributed claims; careers is speaker judgment throughout by the round-1 cut (N1).",
+      "derivation_depth": "5 proved propositions plus the exact risks of an arbitrary rule, the Kaplan fixed-size limit, the data budget 2^(1/xi) and the pass-8 noise-shift computation. Pilot: 8 propositions and 15 derivations over two unrelated halves of a longer lecture (6,437 s against 3,617 s).",
+      "running_case": "Introduced in model; returns in scaling (Figure 1, local exponents), data-types (0.3085 against 0.0228), process (Hessian eigenvalues, threshold 0.2009), enough-data (three fits, Figure 2), code-and-data (noise increase, pass 8), implementation, and exercises 1, 4, 5 and 6. Pilot: 9 sections.",
+      "research_integration": "4 sources, each cited with pages beside the claim it supports (Goodfellow et al. 8 claims, Hestness et al. 20, Kaplan et al. 10, Raina et al. 3). The pilot cites 26 papers; the difference follows from the lecture: an overview talk that names two scaling papers and no other research, against a lecture built on a sequence of named attack, GAN and diffusion papers.",
+      "code_explanation": "Contract (inputs, no side effects, failure path, versions), a paragraph mapping the program to the chapter's four steps, the recorded output, and since pass 8 a paragraph separating direction checks from bands chosen for the seeded run, then the limit. Matches the pilot's structure.",
+      "solution_reasoning": "Median 154.5 words, minimum 99 (pilot 119.0 and 69); every solution shows the steps and computes each number.",
+      "differences_from_exemplars": [
+        "Prose 12,494 against 14,759 words (0.85 times the pilot) for a recording 0.56 times as long.",
+        "Scaling section 2,096 words, above the pilot's largest section (1,178): it carries the learning-curve definition, two primary sources with both Kaplan constant sets, the hardware history and Proposition 3 with Figure 1. It is one argument; the TOC lists h2 only, so an h3 would not aid navigation. No change.",
+        "8 h3 against 21: the pilot splits long sections into subsections; chapter 1 has fewer and longer sections of one argument each.",
+        "Fewer display equations (15 against 27) and propositions (5 against 8): the lecture contains no equation, and the chapter adds only the mathematics its claims need (source note).",
+        "More evidence-label mentions (75 against 51): most of the lecture is course description, speaker experience and product claims, each graded."
+      ],
+      "repairs_made": [
+        "code-and-data: running-case noise increase in use (one derivation in the smallest setting, one limit).",
+        "implementation: meaning of the assertion tolerances."
+      ],
+      "repairs_needed": "None remaining.",
+      "length_judgment": "Treated as a diagnostic. The article went from 11,973 to 12,494 words under this counter: about 94 in pass 7 (S13 and the precision and attribution rewrites) and about 427 in pass 8 for the two repairs (code-and-data 418 to 646, implementation 327 to 526). No section pads; the round-2 editor found the removable cuts exhausted."
+    }
+  },
+  "editor_round_1": {
+    "report": "_editorial/cs230/reviews/lecture-01-introduction-to-deep-learning-round1.md",
+    "verdict": "yes-after-revision",
+    "blocking": "B1 (eq. 1.5 constants from Table 2, p. 11; limits 4.21 and 2.38) and B2 (exact 0-1 and squared-loss risks of an arbitrary rule) fixed with the editor text.",
+    "style": "S1-S12 applied; S6 written as \"the online HTML edition at deeplearningbook.org\"; S3 as a row in notation-proposals/ch01.md.",
+    "structural": "N1 careers cut to the kept items; N2 lead decision: Proposition 4 and exercise 5 kept in chapter 1; N3 eig_min, Err_208/Err_512 and the chi extension added to ch01.md."
+  },
+  "editor_round_2": {
+    "report": "_editorial/cs230/reviews/lecture-01-introduction-to-deep-learning-round2.md",
+    "verdict": "yes",
+    "blocking": 0,
+    "style": "S13-S16 applied in pass 7 with the report text.",
+    "structural": "N4 applied: eig_min and Err_208/Err_512 in symbol_ledger; parity_audit refreshed in pass 8."
+  }
+}

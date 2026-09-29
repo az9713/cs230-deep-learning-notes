@@ -1,0 +1,646 @@
+{
+  "video_id": "MGqQuQEUXhk",
+  "title": "The full cycle of a deep-learning project: from the first dataset to a monitored system",
+  "chapter_order": 3,
+  "recording_lecture_number": 3,
+  "recording_title": "Stanford CS230 | Autumn 2025 | Lecture 3: Full Cycle of a DL project",
+  "speaker": "Andrew Ng",
+  "date": "2025-10-07",
+  "date_source": "official syllabus row 'Lecture 3 10/7/2025 Topics: Full Cycle of a DL project' (official-syllabus.html)",
+  "status": "complete: passes 1-9, gates 6a, 6b (science-editor round 2 verdict yes, 0 blocking) and 6c passed; committed with chapters 1 and 2",
+  "transcript_provenance": "Local machine transcription; not publisher captions",
+  "transcription_model": "Systran/faster-whisper-small.en",
+  "audio_format": "M4A (AAC) fallback after the Opus stream returned HTTP 403; see acquisition-retry record",
+  "audio_sha256": "f0657fa7ae0eea204b4bc12bdcb64f99f95ecbc9fbcd435e0bf2ad60176b3502",
+  "audio_duration_seconds": 4024.2968,
+  "playlist_duration_seconds": 4025,
+  "transcript_sha256": "d6c8f351615f16d6ea1a6c598eb41cf4ac8a4721f7b06ce9f7b7ee1336826a86",
+  "transcript_segment_count": 126,
+  "transcript_first_start_seconds": 5.42,
+  "transcript_last_end_seconds": 4018.99,
+  "asr_second_check": "Ten short spans (1040-1110, 1400-1440, 2235-2275, 2295-2340, 2420-2462, 3080-3118, 3575-3612, 3300-3335, 3815-3860, 590-610 s) re-transcribed with faster-whisper 'small' (multilingual); agreed on 'over a hundred million dollars', '50,000 images', '30 frames per second', 'visual activity de...', '10% of the pixels ... a second ago', 'maybe five frames', 'one parameter, which is epsilon', 'data drift or concept drift', 're-authentication'.",
+  "slides": {
+    "url": null,
+    "alignment": "no deck linked on the syllabus for Lecture 3; the lecturer used a whiteboard",
+    "pages_rendered_and_inspected": [],
+    "video_frames_viewed": {
+      "source": "YouTube format 136 (720p video only), downloaded privately; frames kept outside the repository",
+      "times_seconds": [
+        60,
+        330,
+        655,
+        2330,
+        2380,
+        2440,
+        2520,
+        2560,
+        2620,
+        2700,
+        3020,
+        3060,
+        3120,
+        3140,
+        3340,
+        3600,
+        3700,
+        3860,
+        3990
+      ],
+      "contact_sheets": "one frame per 20 s over the whole recording (13 sheets); one per 10 s over 3620-3770 s; one per 24 s over 3150-3510 s"
+    },
+    "visual_findings": [
+      "~60 s: title 'Full Cycle of a DL project'.",
+      "~330 s: 'AI = Code + Data'; a 'DL system' box containing a smaller 'Models' box.",
+      "~655 s: list 'Specify problem; Get data; Design model; Train model; Deploy model; Monitor/Maintain model', brace over the middle three, loop Design model -> Train -> Analyse; door with camera; two pictures -> NN -> 'Same?'.",
+      "~2380-2620 s: 'Deployment: image -> NN -> 0/1; image -> VAD -> NN -> 0/1; Visual activity detection'; 'Option 1 (non-ML): See if #pixels changed >= epsilon'; 'Option 2 (NN-based): Train small NN on human present / no human present'.",
+      "~3700 s: loop annotated '2 days', '2 months' near Design model and 'Train 2 days'; 'Monitor/Maintain model' circled. A derivative written briefly on the lower board near 3700 s is erased within seconds and has no counterpart in the transcript; not used.",
+      "No writing found for drift or dashboards (3150-3990 s frames)."
+    ]
+  },
+  "evidence_scheme": "Each claim not proved on the page carries one class: empirical result (paper and page), engineering check (this chapter's code or shown arithmetic), product claim, speaker judgment (with recording time). Definitions and proved results carry no label. Each section opens with a provenance line.",
+  "running_case": "Door-unlock face verification: camera at 30 frames per second, visual activity detection gate (option 1: changed fraction Chg_t > c_frac = 0.10 with per-pixel threshold c_pix; option 2: small NN), selection of sharp frames, Siamese encoder f_theta with distance d and threshold c, 1:1 key-card check vs 1:N home allow-list, seasonal covariate shift (scarves, sunglasses), dashboards (re-authentication, accept rate, latency) with bands. Used in every section.",
+  "sections": [
+    {
+      "section": "model",
+      "start": 5.42,
+      "end": 343.06,
+      "lecture_material": "AI projects combine code and data; data on disk and future data are unknown; LLM applications are empirical for the same reason; courses concentrate on models; whiteboard 'AI = Code + Data', 'DL system' box containing a 'Models' box; list of six steps with design-train-analyse loop (to ~545 s).",
+      "research_extension": "Sculley et al. 2015 Figure 1 (p. 4); Breck et al. 2017 compilation analogy (p. 1).",
+      "teaching_construction": "Formal model: p_train, p_deploy, decision y-hat(x), loss in [0,1], risk R_p, test error Err_test; table of steps to sections.",
+      "evidence_class": "definition; speaker judgment"
+    },
+    {
+      "section": "door",
+      "start": 343.06,
+      "end": 679.73,
+      "lecture_material": "Face recognition to unlock a door; key-card check in office complexes; Siamese network comparing two pictures ('Same?' on the whiteboard); registration pictures; no retraining per home.",
+      "research_extension": "Bromley et al. 1993: identical sub-networks (p. 1), identical weights (p. 4), stored vector and threshold (p. 1), operating point 80%/95.5% (p. 7), test set (p. 6).",
+      "teaching_construction": "Encoder, distance, threshold, FAR/FRR and their monotonicity; 1:1 vs 1:N; Proposition 1 (union bound and independent case); office example 0.2 / 0.181; Figure 1.",
+      "evidence_class": "definition; theorem (proved); empirical result; engineering check; speaker judgment"
+    },
+    {
+      "section": "data-speed",
+      "start": 679.73,
+      "end": 1466.27,
+      "lecture_material": "How to collect data without Internet downloads; audience proposals; speed principle; >100 million US dollar dataset anecdote; opt-in collection in cafeterias; 48-hour sprints; data time commensurate with training time ('2 days', '2 months', 'Train 2 days' on the whiteboard); one-day loops; exception with 50,000 images.",
+      "research_extension": "Bromley et al. cafeteria collection and cleaning (p. 2); Taigman et al. 4.4M faces (p. 5), Siamese overfitting with ~9K photos and 120M parameters (p. 7).",
+      "teaching_construction": "Loop time t_loop = t_data + t_train + t_anl; 18 vs 1 loops in 90 days; Proposition 2.",
+      "evidence_class": "theorem (proved); engineering check; empirical result; speaker judgment"
+    },
+    {
+      "section": "probe",
+      "start": 1466.27,
+      "end": 1979.38,
+      "lecture_material": "LLM prompting is empirical; build and probe in a sandbox; change architecture or data; data-centric AI; error analysis; people wearing hats; data is not monolithic; frontier coding data; data quality.",
+      "research_extension": "Taigman et al.: YouTube frames worse 'mainly due to motion blur or viewing distance', 91.4% vs 97.35% (pp. 1, 7).",
+      "teaching_construction": "Slice decomposition by total probability; Proposition 3 (ceiling of a targeted fix); hats/glasses example.",
+      "evidence_class": "definition; theorem (proved); engineering check; empirical result; product claim; speaker judgment"
+    },
+    {
+      "section": "other-distribution",
+      "start": 1979.38,
+      "end": 2176.13,
+      "lecture_material": "Training data need not match the target distribution for a large network; cartoon faces 'usually doesn't hurt'; incorrect data excluded; small models and the Sherlock Holmes attic.",
+      "research_extension": "Sugiyama et al. 2007: ERM consistent under covariate shift only for a correct model (p. 3, attributed to Shimodaira 2000); IWERM (p. 4). Rabanser et al. covariate-shift factorisation (p. 2). Taigman et al. domain distributions hurt (p. 5), fine-tuning to correct biases (p. 7).",
+      "teaching_construction": "Covariate vs concept shift definitions; Proposition 4 (correct specification); least-squares demonstration (cubic vs degree 9, wrong labels).",
+      "evidence_class": "definition; theorem (proved); engineering check; empirical result; speaker judgment"
+    },
+    {
+      "section": "gate",
+      "start": 2176.13,
+      "end": 3140.72,
+      "lecture_material": "Hosting the model; 30 frames per second too expensive; visual activity detection gate (whiteboard 'VAD', 'Visual activity detection'); option 1 pixel change with 10% of pixels one second apart, option 2 small NN (whiteboard); false triggers tree/car/cat; low threshold; start with option 1 for speed; option 1 not enough in practice; selecting ~5 in-focus frames; network for face and focus. h3 options from 2391.76, h3 frames from 3005.84.",
+      "research_extension": "Viola & Jones 2001: false-negative rate as key measure (p. 2), first stage 100%/40%, ~60 instructions, harder examples for later stages (p. 5). Taigman et al. 0.33 s per image (p. 8).",
+      "teaching_construction": "Proposition 5 (cascade cost and exact recall); changed-fraction statistic Chg_t with c_pix and c_frac; synthetic scene; Proposition 6 (several frames).",
+      "evidence_class": "definition; theorem (proved); engineering check; empirical result; speaker judgment"
+    },
+    {
+      "section": "reference",
+      "start": 3140.72,
+      "end": 3301.28,
+      "lecture_material": "Good accuracy; human-level performance as reference for bias/variance diagnosis; face verification better than humans; recommendation where humans are poor.",
+      "research_extension": "Taigman et al. Table 3: 0.9735 +/- 0.0025 vs human cropped 0.9753 (p. 7); 'closely approaching' (p. 1).",
+      "teaching_construction": "Bayes error definition; Proposition 7 (human error >= Bayes error).",
+      "evidence_class": "definition; theorem (proved); empirical result; speaker judgment"
+    },
+    {
+      "section": "drift",
+      "start": 3301.28,
+      "end": 3706.96,
+      "lecture_material": "Data drift and concept drift; scarves, sunglasses, other country; test set vs working system; web search, factory inspection, Texas traffic lights; option 1 robust because 'one parameter'; NN more likely to overfit (h3 robust-gate from 3580.58).",
+      "research_extension": "Rabanser et al. 'fail silently', two-sample tests best (p. 1); Sugiyama et al. IWERM unstable (p. 4); Taigman et al. time-stamp hold-out (p. 5); Sculley et al. fixed thresholds (p. 7).",
+      "teaching_construction": "Concept-shift example (revoked card); total variation; Proposition 8; Proposition 9 (importance weighting, variance bound, effective sample size); Gaussian-shift computation; Proposition 10 (invariance of a statistic-based gate) and the lighting counterexample.",
+      "evidence_class": "definition; theorem (proved); engineering check; empirical result; speaker judgment"
+    },
+    {
+      "section": "monitoring",
+      "start": 3706.96,
+      "end": 4018.99,
+      "lecture_material": "User permission and privacy; brainstorming failures; anecdote of never seeing an unlisted failure; re-authentication, accept vs reject, latency dashboards; many dashboards then pruning; upper and lower alarms; maintenance.",
+      "research_extension": "Breck et al.: labels unavailable (p. 7), dashboards and alerts, threshold tuning (p. 6), dramatic and slow-leak regressions (p. 7). Sculley et al. prediction bias (p. 7).",
+      "teaching_construction": "Binomial band; Proposition 11 (false pages from many metrics); numbers 0.00227, 0.107, 41.4, 37 simulated, detection 0.382 and 0.966.",
+      "evidence_class": "theorem (proved); engineering check; speaker judgment"
+    }
+  ],
+  "references": [
+    {
+      "title": "Bromley, Guyon, LeCun, Sackinger, Shah 1993, Signature Verification using a 'Siamese' Time Delay Neural Network (NIPS 6)",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/1993/file/288cc0ff022877bd3df94bc9360b9c5d-Paper.pdf",
+      "supports": "Siamese architecture, shared weights, threshold verification; cafeteria collection; operating point (PDF pp. 1, 2, 4, 6, 7 = printed 737, 738, 740, 742, 743)."
+    },
+    {
+      "title": "Taigman, Yang, Ranzato, Wolf 2014, DeepFace (CVPR 2014, pp. 1701-1708)",
+      "url": "https://doi.org/10.1109/CVPR.2014.220",
+      "supports": "LFW 97.35% vs human 97.53%; domain mismatch; training size; time hold-out; overfitting; 0.33 s per image (pp. 1, 5, 7, 8)."
+    },
+    {
+      "title": "Viola, Jones 2001, Rapid Object Detection using a Boosted Cascade of Simple Features (CVPR 2001)",
+      "url": "https://doi.org/10.1109/CVPR.2001.990517",
+      "supports": "Attentional cascade; false-negative rate key; first stage 100%/40%; harder examples at later stages (pp. 2, 5)."
+    },
+    {
+      "title": "Sugiyama, Krauledat, Muller 2007, Covariate Shift Adaptation by Importance Weighted Cross Validation (JMLR 8, 985-1005)",
+      "url": "https://www.jmlr.org/papers/volume8/sugiyama07a/sugiyama07a.pdf",
+      "supports": "ERM consistency under covariate shift for correct models; IWERM consistent but unstable (PDF pp. 3-4 = printed 987-988)."
+    },
+    {
+      "title": "Rabanser, Gunnemann, Lipton 2019, Failing Loudly (NeurIPS 2019)",
+      "url": "https://arxiv.org/abs/1810.11953",
+      "supports": "Silent failure; two-sample tests best in their study; covariate/label shift factorisations (pp. 1-2)."
+    },
+    {
+      "title": "Sculley et al. 2015, Hidden Technical Debt in Machine Learning Systems (NIPS 28)",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf",
+      "supports": "Small box of ML code (p. 4); fixed thresholds, prediction bias (p. 7)."
+    },
+    {
+      "title": "Breck, Cai, Nielsen, Salib, Sculley 2017, The ML Test Score (IEEE Big Data 2017, pp. 1123-1132)",
+      "url": "https://doi.org/10.1109/BigData.2017.8258038",
+      "supports": "Code and data as source (p. 1); dashboards, alerts, threshold tuning (p. 6); label latency, slow leaks (p. 7)."
+    }
+  ],
+  "identifiers_verified_by_record": "Crossref API queried 2026-09-28 for DOIs 10.1109/BigData.2017.8258038, 10.1109/CVPR.2014.220, 10.1109/CVPR.2001.990517: titles, venues, years and page ranges match the entries above. The NIPS venues of Bromley et al. (1993) and Sculley et al. (2015) are not printed on the PDFs; they rest on the proceedings.neurips.cc record paths paper_files/paper/1993 and paper_files/paper/2015 from which the PDFs were downloaded on 2026-09-28. The NeurIPS 2019 venue of Rabanser et al. is printed on PDF p. 1.",
+  "research_ledger": [
+    {
+      "id": "Bromley 1993 NIPS",
+      "page": 1,
+      "quote": "This network consists of two identical sub-networks joined at their outputs.",
+      "claim": "Siamese architecture",
+      "status": "page verified"
+    },
+    {
+      "id": "Bromley 1993 NIPS",
+      "page": 1,
+      "quote": "Signatures closer to this stored representation than a chosen threshold are accepted",
+      "claim": "threshold verification against a stored vector",
+      "status": "page verified"
+    },
+    {
+      "id": "Bromley 1993 NIPS",
+      "page": 2,
+      "quote": "Data was collected in a university and at Bell Laboratories and NCR cafeterias.",
+      "claim": "cafeteria collection",
+      "status": "page verified"
+    },
+    {
+      "id": "Bromley 1993 NIPS",
+      "page": 2,
+      "quote": "the data collection was not closely monitored so it was no surprise when the data was found to be quite noisy",
+      "claim": "noisy data cleaned by rules",
+      "status": "page verified"
+    },
+    {
+      "id": "Bromley 1993 NIPS",
+      "page": 4,
+      "quote": "the two sub-networks were constrained to have identical weights",
+      "claim": "shared weights",
+      "status": "page verified"
+    },
+    {
+      "id": "Bromley 1993 NIPS",
+      "page": 6,
+      "quote": "tested using a set of 532 genuine signatures and 424 forgeries for 43 different people",
+      "claim": "test set of the operating point",
+      "status": "page verified"
+    },
+    {
+      "id": "Bromley 1993 NIPS",
+      "page": 7,
+      "quote": "With the threshold set to detect 80% of forgeries, 95.5% of genuine signatures were detected",
+      "claim": "FAR/FRR operating point",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/CVPR.2014.220",
+      "page": 1,
+      "quote": "Our method reaches an accuracy of 97.35% on the Labeled Faces in the Wild (LFW) dataset ... closely approaching human-level performance",
+      "claim": "LFW accuracy",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/CVPR.2014.220",
+      "page": 5,
+      "quote": "training and testing within different domain distributions hurt performance considerably",
+      "claim": "domain mismatch hurts (authors' statement citing their ref [5])",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/CVPR.2014.220",
+      "page": 5,
+      "quote": "The SFC dataset includes 4.4 million labeled faces from 4,030 people",
+      "claim": "training-set size",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/CVPR.2014.220",
+      "page": 5,
+      "quote": "the most recent 5% of face images of each identity are left out for testing ... in order to simulate continuous identification through aging",
+      "claim": "time-stamp hold-out",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/CVPR.2014.220",
+      "page": 7,
+      "quote": "we have observed substantial overfitting ... insufficient to reliably estimate more than 120M parameters",
+      "claim": "data volume vs parameters",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/CVPR.2014.220",
+      "page": 7,
+      "quote": "to correct for some of the data set dependent biases",
+      "claim": "fine-tuning on target benchmark",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/CVPR.2014.220",
+      "page": 7,
+      "quote": "Human, cropped 0.9753; DeepFace-ensemble 0.9735+/-0.0025 unrestricted (Table 3)",
+      "claim": "human vs machine on LFW",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/CVPR.2014.220",
+      "page": 7,
+      "quote": "mainly due to motion blur or viewing distance ... We report an accuracy of 91.4%",
+      "claim": "video-frame quality and YTF accuracy",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/CVPR.2014.220",
+      "page": 8,
+      "quote": "Overall, the DeepFace runs at 0.33 seconds per image",
+      "claim": "per-image cost on a 2.2 GHz single core",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/CVPR.2001.990517",
+      "page": 2,
+      "quote": "The key measure of such an approach is the 'false negative' rate of the attentional process.",
+      "claim": "gate miss rate is key",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/CVPR.2001.990517",
+      "page": 5,
+      "quote": "the threshold can be adjusted to detect 100% of the faces with a false positive rate of 40%",
+      "claim": "first-stage operating point",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/CVPR.2001.990517",
+      "page": 5,
+      "quote": "Computation of the two feature classifier amounts to about 60 microprocessor instructions.",
+      "claim": "first-stage cost",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/CVPR.2001.990517",
+      "page": 5,
+      "quote": "the second classifier faces a more difficult task than the first",
+      "claim": "stages are not independent",
+      "status": "page verified"
+    },
+    {
+      "id": "JMLR 8 (2007) 985-1005",
+      "page": 3,
+      "quote": "If the model is correct, ERM is still consistent even under the covariate shift.",
+      "claim": "correct specification (printed p. 987, footnote 3)",
+      "status": "page verified"
+    },
+    {
+      "id": "JMLR 8 (2007) 985-1005",
+      "page": 3,
+      "quote": "under the covariate shift where ... ERM is not generally consistent anymore",
+      "claim": "misspecified case",
+      "status": "page verified"
+    },
+    {
+      "id": "JMLR 8 (2007) 985-1005",
+      "page": 4,
+      "quote": "Although IWERM is consistent, it is not efficient and can be rather unstable (Shimodaira, 2000).",
+      "claim": "importance weighting unstable (printed p. 988)",
+      "status": "page verified"
+    },
+    {
+      "id": "arXiv:1810.11953",
+      "page": 1,
+      "quote": "tend to fail silently",
+      "claim": "silent failure",
+      "status": "page verified"
+    },
+    {
+      "id": "arXiv:1810.11953",
+      "page": 1,
+      "quote": "a two-sample-testing-based approach, using pre-trained classifiers for dimensionality reduction, performs best",
+      "claim": "shift detection finding",
+      "status": "page verified"
+    },
+    {
+      "id": "arXiv:1810.11953",
+      "page": 2,
+      "quote": "covariate shift q(x, y) = q(x)p(y|x) ... label shift q(x, y) = q(y)p(x|y)",
+      "claim": "factorisations",
+      "status": "page verified"
+    },
+    {
+      "id": "Sculley 2015 NIPS",
+      "page": 4,
+      "quote": "Only a small fraction of real-world ML systems is composed of the ML code",
+      "claim": "small box of ML code",
+      "status": "page verified"
+    },
+    {
+      "id": "Sculley 2015 NIPS",
+      "page": 7,
+      "quote": "the old manually set threshold may be invalid",
+      "claim": "fixed thresholds",
+      "status": "page verified"
+    },
+    {
+      "id": "Sculley 2015 NIPS",
+      "page": 7,
+      "quote": "changes in metrics such as this are often indicative of an issue that requires attention",
+      "claim": "prediction bias",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/BigData.2017.8258038",
+      "page": 1,
+      "quote": "where the source is both code and training data",
+      "claim": "code plus data",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/BigData.2017.8258038",
+      "page": 6,
+      "quote": "automatically alert the engineering team when particular metrics deviate significantly from expectations",
+      "claim": "dashboards and alerts",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/BigData.2017.8258038",
+      "page": 6,
+      "quote": "careful tuning of alerting thresholds is needed to achieve a useful balance between false positive and false negative rates",
+      "claim": "alert thresholds",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/BigData.2017.8258038",
+      "page": 7,
+      "quote": "it is not always possible to know the correct labels even shortly after serving time",
+      "claim": "label latency",
+      "status": "page verified"
+    },
+    {
+      "id": "DOI 10.1109/BigData.2017.8258038",
+      "page": 7,
+      "quote": "it is crucial to monitor both dramatic and slow-leak regressions in prediction quality",
+      "claim": "slow leaks",
+      "status": "page verified"
+    }
+  ],
+  "sources_not_acquired": [
+    "Moreno-Torres et al. 2012, A unifying view on dataset shift in classification (DOI 10.1016/j.patcog.2011.06.019, verified on Crossref): publisher copy paywalled; the open copy's host did not resolve on 2026-09-28. Not cited; concept shift is a definition of this book and the covariate-shift factorisation is cited to Rabanser et al. p. 2.",
+    "Shimodaira 2000 (DOI 10.1016/S0378-3758(00)00115-4, verified on Crossref): paywalled. Not cited directly; its result is cited as stated and attributed on the page of Sugiyama et al."
+  ],
+  "unverified_claims": [
+    "Speaker: face verification systems now better than humans (~3214-3240 s); not checked beyond the 2014 DeepFace comparison.",
+    "Speaker: >100 million US dollar dataset purchase anecdote (~1046-1104 s).",
+    "Speaker: some face systems need >= 50,000 images (~1403-1466 s).",
+    "Speaker: selecting ~5 in-focus frames gave a significant boost (~3086-3113 s); no number.",
+    "Speaker: option 1 alone did not work well enough in practice (~3005-3034 s).",
+    "Speaker: never seen a failure the brainstorm missed (~3744-3802 s).",
+    "Speaker: speed of execution predicts startup success (~988-1046 s).",
+    "Product claims about Claude, OpenAI and Gemini 2.5 Pro coding ability (~1734-1790 s).",
+    "Speaker: California self-driving models failed in Texas until new data (~3550-3580 s).",
+    "Taigman et al. p. 5 statement that domain mismatch hurts cites their reference [5], which was not read."
+  ],
+  "asr_uncertainties": [
+    "'assigned least network', 'a sigmes network' = Siamese network (confirmed by the whiteboard 'Same?' drawing and context)",
+    "'VAD sends a visual activity detection' = VAD stands for visual activity detection (confirmed on the whiteboard)",
+    "'special epsilon' = the gate threshold written as epsilon on the whiteboard",
+    "'Pill' = PIL, the Python imaging library",
+    "'OpenIRM, Throbic, Gemini, or Metalama' = OpenAI, Anthropic, Gemini, Meta Llama",
+    "'OMs', 'LMS', 'LN1' = LLMs",
+    "'e-relevant' = irrelevant",
+    "'V authentication' = re-authentication (second transcription: 're-authentication')",
+    "'own base ... genitive AI base' = LLM-based, generative-AI-based",
+    "'phase recognition' = face recognition",
+    "'11.52 AM ... Tuesday ... Thursday 1152' = a 48-hour example",
+    "Speaker's pronoun for the chief executive differs between the two transcriptions; the chapter uses no pronoun",
+    "Transcript gap 3704.11-3706.96 s coincides with a brief board change; no content lost that the chapter uses"
+  ],
+  "symbol_ledger": [
+    {
+      "symbol": "x, y, D, m, p_train, p_deploy, p_test, y-hat, L, R_p, Err_test",
+      "first_section": "model",
+      "definition": "Input, label, training set and size, training/deployment/test distributions, system decision, loss in [0,1], risk under p, test error."
+    },
+    {
+      "symbol": "f_theta, theta, n_e, d, c, FAR(c), FRR(c), N_id",
+      "first_section": "door",
+      "definition": "Encoder and parameters, encoding dimension, distance, threshold, false-accept and false-reject rates, number of authorised identities."
+    },
+    {
+      "symbol": "t_data, t_train, t_anl, t_loop, t_fix",
+      "first_section": "data-speed",
+      "definition": "Days to collect data, train, analyse; loop time; t_train + t_anl."
+    },
+    {
+      "symbol": "P(slice), Err_slice, Err^new_slice, Err",
+      "first_section": "probe",
+      "definition": "Probability of a slice under deployment, error on it, error on it after a fix, overall error."
+    },
+    {
+      "symbol": "p(x), p(y|x), f*",
+      "first_section": "other-distribution",
+      "definition": "Input distribution, conditional label distribution, pointwise-optimal predictor (correct specification)."
+    },
+    {
+      "symbol": "t (frame index), C_1, C_2, p_fire, n_pix, x_{t,j}, n_lag, Chg_t, c_pix, c_frac, n_fr, p_acc,j",
+      "first_section": "gate",
+      "definition": "Camera frame index; gate and encoder costs per frame; probability the gate passes a frame; pixel values per frame; value j of frame t; lag of 30 frames; changed fraction; per-pixel and fraction thresholds; frames compared per approach; per-frame acceptance probability."
+    },
+    {
+      "symbol": "K, k, p(k|x), Err_Bayes, Err_hum, Err_train, p^hum_k(x)",
+      "first_section": "reference",
+      "definition": "Classes, class index, class posterior, Bayes error, human error, training error, human's answer probabilities (proof only)."
+    },
+    {
+      "symbol": "TV(p,q), E, E_+, omega(x), m_eff, mu",
+      "first_section": "drift",
+      "definition": "Total variation distance, an event, the event where one density exceeds the other, importance weight, effective sample size, mean of the shifted Gaussian."
+    },
+    {
+      "symbol": "p_re, hat p_re, n_att, c_lo, c_hi, p_fa, n_met, n_day",
+      "first_section": "monitoring",
+      "definition": "Normal re-authentication probability and its daily estimate, attempts per day, band edges, per-metric daily false-alarm probability, number of metrics, number of days."
+    }
+  ],
+  "notation_decisions": [
+    "Whiteboard epsilon (gate threshold) written c_frac; epsilon is DDPM noise (NOTATION section 5).",
+    "Brief's c_1, c_2 written C_1, C_2 (NOTATION section 9).",
+    "Recording's 'data drift' called covariate shift; 'concept drift' called concept shift.",
+    "Frame index t with x_{t,j}; the process is named at first use in the gate section; proposed row in notation-proposals/ch03.md.",
+    "Human answer probabilities in the proof of Proposition 7 written p^hum_k(x) (round 1: renamed from r_k(x); r is the reward).",
+    "Per-frame acceptance probability in Proposition 6 written p_acc,j (round 1: renamed from a_j; a is the action).",
+    "Proof-local ell and set B removed (round 1); events are E, E_+ with indicator 1[.]; slice error after a fix is Err^new_slice, not e prime; Phi defined at first use in exercise 3.",
+    "No sigma for standard deviations: written as sqrt(p(1-p)/n) or in words."
+  ],
+  "code_check": {
+    "file": "embedded block in section 'implementation' (identical to the scratch file that was executed)",
+    "sha256_of_executed_file": "c418dd9b7ee1a12a75089d9631049f098cd1a6f4f4cdef6d44ae350d1589d6cb",
+    "command": "python -I <file> in a fresh process",
+    "python": "3.13.5",
+    "numpy": "2.2.6",
+    "result": "exit 0; all assertions passed; wall time 0.49 s; stdout: gate fraction changed: {'empty': 0.0, 'person': 0.312, 'person+glasses': 0.312, 'light wind': 0.023, 'strong wind': 0.118, 'distant car': 0.008, 'cat': 0.152, 'lights on': 1.0} || cascade: P(fire) = 0.625 | exact recall = 0.527 | product = 0.5563 | recall given fire = 0.8432 || relevant-region MSE: {(3, 'relevant'): 0.0004, (3, '+irrelevant'): 0.0863, (3, '+wrong labels'): 0.5494, (9, 'relevant'): 0.0005, (9, '+irrelevant'): 0.0002, (9, '+wrong labels'): 0.5498} || importance weighting (estimate, truth, ESS, m*exp(-mu^2)): {1.0: (0.311, 0.309, 3896, 3679), 2.0: (0.639, 0.691, 511, 183)} || band = (0.0173, 0.0827) | counts (7, 33) || per-metric false alarm = 0.00227 | P(any of 50) = 0.107 | pages in 365 days = 37 || daily detection of a drift to 8% = 0.382",
+    "pep8": "pycodestyle (default settings): no issues"
+  },
+  "pass_log": [
+    {
+      "pass": "1 coverage",
+      "result": "Transcript read sequentially in full (5.42-4018.99 s, 126 segments); nine major sections mapped with spans; syllabus date verified; video frames viewed for all whiteboard-dependent claims."
+    },
+    {
+      "pass": "2 prose",
+      "result": "Full-depth draft in recording order; running case (door) introduced in section 'door' and reused in every later section."
+    },
+    {
+      "pass": "3 mathematics",
+      "result": "Eleven propositions with proofs (1:N union bound; loop rate; slice ceiling; correct specification; cascade cost/recall; several frames; human >= Bayes; TV bound; importance weighting and variance; gate invariance; monitoring false pages). Symbol ledger above."
+    },
+    {
+      "pass": "4 research",
+      "result": "7 primary sources acquired and page-read; 34 page-level ledger entries; 2 sources not acquired and not cited."
+    },
+    {
+      "pass": "5 implementation",
+      "result": "One NumPy program, 5 parts, asserts; fresh-process run passed."
+    },
+    {
+      "pass": "6 exercises",
+      "result": "Six exercises: design+computation (1, 6), computation with assumption check (2), counterexample (3), diagnosis (4), derivation (5); full solutions."
+    },
+    {
+      "pass": "6a visual",
+      "result": "No slide deck exists; whiteboard content verified on video frames (see slides.video_frames_viewed)."
+    },
+    {
+      "pass": "6c citations",
+      "result": "Every cited claim checked on the PDF page (research_ledger); DOIs checked on Crossref."
+    },
+    {
+      "pass": "static checks",
+      "result": "validate_books.static_checks() in memory on the whole repository (absolute path): passed with 0 failures; counts are repository-wide and changed as other chapters were added (last run: 54 timestamps, 110 local links). rigorous-explainer checktex, checklt, check_links, check_svg, check_prose, check_proofs: 0 issues; verify_dom 0 mjx-merror, 0 broken links; check_overlap 0; check_frame 0."
+    },
+    {
+      "pass": "browser",
+      "result": "Playwright (Chrome, network blocked) at 1280 px and 390 px: 0 mjx-merror, 410 typeset math nodes, no horizontal overflow, no page errors, 13 h2 and 13 TOC entries."
+    }
+  ],
+  "editor_round_1": {
+    "report": "_editorial/cs230/reviews/lecture-03-full-cycle-of-a-deep-learning-project-round1.md",
+    "verdict": "yes-after-revision",
+    "blocking": "B1 (E[omega^2] = e^{mu^2} derived inline in section drift) and B2 (exercise 6: band at counts < 7 or > 34, p_fa 0.00130, detection 0.315; weekly counts 104-176, p_fa 0.00159, detection 0.9997; 'changes nothing' removed) fixed with the editor text; numbers re-verified with the binomial.",
+    "style": "S1-S21 fixed. S6 applied as a definition sentence at the start of exercise 3(a) rather than a mid-equation clause. S17 applied at the dfn and at the three other 1:N occurrences. S21 covered by B2.",
+    "structural": "N1 back-pointer to chapter 2 added in section door. N2 cuts applied: laboratory paragraph deleted, attic sentence shortened, two sentences of the laboratory closing paragraph cut, language-model paragraph of section probe halved. N3 recorded in notation-proposals/ch03.md; r_k renamed p^hum_k in the chapter as recommended.",
+    "code": "unchanged; rerun with python -I in a fresh process after the edits: exit 0, output identical to the recorded run."
+  },
+  "parity_audit": {
+    "method": "One counter (scratch parity.py) run on both CS230 chapters: article between content markers with SVG, pre/code, script and all MathJax removed; per-section statistics exclude the exercises, sources and limits sections. Paper links are counted outside the sources list; timestamp links excluded. This counter gives the pilot 27 body paper links where the pilot's own record says 72 external links, so only same-counter figures are compared here.",
+    "diagnostics": {
+      "cs230_L3": {
+        "prose_words_article": 12582,
+        "h2_sections": 13,
+        "section_words_median_excl_exercises_sources_limits": 933.0,
+        "section_words_min": 194,
+        "section_words_max": 1740,
+        "h3_subsections": 13,
+        "display_equations": 8,
+        "inline_math_spans": 385,
+        "external_links_in_body_excl_timestamps": 9,
+        "paper_links_in_body": 9,
+        "distinct_papers_linked": 10,
+        "code_blocks": 2,
+        "figures": 1,
+        "tables": 2,
+        "exercises": 6,
+        "solution_words_median": 180.0,
+        "solution_words_min": 119,
+        "evidence_label_mentions": 51,
+        "propositions_proved": 11,
+        "timestamps": 12
+      },
+      "cs230_L4": {
+        "prose_words_article": 14877,
+        "h2_sections": 19,
+        "section_words_median_excl_exercises_sources_limits": 768.0,
+        "section_words_min": 323,
+        "section_words_max": 1177,
+        "h3_subsections": 21,
+        "display_equations": 27,
+        "inline_math_spans": 801,
+        "external_links_in_body_excl_timestamps": 27,
+        "paper_links_in_body": 27,
+        "distinct_papers_linked": 26,
+        "code_blocks": 2,
+        "figures": 3,
+        "tables": 5,
+        "exercises": 6,
+        "solution_words_median": 126.5,
+        "solution_words_min": 79,
+        "evidence_label_mentions": 51,
+        "propositions_proved": 8,
+        "timestamps": 18
+      }
+    },
+    "qualitative": {
+      "questions_answered_per_central_section": "Each of the 9 lecture sections states its question in its opening paragraph, defines terms before use (FAR/FRR, covariate and concept shift, Bayes error, TV, importance weight, Chg_t), states its hypotheses beside each proposition, proves the proposition on the page, gives a numerical check (shown arithmetic or the laboratory's asserted output), states where the hypothesis fails at the door, and returns to the running case.",
+      "differences_from_pilot": [
+        "Prose 12,582 vs 14,877 article words for a 4,025 s vs 6,437 s recording: about 188 vs 139 words per recording-minute. The surplus carries 11 proved propositions (pilot 8) and the evidence audit of a lecture whose claims are mostly speaker judgment (51 evidence-label mentions in both).",
+        "Display equations 8 vs 27 and inline math 385 vs 801: the lecture is math-light (no deck, whiteboard only); the propositions are short probability arguments rather than derivations of models.",
+        "Distinct papers 7 (10 link targets, because three papers are linked both by DOI and by open PDF) vs 26; body paper links 9 vs 27. The chapter cites by name and page 38 times (editor count); links are given at first mention only.",
+        "Figures 1 vs 3, tables 2 vs 5: the gate scene and the loss table are carried by computed numbers in prose and one table; no plot would add an inference the numbers do not already give.",
+        "Solutions median 180 words (min 119) vs 126.5 (min 79); every solution shows its reasoning and its numbers were computed.",
+        "Minimum section 194 words is the laboratory (its code excluded from the count); the smallest lecture section, reference, has 544 words."
+      ],
+      "repairs_needed": "None. The round-2 editor named no structural note; round-1 cuts were applied. Lower equation and paper counts follow from the lecture's subject (project practice, no deck) rather than from an abbreviated workflow: each lecture claim that admits a formal statement has a proposition, and each external claim has a page.",
+      "length_judgment": "Diagnostic only. Longer per recording-minute than the pilot because the lecture is dense in speaker judgments, each of which is graded and, where a mechanism exists, given one (Propositions 4, 5, 10)."
+    }
+  },
+  "editor_round_2": {
+    "report": "_editorial/cs230/reviews/lecture-03-full-cycle-of-a-deep-learning-project-round2.md",
+    "verdict": "yes",
+    "blocking": 0,
+    "style": "S1 (TV identity, symmetric case) applied in pass 7."
+  },
+  "pass_7_prose": "Round-2 S1 applied (the TV paragraph now states the exchanged case). Read-aloud pass: overloaded sentences split at 18 points (1:N definition, dependence remark, dataset anecdote, Bromley cleaning, Proposition 2 statement, Taigman overfitting, Sugiyama consistency gloss, polynomial caveat, Taigman domain remark, DeepFace timing, frame dependence, TV identity, importance-weighting numbers, Sculley threshold, lighting counterexample, brainstorm anecdote, prediction-bias caveat, yearly false alarms); paragraphs with two moves split at 6 points. No claim, number or citation added or removed; word count 12,024 -> 12,042.",
+  "privacy_note": "No verbatim recording sentences beyond short quoted words; recording statements are paraphrased with timestamps. Frames, audio and transcripts stay outside the repository.",
+  "prose_word_count": {
+    "sections": 12042,
+    "article": 12582,
+    "method": "article between content markers with SVG, pre/code and all MathJax removed"
+  },
+  "book_content_sha256": "05dbe75e6d630ffd66f4c30152bb5f994a84a1c959a360ebc3f5bfa5418b23df"
+}
