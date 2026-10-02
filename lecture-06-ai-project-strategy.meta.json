@@ -1,0 +1,740 @@
+{
+  "video_id": "s6JVGzABKho",
+  "title": "Deciding what to try next when a learned system fails",
+  "chapter_order": 6,
+  "recording_lecture_number": 6,
+  "recording_title": "Stanford CS230 | Autumn 2025 | Lecture 6: AI Project Strategy",
+  "speaker": "Andrew Ng",
+  "date": "2025-10-28",
+  "status": "Independent chapter/book review accepted; local reading edition; course completion gates incomplete",
+  "transcript_provenance": "Local machine transcription; not publisher captions",
+  "transcription_model": "Systran/faster-whisper-small.en",
+  "second_transcription": "Twelve short spans re-transcribed with faster-whisper medium.en to check numbers and names (1020-1070, 1540-1612, 1740-1830, 1960-2060, 2180-2240, 2262-2330, 2995-3045, 3060-3160, 3150-3260, 3590-3645, 4130-4180, 4320-4400 s).",
+  "audio_sha256": "46eb16bb82c96e4ce317a8f673dc2e4103bb57daaa68dfcaacb04648941f6bb5",
+  "audio_duration_seconds": 4517.901,
+  "audio_duration_seconds_transcript_json": 4517.888,
+  "playlist_duration_seconds": 4518,
+  "transcript_sha256": "4f28be8ebdcb9a7f229b4eb2aec810838371890b217223b05e3a37156d79dfd9",
+  "transcript_sha256_file": "transcript.machine.json",
+  "transcript_segment_count": 145,
+  "transcript_first_start_seconds": 5.26,
+  "transcript_last_end_seconds": 4512.75,
+  "slides": {
+    "aligned_deck": null,
+    "linked_decks": [
+      "https://cs230.stanford.edu/syllabus/fall_2024/lecture5_guest.pdf (60 pp., Rajpurkar, medical imaging)",
+      "https://cs230.stanford.edu/syllabus/fall_2024/lecture_5.pdf (6 pp., Katanforoosh, cell segmentation)"
+    ],
+    "alignment": "Neither linked Fall 2024 deck is discussed in the recording; neither is used. The recording is the topic authority. Visual evidence comes from whiteboard frames of the recording.",
+    "pages_rendered_and_inspected": [],
+    "frames_viewed_seconds": [
+      250,
+      900,
+      940,
+      2240,
+      2295,
+      2650,
+      4356,
+      4360,
+      4364,
+      4368,
+      4400,
+      4440
+    ],
+    "viewing_record": {
+      "author_resume_2026-09-28": "Frames extracted from the 720p video with ffmpeg and viewed by the resuming author; crops enlarged at 2295 s (train/dev figures) and 4356-4364 s (share row). Frames of the earlier author were not relied on except 250 and 900 s, which were viewed again."
+    },
+    "visual_findings": [
+      "250 s: sketch of the desk lamp.",
+      "900-940 s: papers 1-7 on rows from 0% to 100%; one read fully, the others skimmed.",
+      "2240 s: \"100 trng audio clips\", \"25 dev\", \"0 test\", arrow to \"3000\"; \"1:10\", \"1:2\"; \"97% accurate\" beside print(\"0\"); waveform with 3-s window, 1-s phrase, label row of 0s then 1110 after the phrase end, red rectangles for positive windows.",
+      "2295 s: \"95% on trng\", \"50% on dev\" (faint; the 5 is legible when enlarged; both transcriptions say 50%).",
+      "2650 s: noise waveform + clean waveform = mixture with two boxed segments, one labelled RTO and one another word.",
+      "4356-4364 s: page-selection share first written 40%, then 5% written under web search.",
+      "4368-4400 s: 70% under fetch top pages (40% replaced), column circled, 20% under writing; crosses per row; notes column \"Bob instd of NASA\".",
+      "4440 s: whole board: Morning look at results/error analysis, Afternoon code, Evening launch training job, Night train NN (4 hours); error vs months curves \"you\" and \"competitor\"; Audio -> [NN] -> RTO?; Video -> [VAD] -> [NN] -> 0/1 (VAD here is the visual activity gate of chapter 3); query -> [search terms] -> [web search] -> [fetch top pages] -> [writing] -> output; shares 20%, 5%, 70%, 20%."
+    ]
+  },
+  "evidence_scheme": "Each claim not proved on the page carries one class: empirical result (paper and page), engineering check (this chapter's code or shown arithmetic), product claim, speaker judgment (with recording time). Definitions and results proved on the page carry no label. Each section opens with a provenance line.",
+  "running_case": "Wake-word lamp (thread 2): 100 training clips x 30 windows, one positive per clip, p+ = 1/30; hidden features h|y ~ N(+-mu, I), mu = (0.5, 0.5), exact log-odds 2 mu.h - log 29 (original construction). Second half: the linear deep researcher (thread 3) with the whiteboard spreadsheet; synthetic 50-row spreadsheets.",
+  "sections": [
+    {
+      "section": "model",
+      "start": 5.26,
+      "end": 662.61,
+      "lecture_material": "Development process vs algorithms; 10x productivity and year-vs-month claims; the desk lamp named Robert with no Wi-Fi setup; restriction to the phrase \"Robert, turn on\"; on-device chip; audience proposals.",
+      "research_extension": "None.",
+      "teaching_construction": "Windows, labels, logit and firing rule; accuracy, recall, precision, prevalence; training/dev/test sets; running case h|y ~ N(+-mu, I), mu = (0.5, 0.5), p+ = 1/30, exact log-odds 2 mu.h - log 29.",
+      "evidence_class": "definition; theorem (shown); speaker judgment"
+    },
+    {
+      "section": "before-training",
+      "start": 662.61,
+      "end": 1545.55,
+      "lecture_material": "Speed of building over choice of idea; general ASR too heavy for an edge chip; small networks for one phrase; no agreed architecture; broad literature skim; e-mailing experts (~50% reply); no public dataset of the phrase; consent when recording; natural before synthetic data; the ~20 cars of a video game.",
+      "research_extension": "Chen, Parada, Heigold 2014 (small-footprint KWS design, p. 1); Richter et al. 2016 (game data supplementing CamVid, p. 1).",
+      "teaching_construction": "None; advice reported without a model by design.",
+      "evidence_class": "speaker judgment; empirical result"
+    },
+    {
+      "section": "clips",
+      "start": 1545.55,
+      "end": 1826.06,
+      "lecture_material": "100 training clips, 25 dev clips, 0 test clips; no test set when the goal is a product; unapologetic tuning to the dev set; waveforms; 3-s windows; 30 windows per clip; 3,000 binary examples.",
+      "research_extension": "Cawley and Talbot 2010 (selection bias, p. 2079); Machine Learning Yearning p. 27 (dev/test from future distribution).",
+      "teaching_construction": "Binomial sd of a 25-clip score (0.06); Proposition 1 (optimism bound sd*sqrt(2 log n_cfg)) with proof; equicorrelated scaling sqrt(1 - cor) under an explicit joint-Gaussian assumption; the marginal-only bound retains arbitrary dependence; p+ = 1/30, ratio 1:29; clip-level split.",
+      "evidence_class": "theorem (proved); engineering check; empirical result; speaker judgment"
+    },
+    {
+      "section": "accuracy",
+      "start": 1826.06,
+      "end": 1974.4,
+      "lecture_material": "97% accurate on dev by outputting 0; one line of Python; audience diagnosis of imbalance.",
+      "research_extension": "None.",
+      "teaching_construction": "Constant baseline 96.67% and best constant loss 0.146 nats (via chapter 2 Proposition 4); Bayes-optimal operating point recall 0.047 at threshold 1/2.",
+      "evidence_class": "engineering check; speaker judgment"
+    },
+    {
+      "section": "remedies",
+      "start": 1974.4,
+      "end": 2274.54,
+      "lecture_material": "Duplicate positives; weight them; penalise false negatives; rule of thumb 1:2 fine, 1:10 worry, 1:30 may fail; undersampling reduces negative diversity; the team widened the positive label to 0.5-1 s.",
+      "research_extension": "Elkan 2001 (Theorem 1, p. 3; recommendation p. 1); King and Zeng 2001 (eq. 7 p. 144; eqs. 8-9 p. 145); Buda, Maki, Mazurowski 2018 (p. 1).",
+      "teaching_construction": "Proposition 2 (duplication = weighting in objective and mean gradient, not second moment); Proposition 3 (logit shift log omega); undersampling expectation identity; Proposition 4 (positive windows per clip); Figure 1; operating points; fitted check.",
+      "evidence_class": "theorem (proved); engineering check; empirical result; speaker judgment"
+    },
+    {
+      "section": "overfitting",
+      "start": 2274.54,
+      "end": 2453.22,
+      "lecture_material": "95% train, 50% dev; audience: overfitting or distribution mismatch; shuffled split rules out mismatch; academic same-distribution assumption; real data in dev/test when training is synthetic; regularisation, then more data.",
+      "research_extension": "Machine Learning Yearning pp. 77-79, 81 (training-dev set, three problems, worked cases, data-mismatch remedy).",
+      "teaching_construction": "Proposition 5 (error-gap identity) and the hypotheses that give each term its name; reading of the 50% figure.",
+      "evidence_class": "theorem (proved); speaker judgment"
+    },
+    {
+      "section": "synthesis",
+      "start": 2453.22,
+      "end": 2999.92,
+      "lecture_material": "Background noise plus clean phrase; superposition of sound; licences; the VAD failure; other words as negatives; thousands of examples; music as targeted condition; diversity and network size; ML as debugging.",
+      "research_extension": "Warden 2018 (pp. 2, 3, 6, 7); Geirhos et al. 2020 (p. 1); Chen, Parada, Heigold 2014 (p. 2).",
+      "teaching_construction": "Power expansion, SNR in dB, 6.02 dB per doubling of A; Proposition 6 (speech shortcut); realism boundary; link to chapter 3 Proposition 4.",
+      "evidence_class": "theorem (proved); engineering check; empirical result; speaker judgment"
+    },
+    {
+      "section": "iteration",
+      "start": 2999.92,
+      "end": 3485.94,
+      "lecture_material": "Daily cycle on the whiteboard; one fix per day; undisciplined teams; 4-hour, 3-week and 10-minute runs; runs that grow; checkpoints; transfer learning; error-vs-months curves; twice-as-slow competitor.",
+      "research_extension": "None (chapter 3 Proposition 2 cited internally).",
+      "teaching_construction": "Loop counts (250 vs 10.4-13 per year); competitor model Err_slow(t) = Err(t/2) with mean-value form; Figure 2 on an assumed exponential curve.",
+      "evidence_class": "theorem (shown); engineering check; speaker judgment"
+    },
+    {
+      "section": "pipelines",
+      "start": 3485.94,
+      "end": 3742.72,
+      "lecture_material": "End-to-end wake word vs pipelines/cascades; the face door; the deep researcher: search terms, web search, fetch top pages, writing; more autonomous iterative designs.",
+      "research_extension": "None.",
+      "teaching_construction": "Chain success probability 0.9^4 = 0.656 under independence, with chapter 3 Proposition 5.",
+      "evidence_class": "definition; engineering check; product claim"
+    },
+    {
+      "section": "error-analysis",
+      "start": 3742.72,
+      "end": 4512.75,
+      "lecture_material": "Choosing a component; failure sources per stage; nasa.gov vs Bob's Backyard Astronomy; low variance among experienced people; look at intermediate outputs; manual error analysis; spreadsheet; 10-100 failing queries; shares 20/5/70/20% not summing to 100%; hours vs months.",
+      "research_extension": "Machine Learning Yearning pp. 31, 32, 106, 110-111.",
+      "teaching_construction": "Definition of shares; share vs stage error rate; Proposition 7 (exhaustive stable defects and local repair, with a singleton equality or conditional bounds); binomial sd of a share; Proposition 8 (expected-centre interval separation first at 12 and 66 rows, without a sample-ranking or power guarantee).",
+      "evidence_class": "theorem (proved); engineering check; speaker judgment"
+    },
+    {
+      "section": "implementation",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "None.",
+      "teaching_construction": "One NumPy program, eight parts.",
+      "evidence_class": "engineering check"
+    },
+    {
+      "section": "limits",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "None.",
+      "teaching_construction": "Limits of each model; what the reader can now do.",
+      "evidence_class": "-"
+    },
+    {
+      "section": "exercises",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "None.",
+      "teaching_construction": "Six exercises with worked solutions: derivation (1), computation with assumption check (2, 3), diagnosis (4), spreadsheet reading (5), design (6).",
+      "evidence_class": "engineering check by shown arithmetic"
+    }
+  ],
+  "references": [
+    {
+      "title": "Ng, Machine Learning Yearning, draft 2018",
+      "url": null,
+      "identifier": "no DOI; draft page numbers",
+      "supports": "pp. 27, 31, 32, 77-79, 81, 106, 110-111; cited as the lecturer's own statements"
+    },
+    {
+      "title": "Chen, Parada, Heigold 2014, Small-footprint keyword spotting using deep neural networks, ICASSP",
+      "url": "https://research.google/pubs/small-footprint-keyword-spotting-using-deep-neural-networks/",
+      "supports": "pp. 1-2",
+      "venue_year_verification": "Official Google Research publication record retained and independently checked 2026-10-02: ICASSP, IEEE, 2014; PDF evidence remains content/page-specific",
+      "historical_venue_year_verification_round2": "unverified bibliographic venue/year in independent round-2 review; historical record claim retained without fresh source certification"
+    },
+    {
+      "title": "Richter, Vineet, Roth, Koltun 2016, Playing for Data",
+      "url": "https://arxiv.org/abs/1608.02192",
+      "supports": "p. 1"
+    },
+    {
+      "title": "Cawley, Talbot 2010, On Over-fitting in Model Selection and Subsequent Selection Bias in Performance Evaluation, JMLR 11",
+      "url": "https://www.jmlr.org/papers/volume11/cawley10a/cawley10a.pdf",
+      "supports": "p. 2079"
+    },
+    {
+      "title": "Elkan 2001, The Foundations of Cost-Sensitive Learning, IJCAI",
+      "url": "https://cseweb.ucsd.edu/~elkan/rescale.pdf",
+      "supports": "pp. 1, 3"
+    },
+    {
+      "title": "King, Zeng 2001, Logistic Regression in Rare Events Data, Political Analysis 9(2)",
+      "url": "https://gking.harvard.edu/files/gking/files/0s.pdf",
+      "identifier": "DOI not on the PDF; not added",
+      "supports": "pp. 144-145"
+    },
+    {
+      "title": "Buda, Maki, Mazurowski 2018, A systematic study of the class imbalance problem in convolutional neural networks, Neural Networks 106",
+      "url": "https://arxiv.org/abs/1710.05381",
+      "supports": "p. 1"
+    },
+    {
+      "title": "Warden 2018, Speech Commands",
+      "url": "https://arxiv.org/abs/1804.03209",
+      "supports": "pp. 2, 3, 6, 7"
+    },
+    {
+      "title": "Geirhos et al. 2020, Shortcut Learning in Deep Neural Networks",
+      "url": "https://arxiv.org/abs/2004.07780",
+      "supports": "p. 1"
+    }
+  ],
+  "research_ledger": [
+    {
+      "id": "ng-2018-mly",
+      "page": 27,
+      "quote": "Choose dev and test sets from a distribution that reflects what data you expect to get in the future and want to do well on. This may not be the same as your training data's distribution.",
+      "claim": "dev/test from the future distribution",
+      "status": "page verified"
+    },
+    {
+      "id": "ng-2018-mly",
+      "page": 27,
+      "quote": "Choose dev and test sets from the same distribution if possible.",
+      "claim": "dev and test from one distribution",
+      "status": "page verified"
+    },
+    {
+      "id": "ng-2018-mly",
+      "page": 31,
+      "quote": "Even if you take one minute per image, you'd be done in under two hours. These two hours could save you a month of wasted effort.",
+      "claim": "cost of reading 100 errors",
+      "status": "page verified"
+    },
+    {
+      "id": "ng-2018-mly",
+      "page": 32,
+      "quote": "because it is possible for one example to be associated with multiple categories, the percentages at the bottom may not add up to 100%",
+      "claim": "shares need not sum to 100%",
+      "status": "page verified"
+    },
+    {
+      "id": "ng-2018-mly",
+      "page": 77,
+      "quote": "we will call the \"Training dev\" set, that we will not train on",
+      "claim": "training-dev set; three problems (bias, variance, data mismatch)",
+      "status": "page verified"
+    },
+    {
+      "id": "ng-2018-mly",
+      "page": 78,
+      "quote": "it only needs to be large enough to evaluate and track the progress of our learning algorithm",
+      "claim": "size of the training-dev set",
+      "status": "page verified"
+    },
+    {
+      "id": "ng-2018-mly",
+      "page": 79,
+      "quote": "1% error on the training set. 5% error on training dev set. 5% error on the dev set.",
+      "claim": "three worked cases (1/5/5, 10/11/12, 10/11/20)",
+      "status": "page verified"
+    },
+    {
+      "id": "ng-2018-mly",
+      "page": 81,
+      "quote": "most of the audio clips in the dev set are taken within a car, whereas most of the training examples were recorded against a quiet background",
+      "claim": "addressing data mismatch",
+      "status": "page verified"
+    },
+    {
+      "id": "ng-2018-mly",
+      "page": 106,
+      "quote": "By attributing errors to specific parts of the pipeline, you can decide how to prioritize your work.",
+      "claim": "error analysis by parts",
+      "status": "page verified"
+    },
+    {
+      "id": "ng-2018-mly",
+      "page": 111,
+      "quote": "Try manually modifying A's output to be a \"perfect\" output",
+      "claim": "attribution with perfect intermediate outputs (also p. 110)",
+      "status": "page verified"
+    },
+    {
+      "id": "cawley-talbot-2010",
+      "page": 2079,
+      "quote": "a non-negligible variance introduces the potential for over-fitting in model selection",
+      "claim": "selection criterion can be overfitted",
+      "status": "page verified"
+    },
+    {
+      "id": "cawley-talbot-2010",
+      "page": 2079,
+      "quote": "susceptible to a form of selection bias",
+      "claim": "selection bias in performance evaluation; comparable magnitude; generality",
+      "status": "page verified"
+    },
+    {
+      "id": "elkan-2001",
+      "page": 3,
+      "quote": "To make a target probability threshold p* correspond to a given probability threshold p0, the number of negative examples in the training set should be multiplied by",
+      "claim": "Theorem 1 (verified on a rendered page image; extracted math is garbled)",
+      "status": "page verified"
+    },
+    {
+      "id": "elkan-2001",
+      "page": 3,
+      "quote": "Oversampling means duplicating examples, and undersampling means deleting examples.",
+      "claim": "definitions",
+      "status": "page verified"
+    },
+    {
+      "id": "elkan-2001",
+      "page": 1,
+      "quote": "learn a classifier from the training set as given, and then to compute optimal decisions explicitly using the probability estimates",
+      "claim": "recommendation",
+      "status": "page verified"
+    },
+    {
+      "id": "king-zeng-2001",
+      "page": 144,
+      "quote": "the following corrected estimate is consistent for beta0",
+      "claim": "prior correction, eq. 7 (journal page 144 = PDF page 8)",
+      "status": "page verified"
+    },
+    {
+      "id": "king-zeng-2001",
+      "page": 145,
+      "quote": "where the weights are w1 = tau/ybar and w0 = (1 - tau)/(1 - ybar)",
+      "claim": "weighting, eqs. 8-9",
+      "status": "page verified"
+    },
+    {
+      "id": "buda-maki-mazurowski-2018",
+      "page": 1,
+      "quote": "the method of addressing class imbalance that emerged as dominant in almost all analyzed scenarios was oversampling",
+      "claim": "oversampling dominant; ROC AUC main metric",
+      "status": "page verified"
+    },
+    {
+      "id": "buda-maki-mazurowski-2018",
+      "page": 1,
+      "quote": "oversampling does not cause overfitting of CNNs",
+      "claim": "no overfitting from oversampling",
+      "status": "page verified"
+    },
+    {
+      "id": "buda-maki-mazurowski-2018",
+      "page": 1,
+      "quote": "thresholding should be applied to compensate for prior class probabilities when overall number of properly classified cases is of interest",
+      "claim": "thresholding",
+      "status": "page verified"
+    },
+    {
+      "id": "chen-parada-heigold-2014",
+      "page": 1,
+      "quote": "a keyword spotting system with a small memory footprint, low computational cost, and high precision",
+      "claim": "design goals; posterior handling",
+      "status": "page verified"
+    },
+    {
+      "id": "chen-parada-heigold-2014",
+      "page": 2,
+      "quote": "To reduce computation, we use a voice-activity detection system and only run the KWS algorithm in voice regions.",
+      "claim": "VAD front end",
+      "status": "page verified"
+    },
+    {
+      "id": "warden-2018",
+      "page": 2,
+      "quote": "Most of the input that is speech will be unrelated to the voice interface, so the model should be unlikely to trigger on arbitrary speech.",
+      "claim": "requirement of keyword spotting",
+      "status": "page verified"
+    },
+    {
+      "id": "warden-2018",
+      "page": 3,
+      "quote": "would lack background noise, would be captured with high-quality microphones",
+      "claim": "studio samples unrealistic; captured wherever users happened to be",
+      "status": "page verified"
+    },
+    {
+      "id": "warden-2018",
+      "page": 6,
+      "quote": "To help train and test this capability, I added several minute-long 16 KHz WAV files of various kinds of background noise.",
+      "claim": "background-noise files",
+      "status": "page verified"
+    },
+    {
+      "id": "warden-2018",
+      "page": 7,
+      "quote": "one additional special label for \"Unknown Word\", and another for \"Silence\"",
+      "claim": "evaluation categories",
+      "status": "page verified"
+    },
+    {
+      "id": "geirhos-2020",
+      "page": 1,
+      "quote": "Shortcuts are decision rules that perform well on standard benchmarks but fail to transfer to more challenging testing conditions, such as real-world scenarios.",
+      "claim": "definition of shortcut",
+      "status": "page verified"
+    },
+    {
+      "id": "richter-2016",
+      "page": 1,
+      "quote": "using the acquired data to supplement real-world images significantly increases accuracy",
+      "claim": "game data supplementing real data; 25 thousand images; one third of CamVid",
+      "status": "page verified"
+    },
+    {
+      "id": "chen-parada-heigold-2014",
+      "page": null,
+      "quote": "Venue: ICASSP, IEEE (2014)",
+      "claim": "venue and year (not on the PDF)",
+      "status": "verified by record: Google Research publication page, fetched 2026-09-28",
+      "current_revision_verification": "unverified bibliographic venue/year in independent round-2 review; historical record claim retained without fresh source certification"
+    }
+  ],
+  "unverified_claims": [
+    "OpenAI deep research and other providers' deep researchers (~3545-3575 s): product claims.",
+    "Search engines designed for AI rather than people (~3610-3640 s): product claim.",
+    "Stanford speech researcher named at ~1030-1059 s: name not established (ASR \"Dangerosky\"/\"Dandrowski\").",
+    "All team anecdotes (97% accuracy, widened labels, synthesis working, six-month teams): speaker judgment.",
+    "The 1:10 imbalance rule of thumb (~2009-2083 s): speaker judgment; Buda et al. do not test it."
+  ],
+  "source_discrepancies_recorded": [
+    "Syllabus row for Lecture 6 names career advice / reading papers / AI and healthcare and links two Fall 2024 decks; the recording is AI project strategy.",
+    "The recording calls the ratio \"1 to 30\"; positives to negatives is 1:29 (1:30 is positives to all windows).",
+    "The window geometry (3-s windows, ~10-s clips, 30 windows, 100 ms tolerance, one positive per clip) is not mutually consistent unless the hop is 100 ms; the chapter states the assumption.",
+    "The recording reports \"50% on dev\"; its metric is unspecified. Window accuracy of 50% is possible even at prevalence 1/30 and implies false activations on at least 0.5-p+ of all windows (0.467 at 1/30). The chapter retains the reported figure and states this limitation.",
+    "Page-selection share written 40% then replaced by 70%; the chapter uses 70%."
+  ],
+  "asr_uncertainties": [
+    "\"Matthew, this is equivalent\" = \"mathematically, this is equivalent\" (medium.en).",
+    "\"Dangerosky\"/\"Dandrowski\" (~1043 s): Stanford speech faculty, unverified; not named in the chapter.",
+    "\"Rob will turn on\", \"Robert Turan on\", \"Ternon\", \"robin\" = \"Robert, turn on\".",
+    "\"Lainer/Lehner/Lena/Jeremy/Alicia/Johnny\": lamp names, unstable.",
+    "\"Apple 3 HomePod\" = Apple HomePod.",
+    "\"C Theorem starter\" = CTO of a startup.",
+    "\"de-researcher\" = deep researcher; \"alarm / large sandwich model\" = LLM / large language model.",
+    "\"Dr. Go\" (small) / \"Data Go\" (medium) = DuckDuckGo; \"Serper\"/\"SERPA\" = a search API.",
+    "\"JAP analysis\" = gap analysis; \"era\" on the axis = error; \"baby the trading job\" = babysit the training job; \"for a girl\" = \"for real\" (medium.en); \"introns down\" = \"our infra is down\" (medium.en).",
+    "\"open-eyed voice\" = OpenAI voice; \"IC circuit ... lab manufacturers\" = lamp manufacturers.",
+    "\"50%\" dev accuracy at ~2274 s: both models and the board agree.",
+    "\"40%\" then \"70%\" at ~4357-4365 s: both models and the board agree."
+  ],
+  "symbol_ledger": [
+    {
+      "symbol": "x, n_samp, y, u, f_theta, theta, sigma, y-hat, L, m",
+      "first_section": "model",
+      "definition": "Window, samples per window, label, logit, network, parameters, sigmoid, probability, BCE, training windows."
+    },
+    {
+      "symbol": "Acc, recall, precision, p+, Err_train, Err_dev, Err_test, Err_hum, Err_Bayes",
+      "first_section": "model",
+      "definition": "Accuracy etc."
+    },
+    {
+      "symbol": "mu, N(mu, I), I, w, b",
+      "first_section": "running-case",
+      "definition": "Running-case features and logistic weights."
+    },
+    {
+      "symbol": "Acc_true, Acc_dev, sd, n_cfg, chi_j, chi_0, chi_j^ind, cor",
+      "first_section": "clips",
+      "definition": "Dev-score model and Proposition 1."
+    },
+    {
+      "symbol": "m_+, m_-",
+      "first_section": "clips",
+      "definition": "Positive and negative training windows."
+    },
+    {
+      "symbol": "Phi",
+      "first_section": "accuracy",
+      "definition": "Standard normal distribution function."
+    },
+    {
+      "symbol": "omega_+, omega^(i), J_omega, m_dup, J_dup, n_batch, p_cond, u*, c, c_lrn, c_tgt, p_+^smp, p_+^pop",
+      "first_section": "remedies",
+      "definition": "Weights, costs, conditional probability, optimal logit, thresholds, King-Zeng fractions."
+    },
+    {
+      "symbol": "t_hop, t_tol, t_end, t_off, n_on",
+      "first_section": "remedies",
+      "definition": "Window grid."
+    },
+    {
+      "symbol": "Err_tdev",
+      "first_section": "overfitting",
+      "definition": "Training-dev error."
+    },
+    {
+      "symbol": "x_bg, x_fg, A, P_bg, P_fg, SNR, SNR_dB, sp(x)",
+      "first_section": "synthesis",
+      "definition": "Mixing and shortcut."
+    },
+    {
+      "symbol": "t_train, t_anl, t_cal, Err(t_cal), Err_slow",
+      "first_section": "iteration",
+      "definition": "Iteration and speed."
+    },
+    {
+      "symbol": "n_stage, p_j",
+      "first_section": "pipelines",
+      "definition": "Stages and stage success."
+    },
+    {
+      "symbol": "n_ex, p-hat_j, p_fail",
+      "first_section": "error-analysis",
+      "definition": "Spreadsheet rows, shares, failure rate."
+    },
+    {
+      "symbol": "omega_-",
+      "first_section": "exercises",
+      "definition": "Weight on negatives (exercise 1)."
+    },
+    {
+      "symbol": "h (running-case features)",
+      "first_section": "model",
+      "definition": "Last-layer activation in R^2; raw pressure samples remain x."
+    },
+    {
+      "symbol": "p_2mk, p_3mk, p_4mk",
+      "first_section": "error-analysis",
+      "definition": "Fractions of rows with exactly two, three or four stage marks."
+    },
+    {
+      "symbol": "sd_j, Cov(p-hat_1,p-hat_2)",
+      "first_section": "error-analysis",
+      "definition": "Share-estimate standard deviation and paired covariance."
+    }
+  ],
+  "code_check": {
+    "file": "HTML entity-decoded embedded Python block in section implementation; code_sha256 hashes the decoded HTML bytes before scratch-file final-newline normalisation.",
+    "command": "python -I <file> in a fresh process",
+    "python": "3.13.5",
+    "numpy": "2.2.6",
+    "result": "Fresh python -I exit 0; assertions passed; stdout matches printed output ignoring only final newline",
+    "stdout": [
+      "constant-0 accuracy, best constant loss: 0.9667 0.1461",
+      "omega=1: recall 0.047 false act 0.0010 precision 0.617 accuracy 0.967",
+      "omega=29: recall 0.760 false act 0.2398 precision 0.099 accuracy 0.760",
+      "2nd-moment coefs (pos w, pos dup, neg w, neg dup): [0.28033, 0.01869, 0.00033, 0.00064]",
+      "fresh windows (recall, precision) unweighted, weighted, shift: ((0.054, 0.607), (0.733, 0.103), 3.38)",
+      "300k windows: shift 3.369 slopes [1.001 1.024] [0.987 1.008]",
+      "P_fg, P_bg: 0.3 0.0891 | SNR dB at A=1, 0.5: 5.27 -0.75 | cross/(P_fg+P_bg): 0.0053",
+      "dev optimism, bound, gaussian E max: 0.079 0.129 1.539",
+      "sd of fetch share: 0.0649 | fetch share largest in 1.0 of sheets"
+    ],
+    "pep8": "passed",
+    "checked_at_utc": "2026-10-02T01:54:09.724851+00:00",
+    "code_sha256": "1a49292366b887c2edbe341ac284b42155d901674cc8988760b322bb1776890a",
+    "elapsed_seconds": 1.643,
+    "status": "passed",
+    "exit_code": 0,
+    "stdout_matches_printed": true,
+    "stderr_empty": true,
+    "code_unchanged": true
+  },
+  "figures": [
+    "Figure 1 (fig-operating): operating curve with omega = 1, 5, 29; points printed by the generator before drawing: (0.001, 0.047), (0.0256, 0.296), (0.2398, 0.760).",
+    "Figure 2 (fig-speed): assumed curve 0.05 + 0.30 exp(-t/3) and its half-speed copy; gaps 0.072 at 3 months, 0.035 at 12."
+  ],
+  "pass_log": [
+    {
+      "pass": "1 coverage",
+      "result": "Transcript read sequentially in full (5.26-4512.75 s, 145 segments) by the resuming author; the twelve medium.en spans read; 10 major sections mapped (spans above). The earlier partial draft was treated as unverified and checked claim by claim against the transcript.",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "2 prose",
+      "result": "Earlier draft kept where it matched the transcript; sections implementation (code, output) completed; figures written; cross-chapter references checked against chapters 1-3 (one false reference, to a binomial argument in chapter 1, replaced by a local derivation).",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "3 mathematics",
+      "result": "8 propositions with proofs (dev optimism; duplication vs weighting; weighted optimum; positive windows; error-gap identity; speech shortcut; repair ceiling; rows to rank two stages) plus derived: binomial sd, equicorrelated scaling, undersampling identity, power expansion and SNR, competitor mean-value form, share sd. Notation collisions removed: tau (King-Zeng), p0/p* (Elkan), theta for single-unit weights, placeholder v, bare p, offset o, prime on a continuous time, rho for a correlation.",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "4 research",
+      "result": "9 sources; every cited claim located on its page (research_ledger). Chen et al. venue verified on the Google Research record. Wording corrected for Warden pp. 6-7 (noise files \"to help train and test\"; Unknown/Silence are evaluation categories), Buda p. 1 (ROC AUC), MLY p. 31, Cawley and Talbot p. 2079, chapter 3 Propositions 2, 5 and 7.",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "5 implementation",
+      "result": "One NumPy program in eight parts; executed with python -I; every number the prose attributes to the code is taken from this run (the earlier draft carried numbers from a program that did not exist: 5.19 dB, recall 0.053 and 0.738, precision 0.586; all replaced).",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "6 exercises",
+      "result": "Six exercises on the four models; all answers recomputed. Exercise 5 fixture corrected (web-search marks 2 -> 4, so marks total 47 = 40 + 7 double-marked rows).",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "6a visual check",
+      "result": "Frames viewed at 250, 900, 940, 2240, 2295 (enlarged), 2650, 4356-4364 (enlarged), 4368, 4400, 4440 s; findings in slides.visual_findings. No slide deck belongs to the recording.",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "6c citation pages",
+      "result": "All cited claims page-verified; see research_ledger.",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "checks",
+      "result": "validate_books.static_checks in memory: 0 failures and 0 warnings for this file. Playwright at 1280 and 390 px with network blocked: 0 MathJax errors, 461 math nodes, no horizontal overflow, TOC 14 links, no raw delimiters. rigorous-explainer checkers: checklt, check_links, check_svg (0 hard), check_prose, check_proofs, check_overlap, check_frame all clean.",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "round-1 author repairs",
+      "result": "Named blocking/style repairs reconciled with current files; independent gate 6b remains pending.",
+      "verification_scope": "Historical round-1 author-repair record; superseded by the round-2 revision entry below."
+    },
+    {
+      "pass": "round-2 author repairs",
+      "result": "B1 exhaustive/local repair assumptions and exercise no-harm condition, B2 two raw-input/waveform displays, B3 joint Gaussianity, S1 expected-share scope and S2 independent-clip count repaired; N1/N2 metadata and notation handoff aligned. Independent round-3 acceptance pending.",
+      "verification_scope": "Author repairs only; checks are in revision-round2-2026-10-02-checks.json. No browser checks or new citation certification performed."
+    },
+    {
+      "pass": "7 prose after round-3 acceptance",
+      "result": "Complete prose audit; zero advisory flags; no accepted manuscript edits."
+    },
+    {
+      "pass": "8 parity after round-3 acceptance",
+      "result": "Comparable intellectual development against chapter 4; coherent cases, developed derivations, code and six worked exercises. Counts recorded consistently; no padding."
+    },
+    {
+      "pass": "9 permitted local integration",
+      "result": "Guarded build excludes unfinished 07-09; accepted authored bodies preserved. Static/numerical/privacy checks recorded separately. Browser blocked; pass 9 incomplete."
+    }
+  ],
+  "notation_decisions": [
+    "p_cond for p(y=1|x) at a fixed input (bare p is not used).",
+    "Elkan thresholds written c_lrn, c_tgt (paper: p0, p*).",
+    "King-Zeng fractions written p_+^smp, p_+^pop (paper: ybar, tau; tau is the softmax temperature here).",
+    "Equal correlation written cor (upright named quantity); rho is the perturbation budget.",
+    "Offset in Proposition 4 written t_off in seconds (no single-letter o).",
+    "Mean-value point written t_cal' (prime as bound dummy).",
+    "Err(t_cal) is a development curve; its argument distinguishes it from the learning curve Err(m) of chapter 1.",
+    "Proposals: _editorial/cs230/notation-proposals/ch06.md."
+  ],
+  "privacy_note": "No verbatim recording sentences beyond single quoted words and short phrases the whiteboard also shows; recording statements are paraphrased with timestamps. No local paths in the page.",
+  "production_notes_removed_from_text": [
+    "ASR spellings kept out of the prose (asr_uncertainties).",
+    "Frame-viewing record kept in the source note and slides.viewing_record only."
+  ],
+  "parity_audit": "passed 2026-10-02; chapter-4 pilot comparison and qualitative section audit in integration-checkpoint-2026-10-02.md",
+  "editorial_revision": {
+    "revised_at_utc": "2026-10-02T01:57:33.702455+00:00",
+    "prior_report": "lecture-06-ai-project-strategy-round2.md",
+    "prior_blocking_defects": 3,
+    "author_repair_status": "round-2 repairs applied; independent acceptance not established",
+    "independent_review_status": "accepted gate 6b in independent round 3; provenance retained in technical_acceptance",
+    "selected_configuration": {
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "source": "delegation instruction; allocation record, not independent runtime attestation"
+    },
+    "validation_record": "revision-round2-2026-10-02-checks.json (internal)",
+    "browser_recheck": "unverified: parent reports cloud Chromium socket runtime blocked before rendering; zero checks/screenshots. No laptop browser or Playwright retry in this author stage.",
+    "publication": "not performed; no upload, build, commit or push",
+    "chapter_sha256": "9545499803948709ff28d05bef1b2458f046264d525c5b86c33a902f007e87d4",
+    "re_review_focus": "Defect completeness/stability/locality, no-harm exercise assumption, raw x versus hidden h, joint Gaussianity, expected-centre interval scope, historical versus current evidence."
+  },
+  "technical_acceptance": {
+    "gate": "6b",
+    "status": "accepted",
+    "round": 3,
+    "report": "lecture-06-ai-project-strategy-round3.md",
+    "report_sha256": "f46790c02b3403d5192909ee226c2ce4e908fedc77bd1d561929911d3bbbd70c",
+    "reviewed_html_sha256": "9545499803948709ff28d05bef1b2458f046264d525c5b86c33a902f007e87d4",
+    "reviewed_metadata_sha256": "ba68154bb0f00170eb5c3dd9e12a4c752f7783ee6fbad19b9a0b5e5ec4e7e9da",
+    "reviewer_allocation": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh",
+      "source": "independent report; not runtime attestation"
+    },
+    "accepted_authored_body_sha256": "d848bc1fa10dc2273e104d20914df90a98ceeaf90abc990a5c64316637193e5d"
+  },
+  "post_acceptance": {
+    "checked_at_utc": "2026-10-02T02:22:38.196357+00:00",
+    "prose_pass7": "passed; no manuscript edits",
+    "parity_pass8": "passed against chapter 4; subject-specific differences justified in integration checkpoint",
+    "pass9": "partial: guarded local integration, static/numerical/privacy checks; browser unverified",
+    "record": "integration-checkpoint-2026-10-02.json",
+    "selected_configuration": {
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "source": "delegation allocation; not runtime attestation"
+    },
+    "integrated_html_sha256": "efe1302dd4c943b6fbe5f56339e90e7b1849b031dd78a041954fc5fa087c1f9c",
+    "authored_body_preserved": true,
+    "numerical_check": {
+      "status": "passed",
+      "exit_code": 0,
+      "stderr_empty": true,
+      "stdout_matches_printed": true,
+      "lines": 9,
+      "elapsed_seconds": 1.498,
+      "decoded_code_sha256": "1a49292366b887c2edbe341ac284b42155d901674cc8988760b322bb1776890a"
+    }
+  },
+  "historical_status_before_edition_review_2026_10_02": "technical gate 6b accepted round 3; passes 7/8 passed; pass 9 partially complete; browser QA blocked; edition incomplete; uncommitted",
+  "current_edition": {
+    "date": "2026-10-02",
+    "editorial_review_status": "accepted within recorded scope",
+    "book_review": "2026-10-02-book-wide-independent-review.md",
+    "book_review_sha256": "88ba052236963038aa78c2d0d634cb789f7eaa1dc9292692343056489c0f943b",
+    "reviewed_authored_body_sha256": "0f43975f4c5b58f8c444f3cdb57a88fc2a35a9bdf90571da17d58b9bf3bedce7",
+    "historical_evidence": "Earlier gate hashes/statuses remain historical; current body identity is recorded here",
+    "reader_and_execution_evidence": "validation-summary.json and reader-validation.json",
+    "publication": "local only; no publication authorization exercised",
+    "course_completion": "incomplete: original archive gaps and human screen-reader review outstanding",
+    "original_archive_gaps": [],
+    "human_screen_reader_review": "not performed",
+    "chen_bibliographic_identity": "Official Google Research record independently checked: ICASSP, IEEE, 2014; no new performance claim"
+  },
+  "historical_chen_record_uncertainty": [
+    "Chen, Parada and Heigold: ICASSP/2014 venue-year attribution not independently reverified in round 2; the local PDF establishes title/authors/content but not venue/year. The older Google Research publication-record claim is historical."
+  ]
+}

@@ -6,7 +6,7 @@
   "recording_title": "Stanford CS230 | Autumn 2025 | Lecture 4: Adversarial Robustness and Generative Models",
   "speaker": "Kian Katanforoosh",
   "date": "2025-10-14",
-  "status": "complete: passes 1-9, gates 6a, 6b (science-editor round 3 verdict yes, 0 blocking) and 6c passed; committed in fa08c6b",
+  "status": "Independent chapter/book review accepted; local reading edition; course completion gates incomplete",
   "transcript_provenance": "Local machine transcription; not publisher captions",
   "transcription_model": "Systran/faster-whisper-small.en",
   "audio_sha256": "2a55b56af5c4a7801922190f3b4f2cd9fa72ea6c888fa848b17d7cea1bb033df",
@@ -1105,5 +1105,19 @@
     "verdict": "yes",
     "blocking": 0,
     "style": "S1 (ALP sentence grade) and S2 (gallery span cited once) applied in pass 7."
+  },
+  "historical_status_before_edition_review_2026_10_02": "complete: passes 1-9, gates 6a, 6b (science-editor round 3 verdict yes, 0 blocking) and 6c passed; committed in fa08c6b",
+  "current_edition": {
+    "date": "2026-10-02",
+    "editorial_review_status": "accepted within recorded scope",
+    "book_review": "2026-10-02-book-wide-independent-review.md",
+    "book_review_sha256": "88ba052236963038aa78c2d0d634cb789f7eaa1dc9292692343056489c0f943b",
+    "reviewed_authored_body_sha256": "346212b9d06e641c232584c3dcbe16645058020c160188679c8adc92f0889eee",
+    "historical_evidence": "Earlier gate hashes/statuses remain historical; current body identity is recorded here",
+    "reader_and_execution_evidence": "validation-summary.json and reader-validation.json",
+    "publication": "local only; no publication authorization exercised",
+    "course_completion": "incomplete: original archive gaps and human screen-reader review outstanding",
+    "original_archive_gaps": [],
+    "human_screen_reader_review": "not performed"
   }
 }

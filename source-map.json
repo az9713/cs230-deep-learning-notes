@@ -1,6 +1,6 @@
 {
   "generated_from_chapter_sidecars": true,
-  "status": "supplied metadata; review pending",
+  "status": "Reviewed section mapping; original-access limits retained in chapter 7",
   "sections": [
     {
       "section": "model",
@@ -679,6 +679,1308 @@
       "chapter": "lecture-04-adversarial-robustness-and-generative-models.html",
       "video_id": "aWlRtOlacYM",
       "duration": 6437
+    },
+    {
+      "section": "why-rl",
+      "start": 5.1,
+      "end": 839.12,
+      "lecture_material": "Plan of the lecture; four results of slide 4; Go by supervised learning and the three issues of slide 5; RL as sequences of good decisions; teaching by experience vs example; applications incl. advertising.",
+      "research_extension": "Silver et al. 2016 (supervised stage 57.0%, RL >80%, 5-0); Silver et al. 2017 (tabula rasa, 100-0); Mnih et al. 2015 (49 games, 29 above 75%).",
+      "teaching_construction": "State-count bound 3^361 ~ 1.7e172; reading of the supervised target via ch. 2 Proposition 9; recording's 13x13 vs slide 5's 19x19 board.",
+      "evidence_class": "definition; empirical result; speaker judgment; engineering check",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "loop",
+      "start": 839.12,
+      "end": 1072.72,
+      "lecture_material": "Agent, environment, state, action, observation, reward, transition (slide 6); fog of war; restricted observation.",
+      "research_extension": "Markov property (Sutton-Barto p. 49).",
+      "teaching_construction": "Finite MDP definitions as used in the chapter.",
+      "evidence_class": "definition; speaker judgment",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "recycling",
+      "start": 1072.72,
+      "end": 1436.58,
+      "lecture_material": "Five-state recycling problem, rewards, terminal states, actions, three-minute rule, discounted return, meaning of discount, gamma = 1 strategy and return 11 (slide 8).",
+      "research_extension": "Return notation (Sutton-Barto p. 55).",
+      "teaching_construction": "Reward-on-entry reading; bound r_max/(1-gamma); unboundedness at gamma = 1; enumeration of three-move plans; Figure 1.",
+      "evidence_class": "definition; theorem (shown); engineering check",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "q-table",
+      "start": 1436.58,
+      "end": 2116.69,
+      "lecture_material": "Q-table, backward computation (slides 9-15), time-remaining concession (~1782-1847 s), Bellman optimality equation, greedy policy, memory cost (slide 16).",
+      "research_extension": "Bellman equations, eq. 3.20, greedy optimality (Sutton-Barto pp. 64-65).",
+      "teaching_construction": "Planning vs learning; copy-back critique of the tree; Propositions 1-2 with proofs; value-iteration sweep counts; deadline state (s, n_left); Figure 2; Table 2.",
+      "evidence_class": "definition; theorem (proved); engineering check; speaker judgment",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "deep-q",
+      "start": 2116.69,
+      "end": 3209.55,
+      "lecture_material": "Q-network with one-hot input (slide 19), Bellman target by a second forward pass, squared loss, hold-fixed target (slides 20-21), loop (slide 22), answers on discount, look-ahead, learned rewards.",
+      "research_extension": "Semi-gradient (S-B p. 202), naive residual gradient (pp. 269-271), Watkins-Dayan theorem, deadly triad (p. 264), Tsitsiklis-Van Roy, Mnih 2013 held-fixed targets, Mnih 2015 target network (p. 7, p. 10).",
+      "teaching_construction": "Proposition 3 (one-hot linear Q-network is a table).",
+      "evidence_class": "definition; theorem (proved and cited); speaker judgment; engineering check",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "breakout",
+      "start": 3209.55,
+      "end": 3665.46,
+      "lecture_material": "Breakout input/output (slide 24), cropping, grayscale, resize, 4-frame history (slide 25), CNN (slide 26), pixels vs features, Seaquest anecdote.",
+      "research_extension": "Mnih et al. 2015 preprocessing and architecture (pp. 4, 6); k-th order history (S-B p. 468).",
+      "teaching_construction": "Markov argument for frame stacking; output sizes and 1,685,667 parameters.",
+      "evidence_class": "empirical result; engineering check; speaker judgment",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "replay",
+      "start": 3665.46,
+      "end": 4228.53,
+      "lecture_material": "Preprocessing in the loop, terminal flag and y = r (slides 28-30), correlation, reuse, replay memory, uniform sampling (slides 31-32), gradient-weighted replay called 'prioritize sweeping'.",
+      "research_extension": "Absorbing state (S-B p. 57); Lin 1992; Mnih 2015 replay advantages (p. 7); Schaul et al. (pp. 1-2); Moore-Atkeson.",
+      "teaching_construction": "Terminal-target failure in the one-hot network; gradient = TD error identity.",
+      "evidence_class": "definition; empirical result; speaker judgment",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "exploration",
+      "start": 4228.53,
+      "end": 4828.75,
+      "lecture_material": "Stuck example (slides 33-36), exploration vs exploitation, epsilon-greedy 5% (slide 37), infinity initialisation question, full algorithm (slide 38), stopping signals, results (slides 39-40).",
+      "research_extension": "epsilon-greedy and optimistic initial values (S-B pp. 28, 34); Mnih 2015 schedule and tunnel (pp. 4, 6).",
+      "teaching_construction": "Proposition 4; first-visit probability 0.814 and simulation 0.817; Bellman-residual counterexample 999.7.",
+      "evidence_class": "theorem (proved); engineering check; speaker judgment; empirical result",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "beyond",
+      "start": 4828.75,
+      "end": 5426.62,
+      "lecture_material": "Montezuma's Revenge, prior knowledge, 'imitation learning' naming, slide 41, PPO vs DQN (slides 43-44), reward design, continuous control, self-play sumo (slide 45), OpenAI Five and AlphaStar (slide 46), AlphaGo documentary (slide 47).",
+      "research_extension": "Bellemare et al.; Ho-Ermon; PPO clipped objective; TRPO date; Mnih reward clipping; Bansal et al.; Berner et al.; Vinyals et al.",
+      "teaching_construction": "8^-20 illustration; advantage identity; win-probability reading of a terminal reward.",
+      "evidence_class": "empirical result; speaker judgment; engineering check; definition",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "pretraining",
+      "start": 5426.62,
+      "end": 5833.17,
+      "lecture_material": "Second-half plan, next-token pretraining (slide 49), problems of slide 50, SFT (slide 51), 13,000 pairs, shortcomings.",
+      "research_extension": "Ouyang et al. dataset sizes (pp. 7, 33).",
+      "teaching_construction": "LM as a policy over tokens; SFT loss; reading via ch. 2 Proposition 9.",
+      "evidence_class": "definition; empirical result; speaker judgment; engineering check",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "reward-model",
+      "start": 5833.17,
+      "end": 6063.58,
+      "lecture_material": "Reward model from SFT with scalar head, rankings, pairwise comparisons, loss not derived, cost argument (slide 52).",
+      "research_extension": "Bradley-Terry via Christiano et al. (p. 5) and Rafailov et al. (p. 3); Ouyang et al. RM details (pp. 8-9); Christiano <1% (p. 1).",
+      "teaching_construction": "Loss derivation, independent-score derivatives and shared-parameter gradient distinguished; worked numbers (0.690, 0.371, -0.310), shift invariance; sampling temperature defined at use.",
+      "evidence_class": "definition; theorem (derived); engineering check; empirical result; speaker judgment",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "rlhf",
+      "start": 6063.58,
+      "end": 6295.79,
+      "lecture_material": "LM as agent vs reward model, slide 53 mapping, sparse terminal reward, DPO mention (~5010-5040 s), closing interview recommendation.",
+      "research_extension": "Ouyang et al. environment, KL penalty, objective (p. 9); Rafailov et al. optimum and DPO loss (p. 4).",
+      "teaching_construction": "Token-level decomposition of the KL penalty; Proposition 5 with proof; lambda table; DPO derivation.",
+      "evidence_class": "theorem (proved); engineering check; empirical result; speaker judgment",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "implementation",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "None.",
+      "teaching_construction": "NumPy laboratory implementing the recycling MDP, T, backward induction, one-hot Q-learning with replay and epsilon-greedy, Proposition 4 learner, Proposition 5 and Bradley-Terry.",
+      "evidence_class": "engineering check",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "limits",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "Statements already cited above.",
+      "teaching_construction": "Limits of each idealisation; what the reader can now do.",
+      "evidence_class": "original construction",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "exercises",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "Sutton-Barto optimistic values (ex. 4).",
+      "teaching_construction": "Six exercises with worked solutions.",
+      "evidence_class": "engineering check; theorem (derived)",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "sources",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "Primary-source list.",
+      "teaching_construction": "None.",
+      "evidence_class": "\u2014",
+      "chapter": "lecture-05-deep-reinforcement-learning.html",
+      "video_id": "4E27qlfYw0A",
+      "duration": 6301
+    },
+    {
+      "section": "model",
+      "start": 5.26,
+      "end": 662.61,
+      "lecture_material": "Development process vs algorithms; 10x productivity and year-vs-month claims; the desk lamp named Robert with no Wi-Fi setup; restriction to the phrase \"Robert, turn on\"; on-device chip; audience proposals.",
+      "research_extension": "None.",
+      "teaching_construction": "Windows, labels, logit and firing rule; accuracy, recall, precision, prevalence; training/dev/test sets; running case h|y ~ N(+-mu, I), mu = (0.5, 0.5), p+ = 1/30, exact log-odds 2 mu.h - log 29.",
+      "evidence_class": "definition; theorem (shown); speaker judgment",
+      "chapter": "lecture-06-ai-project-strategy.html",
+      "video_id": "s6JVGzABKho",
+      "duration": 4518
+    },
+    {
+      "section": "before-training",
+      "start": 662.61,
+      "end": 1545.55,
+      "lecture_material": "Speed of building over choice of idea; general ASR too heavy for an edge chip; small networks for one phrase; no agreed architecture; broad literature skim; e-mailing experts (~50% reply); no public dataset of the phrase; consent when recording; natural before synthetic data; the ~20 cars of a video game.",
+      "research_extension": "Chen, Parada, Heigold 2014 (small-footprint KWS design, p. 1); Richter et al. 2016 (game data supplementing CamVid, p. 1).",
+      "teaching_construction": "None; advice reported without a model by design.",
+      "evidence_class": "speaker judgment; empirical result",
+      "chapter": "lecture-06-ai-project-strategy.html",
+      "video_id": "s6JVGzABKho",
+      "duration": 4518
+    },
+    {
+      "section": "clips",
+      "start": 1545.55,
+      "end": 1826.06,
+      "lecture_material": "100 training clips, 25 dev clips, 0 test clips; no test set when the goal is a product; unapologetic tuning to the dev set; waveforms; 3-s windows; 30 windows per clip; 3,000 binary examples.",
+      "research_extension": "Cawley and Talbot 2010 (selection bias, p. 2079); Machine Learning Yearning p. 27 (dev/test from future distribution).",
+      "teaching_construction": "Binomial sd of a 25-clip score (0.06); Proposition 1 (optimism bound sd*sqrt(2 log n_cfg)) with proof; equicorrelated scaling sqrt(1 - cor) under an explicit joint-Gaussian assumption; the marginal-only bound retains arbitrary dependence; p+ = 1/30, ratio 1:29; clip-level split.",
+      "evidence_class": "theorem (proved); engineering check; empirical result; speaker judgment",
+      "chapter": "lecture-06-ai-project-strategy.html",
+      "video_id": "s6JVGzABKho",
+      "duration": 4518
+    },
+    {
+      "section": "accuracy",
+      "start": 1826.06,
+      "end": 1974.4,
+      "lecture_material": "97% accurate on dev by outputting 0; one line of Python; audience diagnosis of imbalance.",
+      "research_extension": "None.",
+      "teaching_construction": "Constant baseline 96.67% and best constant loss 0.146 nats (via chapter 2 Proposition 4); Bayes-optimal operating point recall 0.047 at threshold 1/2.",
+      "evidence_class": "engineering check; speaker judgment",
+      "chapter": "lecture-06-ai-project-strategy.html",
+      "video_id": "s6JVGzABKho",
+      "duration": 4518
+    },
+    {
+      "section": "remedies",
+      "start": 1974.4,
+      "end": 2274.54,
+      "lecture_material": "Duplicate positives; weight them; penalise false negatives; rule of thumb 1:2 fine, 1:10 worry, 1:30 may fail; undersampling reduces negative diversity; the team widened the positive label to 0.5-1 s.",
+      "research_extension": "Elkan 2001 (Theorem 1, p. 3; recommendation p. 1); King and Zeng 2001 (eq. 7 p. 144; eqs. 8-9 p. 145); Buda, Maki, Mazurowski 2018 (p. 1).",
+      "teaching_construction": "Proposition 2 (duplication = weighting in objective and mean gradient, not second moment); Proposition 3 (logit shift log omega); undersampling expectation identity; Proposition 4 (positive windows per clip); Figure 1; operating points; fitted check.",
+      "evidence_class": "theorem (proved); engineering check; empirical result; speaker judgment",
+      "chapter": "lecture-06-ai-project-strategy.html",
+      "video_id": "s6JVGzABKho",
+      "duration": 4518
+    },
+    {
+      "section": "overfitting",
+      "start": 2274.54,
+      "end": 2453.22,
+      "lecture_material": "95% train, 50% dev; audience: overfitting or distribution mismatch; shuffled split rules out mismatch; academic same-distribution assumption; real data in dev/test when training is synthetic; regularisation, then more data.",
+      "research_extension": "Machine Learning Yearning pp. 77-79, 81 (training-dev set, three problems, worked cases, data-mismatch remedy).",
+      "teaching_construction": "Proposition 5 (error-gap identity) and the hypotheses that give each term its name; reading of the 50% figure.",
+      "evidence_class": "theorem (proved); speaker judgment",
+      "chapter": "lecture-06-ai-project-strategy.html",
+      "video_id": "s6JVGzABKho",
+      "duration": 4518
+    },
+    {
+      "section": "synthesis",
+      "start": 2453.22,
+      "end": 2999.92,
+      "lecture_material": "Background noise plus clean phrase; superposition of sound; licences; the VAD failure; other words as negatives; thousands of examples; music as targeted condition; diversity and network size; ML as debugging.",
+      "research_extension": "Warden 2018 (pp. 2, 3, 6, 7); Geirhos et al. 2020 (p. 1); Chen, Parada, Heigold 2014 (p. 2).",
+      "teaching_construction": "Power expansion, SNR in dB, 6.02 dB per doubling of A; Proposition 6 (speech shortcut); realism boundary; link to chapter 3 Proposition 4.",
+      "evidence_class": "theorem (proved); engineering check; empirical result; speaker judgment",
+      "chapter": "lecture-06-ai-project-strategy.html",
+      "video_id": "s6JVGzABKho",
+      "duration": 4518
+    },
+    {
+      "section": "iteration",
+      "start": 2999.92,
+      "end": 3485.94,
+      "lecture_material": "Daily cycle on the whiteboard; one fix per day; undisciplined teams; 4-hour, 3-week and 10-minute runs; runs that grow; checkpoints; transfer learning; error-vs-months curves; twice-as-slow competitor.",
+      "research_extension": "None (chapter 3 Proposition 2 cited internally).",
+      "teaching_construction": "Loop counts (250 vs 10.4-13 per year); competitor model Err_slow(t) = Err(t/2) with mean-value form; Figure 2 on an assumed exponential curve.",
+      "evidence_class": "theorem (shown); engineering check; speaker judgment",
+      "chapter": "lecture-06-ai-project-strategy.html",
+      "video_id": "s6JVGzABKho",
+      "duration": 4518
+    },
+    {
+      "section": "pipelines",
+      "start": 3485.94,
+      "end": 3742.72,
+      "lecture_material": "End-to-end wake word vs pipelines/cascades; the face door; the deep researcher: search terms, web search, fetch top pages, writing; more autonomous iterative designs.",
+      "research_extension": "None.",
+      "teaching_construction": "Chain success probability 0.9^4 = 0.656 under independence, with chapter 3 Proposition 5.",
+      "evidence_class": "definition; engineering check; product claim",
+      "chapter": "lecture-06-ai-project-strategy.html",
+      "video_id": "s6JVGzABKho",
+      "duration": 4518
+    },
+    {
+      "section": "error-analysis",
+      "start": 3742.72,
+      "end": 4512.75,
+      "lecture_material": "Choosing a component; failure sources per stage; nasa.gov vs Bob's Backyard Astronomy; low variance among experienced people; look at intermediate outputs; manual error analysis; spreadsheet; 10-100 failing queries; shares 20/5/70/20% not summing to 100%; hours vs months.",
+      "research_extension": "Machine Learning Yearning pp. 31, 32, 106, 110-111.",
+      "teaching_construction": "Definition of shares; share vs stage error rate; Proposition 7 (exhaustive stable defects and local repair, with a singleton equality or conditional bounds); binomial sd of a share; Proposition 8 (expected-centre interval separation first at 12 and 66 rows, without a sample-ranking or power guarantee).",
+      "evidence_class": "theorem (proved); engineering check; speaker judgment",
+      "chapter": "lecture-06-ai-project-strategy.html",
+      "video_id": "s6JVGzABKho",
+      "duration": 4518
+    },
+    {
+      "section": "implementation",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "None.",
+      "teaching_construction": "One NumPy program, eight parts.",
+      "evidence_class": "engineering check",
+      "chapter": "lecture-06-ai-project-strategy.html",
+      "video_id": "s6JVGzABKho",
+      "duration": 4518
+    },
+    {
+      "section": "limits",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "None.",
+      "teaching_construction": "Limits of each model; what the reader can now do.",
+      "evidence_class": "-",
+      "chapter": "lecture-06-ai-project-strategy.html",
+      "video_id": "s6JVGzABKho",
+      "duration": 4518
+    },
+    {
+      "section": "exercises",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "None.",
+      "teaching_construction": "Six exercises with worked solutions: derivation (1), computation with assumption check (2, 3), diagnosis (4), spreadsheet reading (5), design (6).",
+      "evidence_class": "engineering check by shown arithmetic",
+      "chapter": "lecture-06-ai-project-strategy.html",
+      "video_id": "s6JVGzABKho",
+      "duration": 4518
+    },
+    {
+      "section": "model",
+      "start": 5.17,
+      "end": 693.17,
+      "lecture_material": "Base-model limitations and controllability anecdotes; support case introduced early from the later recording.",
+      "research_extension": "None",
+      "teaching_construction": "Fixed conditional model, input parts, mechanism table and Figure 1.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "context",
+      "start": 693.17,
+      "end": 1085.39,
+      "lecture_material": "Document drive, slide context table, needle test, RAG/long-context forecasts, improvement axes.",
+      "research_extension": "Vendor captures, GPT reports, Liu position experiment",
+      "teaching_construction": "Token budget and worked 43-example bound.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "prompting",
+      "start": 1085.39,
+      "end": 1933.23,
+      "lecture_material": "Consultants, instructions, role/reflection prompts, templates, zero/few shot, conversation summaries.",
+      "research_extension": "Wei exemplars, Brown no-weight-updates, MemGPT summaries; DellAcqua three-arm outcomes and within/outside-frontier distinctions checked in original working paper.",
+      "teaching_construction": "Each technique mapped to one input component.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "chaining",
+      "start": 1933.23,
+      "end": 2475.74,
+      "lecture_material": "Prompt-chain distinction, review response, intermediate inspection, latency, testing, judge variants.",
+      "research_extension": "Zheng judge types",
+      "teaching_construction": "Proposition 1, dependence examples, latency, paired-count limitation.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "finetuning",
+      "start": 2475.74,
+      "end": 2691.41,
+      "lecture_material": "Costs/uses, lecturer preference, Slack anecdote.",
+      "research_extension": "Historical Lazerowitz blog capture",
+      "teaching_construction": "Fine-tuning objective and qualified interpretation.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "rag",
+      "start": 2691.41,
+      "end": 3186.48,
+      "lecture_material": "Index/embed/retrieve/augment pipeline, dimension tradeoff, chunking, HyDE, survey tree.",
+      "research_extension": "DPR, Lewis trained RAG, Gao survey, HyDE, Liu",
+      "teaching_construction": "Proposition 2, cost/recall, eight-item word-count corpus, four-way metric distinction.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "agentic",
+      "start": 3186.48,
+      "end": 4019.26,
+      "lecture_material": "Definition, distinction from RL agents, refund workflow, deterministic/fuzzy design, appeals, credit memo.",
+      "research_extension": "None",
+      "teaching_construction": "Effect of stage rate on bounds; recovery violates A1.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "anatomy",
+      "start": 4019.26,
+      "end": 4740.53,
+      "lecture_material": "Travel agent, prompts/memory/tools/resources, autonomy, MCP discussion, Paris loop.",
+      "research_extension": "MemGPT, ReAct, historical MCP specification/announcement",
+      "teaching_construction": "Memory access accounting; path-conditioned stage probabilities.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "evals",
+      "start": 4740.53,
+      "end": 5132.0,
+      "lecture_material": "User ratings, preferences, error analysis and politeness judges comparing models/prompts.",
+      "research_extension": "Zheng agreement and bias experiments; Cohen original remains unverified",
+      "teaching_construction": "Detection probability, Propositions 3/4, kappa table, conservative margin criterion, Figure 2.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "casestudy",
+      "start": 5132.0,
+      "end": 5660.64,
+      "lecture_material": "Task decomposition, four stages, traces, three eval axes and failure examples.",
+      "research_extension": "None",
+      "teaching_construction": "Stage/instrument mapping, missing-policy diagnosis and order-ID fixture.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "multiagent",
+      "start": 5660.64,
+      "end": 6184.58,
+      "lecture_material": "Parallelism/reuse, smart-home ideas, topology, slide comparison claims.",
+      "research_extension": "Dorri organizational taxonomy; McKinsey six-row comparison remains slide attribution.",
+      "teaching_construction": "Sum/max latency with preserved joint-outcome-distribution hypothesis.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "next",
+      "start": 6184.58,
+      "end": 6588.53,
+      "lecture_material": "Plateau, architectures, multimodality, mixed methods, brain-inspired approaches, learning velocity.",
+      "research_extension": "None",
+      "teaching_construction": "None; forecasts and analogies labelled.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "implementation",
+      "start": null,
+      "end": null,
+      "lecture_material": "None",
+      "research_extension": "None",
+      "teaching_construction": "Standard-library Python with original fixtures, seeded simulations and assertions.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "limits",
+      "start": null,
+      "end": null,
+      "lecture_material": "None",
+      "research_extension": "None",
+      "teaching_construction": "Model, retrieval, judge and source boundaries.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "exercises",
+      "start": null,
+      "end": null,
+      "lecture_material": "None",
+      "research_extension": "None",
+      "teaching_construction": "Six worked exercises: geometry, recall/precision, dependence, agreement, position bias and eval design.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "sources",
+      "start": null,
+      "end": null,
+      "lecture_material": "Slide sources distinguished",
+      "research_extension": "Primary-source bibliography",
+      "teaching_construction": "Claim-to-page descriptions.",
+      "chapter": "lecture-07-agents-prompts-and-rag.html",
+      "video_id": "k1njvbBmfsw",
+      "duration": 6594
+    },
+    {
+      "section": "opportunity",
+      "start": 4.14,
+      "end": 86.62,
+      "lecture_material": "Ng opportunity and metric ceilings",
+      "research_extension": "None",
+      "teaching_construction": "Running project and three evidence audiences",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "horizon",
+      "start": 86.62,
+      "end": 167.49,
+      "lecture_material": "METR headline and coding remark",
+      "research_extension": "METR v1 pp. 2,9,10,12,15",
+      "teaching_construction": "Exponential model, least-squares derivation, synthetic points, sensitivity Figure 1",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "prototypes",
+      "start": 167.49,
+      "end": 339.09,
+      "lecture_material": "Building blocks and slide-only twenty prototypes/speed figures",
+      "research_extension": "None",
+      "teaching_construction": "Independent-attempt proof, shared-outcome counterexample",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "bottleneck",
+      "start": 339.09,
+      "end": 554.66,
+      "lecture_material": "Build-feedback loop and PM bottleneck",
+      "research_extension": "Amdahl 1967 article in 2007 reprint, both pages",
+      "teaching_construction": "Serial cycle proof and original schedule Figure 2",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "teams",
+      "start": 554.66,
+      "end": 1122.38,
+      "lecture_material": "People, team-selection anecdote and qualified effort advice",
+      "research_extension": "Retained Christakis/Fowler publisher-formatted PDF p1/journal2249; Shalizi/Thomas pp1-3",
+      "teaching_construction": "Team comparison and causal counterexample",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "market",
+      "start": 1150.59,
+      "end": 1752.59,
+      "lecture_material": "Moroney interview anecdote and hiring narrative",
+      "research_extension": "Google Gemini 3 announcement date only",
+      "teaching_construction": "Project relevance and causal limits",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "pillars",
+      "start": 1753.49,
+      "end": 2177.65,
+      "lecture_material": "Depth, business focus, delivery and output framing",
+      "research_extension": "None",
+      "teaching_construction": "Namesake case, complete-task times, evidence table",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "production",
+      "start": 2177.81,
+      "end": 2860.62,
+      "lecture_material": "Four realities and reported historical image behaviour",
+      "research_extension": "None",
+      "teaching_construction": "Risk/support/causal-mechanism distinctions; sensitive allegation omitted",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "debt",
+      "start": 2860.62,
+      "end": 3395.23,
+      "lecture_material": "Trusted advisor and technical-debt illustration",
+      "research_extension": "Cunningham original HTML; Sculley pp. 1,4",
+      "teaching_construction": "Maintenance dependencies; loan arithmetic only",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "agent",
+      "start": 3395.23,
+      "end": 3896.19,
+      "lecture_material": "Sales pilot and practitioner four-step workflow",
+      "research_extension": "ReAct pp. 1-2; Reflexion pp. 1-2",
+      "teaching_construction": "Bounded brief criteria and conditional time allocation",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "forecasts",
+      "start": 3896.19,
+      "end": 4905.87,
+      "lecture_material": "Hype, pyramid, hosted/self-hosted forecast and diversification",
+      "research_extension": "None",
+      "teaching_construction": "Deployment/size/task and advice/guarantee distinctions",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "hardware",
+      "start": 4905.87,
+      "end": 5097.14,
+      "lecture_material": "Embedded devices and SME accounts",
+      "research_extension": "Retained Arm dated architecture overview; no device-speed or energy-performance inference",
+      "teaching_construction": "Hardware/data boundary distinctions; no measured phone claim",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "video",
+      "start": 5098.13,
+      "end": 5572.98,
+      "lecture_material": "Artificial understanding and video accounts; comparison challenge",
+      "research_extension": "None",
+      "teaching_construction": "Uncontrolled-comparison analysis and proposed matched evaluation",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "questions",
+      "start": 5573.07,
+      "end": 6302.16,
+      "lecture_material": "Education, nonprofit, scarce-compute, research and equality Q&A",
+      "research_extension": "None",
+      "teaching_construction": "Access/output/outcome distinctions; downstream outcome stays unknown",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "implementation",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching; no recording span",
+      "research_extension": "Uses previously scoped chapter references",
+      "teaching_construction": "Original finite numerical fixture and printed output",
+      "evidence_class": "original teaching construction",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "limits",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching; no recording span",
+      "research_extension": "Uses previously scoped chapter references",
+      "teaching_construction": "Assumptions and evidence limits",
+      "evidence_class": "original teaching construction",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "exercises",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching; no recording span",
+      "research_extension": "Uses previously scoped chapter references",
+      "teaching_construction": "Five worked exercises",
+      "evidence_class": "original teaching construction",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "sources",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching; no recording span",
+      "research_extension": "Uses previously scoped chapter references",
+      "teaching_construction": "Claim-scoped bibliography",
+      "evidence_class": "source provenance",
+      "chapter": "lecture-08-career-advice-in-ai.html",
+      "video_id": "AuZoDsNmG_s",
+      "duration": 6309
+    },
+    {
+      "section": "checkpoint",
+      "title": "1. Three regressions, several possible explanations 0:05",
+      "start": 5.49,
+      "end": 897.62,
+      "segments": [
+        1,
+        26
+      ],
+      "lecture_material": "Provenance. Lecture: the constructed 200-billion-parameter checkpoint, audience hypotheses and four diagnostic categories, approximately 5\u2013898 s. Original construction: the measurement and intervention distinction used throughout this chapter.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "speaker judgment: Constructed200B incident and diagnostic buckets; definition: Checkpoint, measurement and intervention",
+      "claim_provenance": [
+        {
+          "class": "speaker judgment",
+          "claim": "Constructed200B incident and diagnostic buckets"
+        },
+        {
+          "class": "definition",
+          "claim": "Checkpoint, measurement and intervention"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "zoo",
+      "title": "2. A fixed zoo classifier and a scalar to explain 14:57",
+      "start": 897.62,
+      "end": 1192.59,
+      "segments": [
+        27,
+        33
+      ],
+      "lecture_material": "Provenance. Lecture: animal classification, human supervision, feature maps and image-level testing, approximately 898\u20131193 s. Original construction: the persistent formal model and two-feature diagnostic fixture.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "definition: Fixed CNN, activations, logits and probabilities; engineering check: Original two-feature fixture",
+      "claim_provenance": [
+        {
+          "class": "definition",
+          "claim": "Fixed CNN, activations, logits and probabilities"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Original two-feature fixture"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "saliency",
+      "title": "3. Saliency: local sensitivity and class competition 19:52",
+      "start": 1192.59,
+      "end": 1389.89,
+      "segments": [
+        34,
+        39
+      ],
+      "lecture_material": "Provenance. Lecture: input gradients and pre- versus post-softmax scores, approximately 1193\u20131390 s. Research extension: Simonyan, Vedaldi and Zisserman , PDF pp. 2, 4. Original construction: the Jacobian derivation and competing-class counterexample.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Local differentiable expansion and proved softmax derivative; empirical result: Source display convention, not segmentation certification; engineering check: Fixed-logit competing-class probability change",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Local differentiable expansion and proved softmax derivative"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Source display convention, not segmentation certification"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Fixed-logit competing-class probability change"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "ig",
+      "title": "4. Integrated gradients: a reference, a path and an accounting identity 23:09",
+      "start": 1389.89,
+      "end": 1505.22,
+      "segments": [
+        40,
+        43
+      ],
+      "lecture_material": "Provenance. Lecture: the black-to-image path and retinal illustration, approximately 1390\u20131505 s. Research extension: Sundararajan, Taly and Yan , pp. 2\u20134, 6\u20137. Original construction: proofs with explicit regularity, saturation and ReLU fixtures, and a quadrature bound.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Completeness under path-specific hypotheses and smooth quadrature bound, proved; engineering check: Saturation and kink integration; empirical result: Single source retinal illustration; no clinical generalization",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Completeness under path-specific hypotheses and smooth quadrature bound, proved"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Saturation and kink integration"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Single source retinal illustration; no clinical generalization"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "occlusion",
+      "title": "5. Occlusion: ask a finite counterfactual of the fixed model 25:05",
+      "start": 1505.22,
+      "end": 1714.03,
+      "segments": [
+        44,
+        50
+      ],
+      "lecture_material": "Provenance. Lecture: square masking and the Pomeranian, wheel and Afghan-hound examples, approximately 1505\u20131714 s. Research extension: Zeiler and Fergus , p. 5 and Figure 7 on p. 7. Original construction: cost arithmetic and the comparison with a derivative.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "definition: Finite replacement score change; engineering check: 729 locations/730 forward evaluations; empirical result: Source Figure7; speaker judgment: Human-occlusion interpretation in recording",
+      "claim_provenance": [
+        {
+          "class": "definition",
+          "claim": "Finite replacement score change"
+        },
+        {
+          "class": "engineering check",
+          "claim": "729 locations/730 forward evaluations"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Source Figure7"
+        },
+        {
+          "class": "speaker judgment",
+          "claim": "Human-occlusion interpretation in recording"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "cam",
+      "title": "6. Class activation maps: an exact decomposition for a particular head 28:34",
+      "start": 1714.38,
+      "end": 2213.71,
+      "segments": [
+        51,
+        65
+      ],
+      "lecture_material": "Provenance. Lecture: replacing flattening and three fully connected layers by global average pooling and one linear layer, approximately 1714\u20132214 s. Research extension: Zhou et al. , pp. 1\u20133, and Selvaraju et al. , pp. 4\u20135. Original construction: the bias-aware mean identity and a nonlinear counterexample.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Exact bias-aware mean-CAM identity for stated head; engineering check: Original two-map head, orange mean and nonlinear counterexample; empirical result: GradCAM source method; coarse localization boundary",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Exact bias-aware mean-CAM identity for stated head"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Original two-map head, orange mean and nonlinear counterexample"
+        },
+        {
+          "class": "empirical result",
+          "claim": "GradCAM source method; coarse localization boundary"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "ascent",
+      "title": "7. Synthetic inputs: what a score rewards under a regularizer 36:53",
+      "start": 2213.71,
+      "end": 2578.53,
+      "segments": [
+        66,
+        77
+      ],
+      "lecture_material": "Provenance. Lecture: class and unit visualization, fixed-weight pixel ascent and goose/flamingo interpretations, approximately 2214\u20132579 s. Research extension: Simonyan et al., p. 2; Yosinski et al. , pp. 2, 5\u20136. Original construction: the analytic optimum and feasibility distinction.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Original linear penalized/box optima; empirical result: Yosinski regularization in studied network; speaker judgment: Goose/flamingo interpretation",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Original linear penalized/box optima"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Yosinski regularization in studied network"
+        },
+        {
+          "class": "speaker judgment",
+          "claim": "Goose/flamingo interpretation"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "search",
+      "title": "8. Real examples and the region a unit can access 42:58",
+      "start": 2578.53,
+      "end": 2936.22,
+      "segments": [
+        78,
+        87
+      ],
+      "lecture_material": "Provenance. Lecture: dataset search, cropped top activations and increasing receptive fields, approximately 2579\u20132936 s. Research extension: Zeiler and Fergus, pp. 3\u20134; Luo et al. , pp. 1\u20133. Original construction: receptive-field recurrence and selection counterexample.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Receptive width/jump recurrence under stated geometry; engineering check: Original3/4/8-width fixture; empirical result: Luo effective-field findings; speaker judgment: Source80x80 illustration",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Receptive width/jump recurrence under stated geometry"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Original3/4/8-width fixture"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Luo effective-field findings"
+        },
+        {
+          "class": "speaker judgment",
+          "claim": "Source80x80 illustration"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "linear-convolution",
+      "title": "9. What convolution discards 48:56",
+      "start": 2936.22,
+      "end": 3298.67,
+      "segments": [
+        88,
+        98
+      ],
+      "lecture_material": "Provenance. Lecture and slides 23\u201326: the one-dimensional stride-2 example. Original construction: an explicit distinction between padded coordinates and genuine input coordinates. Dumoulin and Visin, pp. 19\u201324: transpose geometry.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Original shape, matrix, rank/null-space derivation; engineering check: Eight-entry fixture and same-output alternatives",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Original shape, matrix, rank/null-space derivation"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Eight-entry fixture and same-output alternatives"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "adjoint",
+      "title": "10. A transpose is a backward linear map, not an inverse 54:58",
+      "start": 3298.67,
+      "end": 3567.09,
+      "segments": [
+        99,
+        107
+      ],
+      "lecture_material": "Provenance. Lecture and slides 26\u201328: transposed convolution and zero insertion. Original derivation: adjoints, pseudoinverses and the padding-dependent counterexample. Dumoulin and Visin, pp. 19\u201324.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Adjoint chain rule, Gram identities, domain-specific pseudoinverses and zero-insertion equality; engineering check: Minimum-norm preimage and wrong boundary normalization",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Adjoint chain rule, Gram identities, domain-specific pseudoinverses and zero-insertion equality"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Minimum-norm preimage and wrong boundary normalization"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "backward-nonlinear",
+      "title": "11. Pooling switches and three different ReLU rules 59:27",
+      "start": 3567.6,
+      "end": 3911.94,
+      "segments": [
+        108,
+        118
+      ],
+      "lecture_material": "Provenance. Lecture and slides 29\u201333; Zeiler and Fergus, pp. 2\u20133; Springenberg et al., PDF p. 9. Original construction: negative pooling and sign counterexamples.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "definition: Three explicitly different backward rules; theorem: Switch nonnegative right-inverse qualification; engineering check: Negative-pool failure and sign cases",
+      "claim_provenance": [
+        {
+          "class": "definition",
+          "claim": "Three explicitly different backward rules"
+        },
+        {
+          "class": "theorem",
+          "claim": "Switch nonnegative right-inverse qualification"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Negative-pool failure and sign cases"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "interpretation",
+      "title": "12. Turn a picture into a falsifiable diagnostic 1:05:11",
+      "start": 3911.94,
+      "end": 4395.23,
+      "segments": [
+        119,
+        134
+      ],
+      "lecture_material": "Provenance. Lecture's layer galleries and Deep Visualization Toolbox demonstration; Zeiler and Fergus and Yosinski et al. Original synthesis: the comparison protocol. Adebayo et al., pp. 1\u20133: sanity checks.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "empirical result: Source gallery and Adebayo randomization findings; speaker judgment: Source-described toolbox dynamic behavior; definition: Original falsifiable comparison protocol",
+      "claim_provenance": [
+        {
+          "class": "empirical result",
+          "claim": "Source gallery and Adebayo randomization findings"
+        },
+        {
+          "class": "speaker judgment",
+          "claim": "Source-described toolbox dynamic behavior"
+        },
+        {
+          "class": "definition",
+          "claim": "Original falsifiable comparison protocol"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "transformers",
+      "title": "13. Attention, embeddings and circuits 1:13:15",
+      "start": 4395.23,
+      "end": 4686.08,
+      "segments": [
+        135,
+        144
+      ],
+      "lecture_material": "Provenance. Lecture and slides 42\u201344; Vaswani et al., p. 4; Vig, pp. 1\u20132; Jain and Wallace and Wiegreffe and Pinter; the 2021 circuits framework and Olsson et al. (2022). Original construction: equal-value attention counterexample.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "definition: One-head attention and tSNE quantities; theorem: Conditional variance calculation and equal-value identity; empirical result: Scoped attention-explanation tests and induction evidence",
+      "claim_provenance": [
+        {
+          "class": "definition",
+          "claim": "One-head attention and tSNE quantities"
+        },
+        {
+          "class": "theorem",
+          "claim": "Conditional variance calculation and equal-value identity"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Scoped attention-explanation tests and induction evidence"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "telemetry",
+      "title": "14. Training telemetry and compute allocation 1:18:06",
+      "start": 4686.08,
+      "end": 5114.21,
+      "segments": [
+        145,
+        159
+      ],
+      "lecture_material": "Provenance. Lecture and slides 45\u201346; Kaplan et al., p. 6; Hoffmann et al., pp. 1, 5\u20136. Original construction: constrained allocation and diagnostic ledger.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "engineering check: Dense FLOP approximation under stated omissions; empirical result: Kaplan/Hoffmann source-specific fits and reported budget experiment; theorem: Original constrained-allocation derivation",
+      "claim_provenance": [
+        {
+          "class": "engineering check",
+          "claim": "Dense FLOP approximation under stated omissions"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Kaplan/Hoffmann source-specific fits and reported budget experiment"
+        },
+        {
+          "class": "theorem",
+          "claim": "Original constrained-allocation derivation"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "evaluations",
+      "title": "15. Capability, contamination and safety are separate measurements 1:25:14",
+      "start": 5114.21,
+      "end": 5563.17,
+      "segments": [
+        160,
+        174
+      ],
+      "lecture_material": "Provenance. Lecture and slides 47\u201349; Brown et al., PDF p. 43; OpenAI\u2013Anthropic's August 2025 pilot report. Original construction: paired comparison and contamination estimands.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "definition: Evaluation and contamination estimands; engineering check: Paired sample statistics and finite overlap fixture; product claim: Dated vendor/pilot statements with source conditions",
+      "claim_provenance": [
+        {
+          "class": "definition",
+          "claim": "Evaluation and contamination estimands"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Paired sample statistics and finite overlap fixture"
+        },
+        {
+          "class": "product claim",
+          "claim": "Dated vendor/pilot statements with source conditions"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "data",
+      "title": "16. Data composition and sparse routing 1:32:43",
+      "start": 5563.17,
+      "end": 5949.07,
+      "segments": [
+        175,
+        188
+      ],
+      "lecture_material": "Provenance. Lecture: token allocation, The Pile, mixture-of-experts and data feedback. Gao et al., pp. 1, 3\u20134; Shazeer et al., pp. 3\u20135; Fedus et al., pp. 6\u20137. Original construction: mixture decomposition.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Exact mixture decomposition; engineering check: Fixed-domain composition example and share arithmetic; speaker judgment: Illustrative non-English12to19 drift; empirical result: Pile composition and sparse-expert mechanisms in sources",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Exact mixture decomposition"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Fixed-domain composition example and share arithmetic"
+        },
+        {
+          "class": "speaker judgment",
+          "claim": "Illustrative non-English12to19 drift"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Pile composition and sparse-expert mechanisms in sources"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "closing",
+      "title": "17. What the closing questions leave unresolved 1:39:09",
+      "start": 5949.65,
+      "end": 6407.47,
+      "segments": [
+        189,
+        202
+      ],
+      "lecture_material": "Provenance. Lecture's final questions through 6407 s, slide 50, and Villalobos et al., revised 2024 version, p. 1. Original synthesis: the final investigation plan.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "speaker judgment: Recording uncertainty and conditional public-text research forecast; definition: Distinct update mechanisms and historical milestones",
+      "claim_provenance": [
+        {
+          "class": "speaker judgment",
+          "claim": "Recording uncertainty and conditional public-text research forecast"
+        },
+        {
+          "class": "definition",
+          "claim": "Distinct update mechanisms and historical milestones"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "numerical-lab",
+      "title": "18. A numerical lab that checks the distinctions",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching material, not a recording span",
+      "research_extension": "Uses only the already-identified claim-bearing sources",
+      "teaching_construction": "Original stdlib fixtures; embedded executable and actual stdout; no model training",
+      "evidence_class": "engineering check",
+      "claim_provenance": [
+        {
+          "class": "engineering check",
+          "claim": "Original stdlib fixtures; embedded executable and actual stdout; no model training"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "exercises",
+      "title": "19. Six exercises with complete solutions",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching material, not a recording span",
+      "research_extension": "Uses only the already-identified claim-bearing sources",
+      "teaching_construction": "Six complete solutions to already-developed models, identities, counterexamples and diagnostic questions",
+      "evidence_class": "theorem; engineering check",
+      "claim_provenance": [
+        {
+          "class": "theorem; engineering check",
+          "claim": "Six complete solutions to already-developed models, identities, counterexamples and diagnostic questions"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
+    },
+    {
+      "section": "references",
+      "title": "20. Primary references and the claim boundaries",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching material, not a recording span",
+      "research_extension": "Uses only the already-identified claim-bearing sources",
+      "teaching_construction": "Claim-scoped primary bibliography; PDF page conventions and original-example boundary",
+      "evidence_class": "source provenance",
+      "claim_provenance": [
+        {
+          "class": "source provenance",
+          "claim": "Claim-scoped primary bibliography; PDF page conventions and original-example boundary"
+        }
+      ],
+      "chapter": "lecture-09-whats-going-on-inside-my-model.html",
+      "video_id": "Ozb1AR_F5MU",
+      "duration": 6414
     }
   ]
 }

@@ -1,12 +1,12 @@
 {
   "course": "CS230",
-  "checked_at_utc": "2026-09-29T03:48:06.033557+00:00",
-  "scope": "Reader mechanics only; does not certify chapter or course completion",
+  "checked_at_utc": "2026-10-02T19:04:40.527715+00:00",
+  "scope": "Actual local reader mechanics; does not certify whole-course completion or a human accessibility audit",
   "static": {
     "status": "passed",
-    "html_files": 8,
-    "local_links_checked": 118,
-    "timestamps_checked": 54,
+    "html_files": 14,
+    "local_links_checked": 239,
+    "timestamps_checked": 125,
     "chapter_pages_with_dollar_math": 0,
     "failures": [],
     "warnings": []
@@ -70,7 +70,7 @@
       },
       {
         "mathErrors": 0,
-        "mathNodes": 393,
+        "mathNodes": 394,
         "horizontalOverflow": false,
         "controls": true,
         "emptyToc": false,
@@ -79,7 +79,7 @@
       },
       {
         "mathErrors": 0,
-        "mathNodes": 393,
+        "mathNodes": 394,
         "horizontalOverflow": false,
         "controls": true,
         "emptyToc": false,
@@ -88,7 +88,7 @@
       },
       {
         "mathErrors": 0,
-        "mathNodes": 828,
+        "mathNodes": 819,
         "horizontalOverflow": false,
         "controls": true,
         "emptyToc": false,
@@ -97,7 +97,7 @@
       },
       {
         "mathErrors": 0,
-        "mathNodes": 828,
+        "mathNodes": 819,
         "horizontalOverflow": false,
         "controls": true,
         "emptyToc": false,
@@ -106,7 +106,97 @@
       },
       {
         "mathErrors": 0,
-        "mathNodes": 0,
+        "mathNodes": 705,
+        "horizontalOverflow": false,
+        "controls": true,
+        "emptyToc": false,
+        "file": "lecture-05-deep-reinforcement-learning.html",
+        "viewport": 1280
+      },
+      {
+        "mathErrors": 0,
+        "mathNodes": 705,
+        "horizontalOverflow": false,
+        "controls": true,
+        "emptyToc": false,
+        "file": "lecture-05-deep-reinforcement-learning.html",
+        "viewport": 390
+      },
+      {
+        "mathErrors": 0,
+        "mathNodes": 471,
+        "horizontalOverflow": false,
+        "controls": true,
+        "emptyToc": false,
+        "file": "lecture-06-ai-project-strategy.html",
+        "viewport": 1280
+      },
+      {
+        "mathErrors": 0,
+        "mathNodes": 471,
+        "horizontalOverflow": false,
+        "controls": true,
+        "emptyToc": false,
+        "file": "lecture-06-ai-project-strategy.html",
+        "viewport": 390
+      },
+      {
+        "mathErrors": 0,
+        "mathNodes": 340,
+        "horizontalOverflow": false,
+        "controls": true,
+        "emptyToc": false,
+        "file": "lecture-07-agents-prompts-and-rag.html",
+        "viewport": 1280
+      },
+      {
+        "mathErrors": 0,
+        "mathNodes": 340,
+        "horizontalOverflow": false,
+        "controls": true,
+        "emptyToc": false,
+        "file": "lecture-07-agents-prompts-and-rag.html",
+        "viewport": 390
+      },
+      {
+        "mathErrors": 0,
+        "mathNodes": 99,
+        "horizontalOverflow": false,
+        "controls": true,
+        "emptyToc": false,
+        "file": "lecture-08-career-advice-in-ai.html",
+        "viewport": 1280
+      },
+      {
+        "mathErrors": 0,
+        "mathNodes": 99,
+        "horizontalOverflow": false,
+        "controls": true,
+        "emptyToc": false,
+        "file": "lecture-08-career-advice-in-ai.html",
+        "viewport": 390
+      },
+      {
+        "mathErrors": 0,
+        "mathNodes": 341,
+        "horizontalOverflow": false,
+        "controls": true,
+        "emptyToc": false,
+        "file": "lecture-09-whats-going-on-inside-my-model.html",
+        "viewport": 1280
+      },
+      {
+        "mathErrors": 0,
+        "mathNodes": 341,
+        "horizontalOverflow": false,
+        "controls": true,
+        "emptyToc": false,
+        "file": "lecture-09-whats-going-on-inside-my-model.html",
+        "viewport": 390
+      },
+      {
+        "mathErrors": 0,
+        "mathNodes": 31,
         "horizontalOverflow": false,
         "controls": true,
         "emptyToc": false,
@@ -115,7 +205,7 @@
       },
       {
         "mathErrors": 0,
-        "mathNodes": 0,
+        "mathNodes": 31,
         "horizontalOverflow": false,
         "controls": true,
         "emptyToc": false,
@@ -124,7 +214,7 @@
       },
       {
         "mathErrors": 0,
-        "mathNodes": 0,
+        "mathNodes": 1,
         "horizontalOverflow": false,
         "controls": true,
         "emptyToc": false,
@@ -133,7 +223,7 @@
       },
       {
         "mathErrors": 0,
-        "mathNodes": 0,
+        "mathNodes": 1,
         "horizontalOverflow": false,
         "controls": true,
         "emptyToc": false,
@@ -160,15 +250,21 @@
       }
     ],
     "failures": [],
-    "clipboard": "Fallback branch checked with captured text; manual OS clipboard verification not performed",
-    "network": "HTTP and HTTPS requests blocked during browser checks"
+    "page_errors": [],
+    "network": "HTTP/HTTPS blocked; file assets only",
+    "browser": "Disposable bundled headless Chromium; fresh contexts, no existing user browser connection",
+    "accessibility": "Keyboard theme/text/solutions controls tested; print events/state tested; screen-reader user study not performed",
+    "clipboard": "Fallback text captured; OS clipboard not accessed"
   },
-  "pedagogy": {
-    "status": "not performed",
-    "reason": "Requires chapter editorial review"
-  },
-  "python_execution": {
-    "status": "not performed",
-    "reason": "Run declared lab/snippet checks separately"
+  "chapter_html_sha256": {
+    "lecture-01-introduction-to-deep-learning.html": "bb2cbc9f008e2839b1450b74e65d6040b6bde5f4f337aaf2b329ffc389689ac3",
+    "lecture-02-supervised-self-supervised-and-weakly-supervised-learning.html": "07abd500c0cd2c0c723d15d8cc8bed1699ed2fae2b8df8860f5b17178b8fff24",
+    "lecture-03-full-cycle-of-a-deep-learning-project.html": "eef5102b3c61e5de704588879c581e1065d189304652dd24722b5edc3cc45d13",
+    "lecture-04-adversarial-robustness-and-generative-models.html": "e39a554aa59bf1c73c83dcc5a30b2e160898feb01d89820a74882b34a4ceffff",
+    "lecture-05-deep-reinforcement-learning.html": "feca923f498512fed600a86b1d249ca719041289984f870bc7ecb3d4f592be92",
+    "lecture-06-ai-project-strategy.html": "acd4030cbf965d04a2391ee0cfa4b6db00083cf02d2c6018dfaeb29b2253b3e7",
+    "lecture-07-agents-prompts-and-rag.html": "8329007cf394f7865adcd5b42fb864279fd590eaa1f835ae038e2e404266279f",
+    "lecture-08-career-advice-in-ai.html": "57456514d0ff05e73ce3127a12484dfab05a998b23630e32f9250361982b9abf",
+    "lecture-09-whats-going-on-inside-my-model.html": "f6d31ef64f873ef91abe5fa1b2c2190fba25730bc77698d5c4a6d1e007ba1c84"
   }
 }

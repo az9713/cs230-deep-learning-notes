@@ -1,0 +1,1185 @@
+{
+  "video_id": "Ozb1AR_F5MU",
+  "title": "Inspecting a model without mistaking a signal for a cause",
+  "chapter_order": 9,
+  "recording_lecture_number": 10,
+  "recording_title": "Stanford CS230 | Autumn 2025 | Lecture 10: What’s Going On Inside My Model?",
+  "speaker": "Kian Katanforoosh",
+  "date": "2025-12-02",
+  "status": "Independent chapter/book review accepted; local reading edition; course completion gates incomplete",
+  "transcript_provenance": "Local machine transcription; not publisher captions",
+  "transcription_model": "Systran/faster-whisper-small.en",
+  "audio_sha256": "0942ec363de6ae470217db2fb7074764d9302d5219e3778240b11a9793ddabe2",
+  "audio_duration_seconds": 6413.184,
+  "playlist_duration_seconds": 6414,
+  "transcript_sha256": "d29a993cf96f0b0bc9e2880170be1be87c88a176ae180f1134079ec9331258bc",
+  "transcript_text_sha256": "310336cc5ec5c9aec06ed2cac85f2362b632da574b80504e838907cac346d79f",
+  "transcript_segment_count": 202,
+  "transcript_first_start_seconds": 5.49,
+  "transcript_last_end_seconds": 6407.47,
+  "slides": {
+    "url": "https://cs230.stanford.edu/syllabus/fall_2025/10/lecture_10.pdf",
+    "sha256": "302ece720435ff07079d56de221823a64f6996ee12f451d25a2350ff099b03ae",
+    "pages": 50,
+    "alignment": "Speaker and deck call this Lecture9; recording playlist Lecture10; book chapter9",
+    "pages_rendered_and_inspected": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
+    ],
+    "viewing_record": {
+      "current_author_contact_sheets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ]
+    },
+    "video_boundary": "All slide stills visually viewed; no external video frames acquired or examined",
+    "visual_findings": [
+      "Page13 orange entries sum1675, mean104.6875",
+      "Page25 intended four-tap filter; 5x12 unrestricted padded-domain map is not invertible",
+      "Page31 forward and backward signs differ; zero derivative convention explicit",
+      "Page43 citations corrected to framework2021 and induction2022",
+      "Page47 GPT5 link is introducing-gpt-5; source label is not its verified document title",
+      "Page49 contamination and regressions are distinct concepts",
+      "Page50 historical December2025 milestones"
+    ]
+  },
+  "sections": [
+    {
+      "section": "checkpoint",
+      "title": "1. Three regressions, several possible explanations 0:05",
+      "start": 5.49,
+      "end": 897.62,
+      "segments": [
+        1,
+        26
+      ],
+      "lecture_material": "Provenance. Lecture: the constructed 200-billion-parameter checkpoint, audience hypotheses and four diagnostic categories, approximately 5–898 s. Original construction: the measurement and intervention distinction used throughout this chapter.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "speaker judgment: Constructed200B incident and diagnostic buckets; definition: Checkpoint, measurement and intervention",
+      "claim_provenance": [
+        {
+          "class": "speaker judgment",
+          "claim": "Constructed200B incident and diagnostic buckets"
+        },
+        {
+          "class": "definition",
+          "claim": "Checkpoint, measurement and intervention"
+        }
+      ]
+    },
+    {
+      "section": "zoo",
+      "title": "2. A fixed zoo classifier and a scalar to explain 14:57",
+      "start": 897.62,
+      "end": 1192.59,
+      "segments": [
+        27,
+        33
+      ],
+      "lecture_material": "Provenance. Lecture: animal classification, human supervision, feature maps and image-level testing, approximately 898–1193 s. Original construction: the persistent formal model and two-feature diagnostic fixture.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "definition: Fixed CNN, activations, logits and probabilities; engineering check: Original two-feature fixture",
+      "claim_provenance": [
+        {
+          "class": "definition",
+          "claim": "Fixed CNN, activations, logits and probabilities"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Original two-feature fixture"
+        }
+      ]
+    },
+    {
+      "section": "saliency",
+      "title": "3. Saliency: local sensitivity and class competition 19:52",
+      "start": 1192.59,
+      "end": 1389.89,
+      "segments": [
+        34,
+        39
+      ],
+      "lecture_material": "Provenance. Lecture: input gradients and pre- versus post-softmax scores, approximately 1193–1390 s. Research extension: Simonyan, Vedaldi and Zisserman , PDF pp. 2, 4. Original construction: the Jacobian derivation and competing-class counterexample.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Local differentiable expansion and proved softmax derivative; empirical result: Source display convention, not segmentation certification; engineering check: Fixed-logit competing-class probability change",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Local differentiable expansion and proved softmax derivative"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Source display convention, not segmentation certification"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Fixed-logit competing-class probability change"
+        }
+      ]
+    },
+    {
+      "section": "ig",
+      "title": "4. Integrated gradients: a reference, a path and an accounting identity 23:09",
+      "start": 1389.89,
+      "end": 1505.22,
+      "segments": [
+        40,
+        43
+      ],
+      "lecture_material": "Provenance. Lecture: the black-to-image path and retinal illustration, approximately 1390–1505 s. Research extension: Sundararajan, Taly and Yan , pp. 2–4, 6–7. Original construction: proofs with explicit regularity, saturation and ReLU fixtures, and a quadrature bound.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Completeness under path-specific hypotheses and smooth quadrature bound, proved; engineering check: Saturation and kink integration; empirical result: Single source retinal illustration; no clinical generalization",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Completeness under path-specific hypotheses and smooth quadrature bound, proved"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Saturation and kink integration"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Single source retinal illustration; no clinical generalization"
+        }
+      ]
+    },
+    {
+      "section": "occlusion",
+      "title": "5. Occlusion: ask a finite counterfactual of the fixed model 25:05",
+      "start": 1505.22,
+      "end": 1714.03,
+      "segments": [
+        44,
+        50
+      ],
+      "lecture_material": "Provenance. Lecture: square masking and the Pomeranian, wheel and Afghan-hound examples, approximately 1505–1714 s. Research extension: Zeiler and Fergus , p. 5 and Figure 7 on p. 7. Original construction: cost arithmetic and the comparison with a derivative.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "definition: Finite replacement score change; engineering check: 729 locations/730 forward evaluations; empirical result: Source Figure7; speaker judgment: Human-occlusion interpretation in recording",
+      "claim_provenance": [
+        {
+          "class": "definition",
+          "claim": "Finite replacement score change"
+        },
+        {
+          "class": "engineering check",
+          "claim": "729 locations/730 forward evaluations"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Source Figure7"
+        },
+        {
+          "class": "speaker judgment",
+          "claim": "Human-occlusion interpretation in recording"
+        }
+      ]
+    },
+    {
+      "section": "cam",
+      "title": "6. Class activation maps: an exact decomposition for a particular head 28:34",
+      "start": 1714.38,
+      "end": 2213.71,
+      "segments": [
+        51,
+        65
+      ],
+      "lecture_material": "Provenance. Lecture: replacing flattening and three fully connected layers by global average pooling and one linear layer, approximately 1714–2214 s. Research extension: Zhou et al. , pp. 1–3, and Selvaraju et al. , pp. 4–5. Original construction: the bias-aware mean identity and a nonlinear counterexample.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Exact bias-aware mean-CAM identity for stated head; engineering check: Original two-map head, orange mean and nonlinear counterexample; empirical result: GradCAM source method; coarse localization boundary",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Exact bias-aware mean-CAM identity for stated head"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Original two-map head, orange mean and nonlinear counterexample"
+        },
+        {
+          "class": "empirical result",
+          "claim": "GradCAM source method; coarse localization boundary"
+        }
+      ]
+    },
+    {
+      "section": "ascent",
+      "title": "7. Synthetic inputs: what a score rewards under a regularizer 36:53",
+      "start": 2213.71,
+      "end": 2578.53,
+      "segments": [
+        66,
+        77
+      ],
+      "lecture_material": "Provenance. Lecture: class and unit visualization, fixed-weight pixel ascent and goose/flamingo interpretations, approximately 2214–2579 s. Research extension: Simonyan et al., p. 2; Yosinski et al. , pp. 2, 5–6. Original construction: the analytic optimum and feasibility distinction.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Original linear penalized/box optima; empirical result: Yosinski regularization in studied network; speaker judgment: Goose/flamingo interpretation",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Original linear penalized/box optima"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Yosinski regularization in studied network"
+        },
+        {
+          "class": "speaker judgment",
+          "claim": "Goose/flamingo interpretation"
+        }
+      ]
+    },
+    {
+      "section": "search",
+      "title": "8. Real examples and the region a unit can access 42:58",
+      "start": 2578.53,
+      "end": 2936.22,
+      "segments": [
+        78,
+        87
+      ],
+      "lecture_material": "Provenance. Lecture: dataset search, cropped top activations and increasing receptive fields, approximately 2579–2936 s. Research extension: Zeiler and Fergus, pp. 3–4; Luo et al. , pp. 1–3. Original construction: receptive-field recurrence and selection counterexample.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Receptive width/jump recurrence under stated geometry; engineering check: Original3/4/8-width fixture; empirical result: Luo effective-field findings; speaker judgment: Source80x80 illustration",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Receptive width/jump recurrence under stated geometry"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Original3/4/8-width fixture"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Luo effective-field findings"
+        },
+        {
+          "class": "speaker judgment",
+          "claim": "Source80x80 illustration"
+        }
+      ]
+    },
+    {
+      "section": "linear-convolution",
+      "title": "9. What convolution discards 48:56",
+      "start": 2936.22,
+      "end": 3298.67,
+      "segments": [
+        88,
+        98
+      ],
+      "lecture_material": "Provenance. Lecture and slides 23–26: the one-dimensional stride-2 example. Original construction: an explicit distinction between padded coordinates and genuine input coordinates. Dumoulin and Visin, pp. 19–24: transpose geometry.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Original shape, matrix, rank/null-space derivation; engineering check: Eight-entry fixture and same-output alternatives",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Original shape, matrix, rank/null-space derivation"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Eight-entry fixture and same-output alternatives"
+        }
+      ]
+    },
+    {
+      "section": "adjoint",
+      "title": "10. A transpose is a backward linear map, not an inverse 54:58",
+      "start": 3298.67,
+      "end": 3567.09,
+      "segments": [
+        99,
+        107
+      ],
+      "lecture_material": "Provenance. Lecture and slides 26–28: transposed convolution and zero insertion. Original derivation: adjoints, pseudoinverses and the padding-dependent counterexample. Dumoulin and Visin, pp. 19–24.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Adjoint chain rule, Gram identities, domain-specific pseudoinverses and zero-insertion equality; engineering check: Minimum-norm preimage and wrong boundary normalization",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Adjoint chain rule, Gram identities, domain-specific pseudoinverses and zero-insertion equality"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Minimum-norm preimage and wrong boundary normalization"
+        }
+      ]
+    },
+    {
+      "section": "backward-nonlinear",
+      "title": "11. Pooling switches and three different ReLU rules 59:27",
+      "start": 3567.6,
+      "end": 3911.94,
+      "segments": [
+        108,
+        118
+      ],
+      "lecture_material": "Provenance. Lecture and slides 29–33; Zeiler and Fergus, pp. 2–3; Springenberg et al., PDF p. 9. Original construction: negative pooling and sign counterexamples.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "definition: Three explicitly different backward rules; theorem: Switch nonnegative right-inverse qualification; engineering check: Negative-pool failure and sign cases",
+      "claim_provenance": [
+        {
+          "class": "definition",
+          "claim": "Three explicitly different backward rules"
+        },
+        {
+          "class": "theorem",
+          "claim": "Switch nonnegative right-inverse qualification"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Negative-pool failure and sign cases"
+        }
+      ]
+    },
+    {
+      "section": "interpretation",
+      "title": "12. Turn a picture into a falsifiable diagnostic 1:05:11",
+      "start": 3911.94,
+      "end": 4395.23,
+      "segments": [
+        119,
+        134
+      ],
+      "lecture_material": "Provenance. Lecture's layer galleries and Deep Visualization Toolbox demonstration; Zeiler and Fergus and Yosinski et al. Original synthesis: the comparison protocol. Adebayo et al., pp. 1–3: sanity checks.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "empirical result: Source gallery and Adebayo randomization findings; speaker judgment: Source-described toolbox dynamic behavior; definition: Original falsifiable comparison protocol",
+      "claim_provenance": [
+        {
+          "class": "empirical result",
+          "claim": "Source gallery and Adebayo randomization findings"
+        },
+        {
+          "class": "speaker judgment",
+          "claim": "Source-described toolbox dynamic behavior"
+        },
+        {
+          "class": "definition",
+          "claim": "Original falsifiable comparison protocol"
+        }
+      ]
+    },
+    {
+      "section": "transformers",
+      "title": "13. Attention, embeddings and circuits 1:13:15",
+      "start": 4395.23,
+      "end": 4686.08,
+      "segments": [
+        135,
+        144
+      ],
+      "lecture_material": "Provenance. Lecture and slides 42–44; Vaswani et al., p. 4; Vig, pp. 1–2; Jain and Wallace and Wiegreffe and Pinter; the 2021 circuits framework and Olsson et al. (2022). Original construction: equal-value attention counterexample.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "definition: One-head attention and tSNE quantities; theorem: Conditional variance calculation and equal-value identity; empirical result: Scoped attention-explanation tests and induction evidence",
+      "claim_provenance": [
+        {
+          "class": "definition",
+          "claim": "One-head attention and tSNE quantities"
+        },
+        {
+          "class": "theorem",
+          "claim": "Conditional variance calculation and equal-value identity"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Scoped attention-explanation tests and induction evidence"
+        }
+      ]
+    },
+    {
+      "section": "telemetry",
+      "title": "14. Training telemetry and compute allocation 1:18:06",
+      "start": 4686.08,
+      "end": 5114.21,
+      "segments": [
+        145,
+        159
+      ],
+      "lecture_material": "Provenance. Lecture and slides 45–46; Kaplan et al., p. 6; Hoffmann et al., pp. 1, 5–6. Original construction: constrained allocation and diagnostic ledger.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "engineering check: Dense FLOP approximation under stated omissions; empirical result: Kaplan/Hoffmann source-specific fits and reported budget experiment; theorem: Original constrained-allocation derivation",
+      "claim_provenance": [
+        {
+          "class": "engineering check",
+          "claim": "Dense FLOP approximation under stated omissions"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Kaplan/Hoffmann source-specific fits and reported budget experiment"
+        },
+        {
+          "class": "theorem",
+          "claim": "Original constrained-allocation derivation"
+        }
+      ]
+    },
+    {
+      "section": "evaluations",
+      "title": "15. Capability, contamination and safety are separate measurements 1:25:14",
+      "start": 5114.21,
+      "end": 5563.17,
+      "segments": [
+        160,
+        174
+      ],
+      "lecture_material": "Provenance. Lecture and slides 47–49; Brown et al., PDF p. 43; OpenAI–Anthropic's August 2025 pilot report. Original construction: paired comparison and contamination estimands.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "definition: Evaluation and contamination estimands; engineering check: Paired sample statistics and finite overlap fixture; product claim: Dated vendor/pilot statements with source conditions",
+      "claim_provenance": [
+        {
+          "class": "definition",
+          "claim": "Evaluation and contamination estimands"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Paired sample statistics and finite overlap fixture"
+        },
+        {
+          "class": "product claim",
+          "claim": "Dated vendor/pilot statements with source conditions"
+        }
+      ]
+    },
+    {
+      "section": "data",
+      "title": "16. Data composition and sparse routing 1:32:43",
+      "start": 5563.17,
+      "end": 5949.07,
+      "segments": [
+        175,
+        188
+      ],
+      "lecture_material": "Provenance. Lecture: token allocation, The Pile, mixture-of-experts and data feedback. Gao et al., pp. 1, 3–4; Shazeer et al., pp. 3–5; Fedus et al., pp. 6–7. Original construction: mixture decomposition.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "theorem: Exact mixture decomposition; engineering check: Fixed-domain composition example and share arithmetic; speaker judgment: Illustrative non-English12to19 drift; empirical result: Pile composition and sparse-expert mechanisms in sources",
+      "claim_provenance": [
+        {
+          "class": "theorem",
+          "claim": "Exact mixture decomposition"
+        },
+        {
+          "class": "engineering check",
+          "claim": "Fixed-domain composition example and share arithmetic"
+        },
+        {
+          "class": "speaker judgment",
+          "claim": "Illustrative non-English12to19 drift"
+        },
+        {
+          "class": "empirical result",
+          "claim": "Pile composition and sparse-expert mechanisms in sources"
+        }
+      ]
+    },
+    {
+      "section": "closing",
+      "title": "17. What the closing questions leave unresolved 1:39:09",
+      "start": 5949.65,
+      "end": 6407.47,
+      "segments": [
+        189,
+        202
+      ],
+      "lecture_material": "Provenance. Lecture's final questions through 6407 s, slide 50, and Villalobos et al., revised 2024 version, p. 1. Original synthesis: the final investigation plan.",
+      "research_extension": "Claim-bearing sources identified in section provenance and references",
+      "teaching_construction": "Original derivations, finite fixtures and counterexamples identified in section",
+      "evidence_class": "speaker judgment: Recording uncertainty and conditional public-text research forecast; definition: Distinct update mechanisms and historical milestones",
+      "claim_provenance": [
+        {
+          "class": "speaker judgment",
+          "claim": "Recording uncertainty and conditional public-text research forecast"
+        },
+        {
+          "class": "definition",
+          "claim": "Distinct update mechanisms and historical milestones"
+        }
+      ]
+    },
+    {
+      "section": "numerical-lab",
+      "title": "18. A numerical lab that checks the distinctions",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching material, not a recording span",
+      "research_extension": "Uses only the already-identified claim-bearing sources",
+      "teaching_construction": "Original stdlib fixtures; embedded executable and actual stdout; no model training",
+      "evidence_class": "engineering check",
+      "claim_provenance": [
+        {
+          "class": "engineering check",
+          "claim": "Original stdlib fixtures; embedded executable and actual stdout; no model training"
+        }
+      ]
+    },
+    {
+      "section": "exercises",
+      "title": "19. Six exercises with complete solutions",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching material, not a recording span",
+      "research_extension": "Uses only the already-identified claim-bearing sources",
+      "teaching_construction": "Six complete solutions to already-developed models, identities, counterexamples and diagnostic questions",
+      "evidence_class": "theorem; engineering check",
+      "claim_provenance": [
+        {
+          "class": "theorem; engineering check",
+          "claim": "Six complete solutions to already-developed models, identities, counterexamples and diagnostic questions"
+        }
+      ]
+    },
+    {
+      "section": "references",
+      "title": "20. Primary references and the claim boundaries",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching material, not a recording span",
+      "research_extension": "Uses only the already-identified claim-bearing sources",
+      "teaching_construction": "Claim-scoped primary bibliography; PDF page conventions and original-example boundary",
+      "evidence_class": "source provenance",
+      "claim_provenance": [
+        {
+          "class": "source provenance",
+          "claim": "Claim-scoped primary bibliography; PDF page conventions and original-example boundary"
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "title": "Simonyan, Vedaldi and Zisserman, Deep Inside Convolutional Networks",
+      "url": "https://arxiv.org/abs/1312.6034",
+      "supports": "Simonyan, Vedaldi and Zisserman, Deep Inside Convolutional Networks (2013), pp. 2, 4: score gradients, channel reduction and regularized class visualization."
+    },
+    {
+      "title": "Sundararajan, Taly and Yan, Axiomatic Attribution for Deep Networks",
+      "url": "https://arxiv.org/abs/1703.01365",
+      "supports": "Sundararajan, Taly and Yan, Axiomatic Attribution for Deep Networks (2017), pp. 3–4, 6: integrated gradients, completeness and retinal example."
+    },
+    {
+      "title": "Zeiler and Fergus, Visualizing and Understanding Convolutional Networks",
+      "url": "https://arxiv.org/abs/1311.2901",
+      "supports": "Zeiler and Fergus, Visualizing and Understanding Convolutional Networks (2013/2014), pp. 2–7: backward visualization, pooling switches and occlusion."
+    },
+    {
+      "title": "Zhou et al., Learning Deep Features for Discriminative Localization",
+      "url": "https://arxiv.org/abs/1512.04150",
+      "supports": "Zhou et al., Learning Deep Features for Discriminative Localization (2015/2016), pp. 1–3: global pooling and CAM. Its sum-pooling scale is reconciled with this chapter's mean convention."
+    },
+    {
+      "title": "Selvaraju et al., Grad-CAM",
+      "url": "https://arxiv.org/abs/1610.02391",
+      "supports": "Selvaraju et al., Grad-CAM (2016/2017), pp. 4–5: gradient-weighted feature maps and the final rectifier."
+    },
+    {
+      "title": "Yosinski et al., Understanding Neural Networks Through Deep Visualization",
+      "url": "https://arxiv.org/abs/1506.06579",
+      "supports": "Yosinski et al., Understanding Neural Networks Through Deep Visualization (2015), pp. 2, 4–6: interactive visualization and regularized optimization."
+    },
+    {
+      "title": "Springenberg et al., Striving for Simplicity: The All Convolutional Net",
+      "url": "https://arxiv.org/abs/1412.6806",
+      "supports": "Springenberg et al., Striving for Simplicity: The All Convolutional Net (2014/2015), p. 9: guided backpropagation and backward masks."
+    },
+    {
+      "title": "Dumoulin and Visin, A Guide to Convolution Arithmetic for Deep Learning",
+      "url": "https://arxiv.org/abs/1603.07285",
+      "supports": "Dumoulin and Visin, A Guide to Convolution Arithmetic for Deep Learning (2016), pp. 19–24: transposed-convolution geometry and zero insertion."
+    },
+    {
+      "title": "Luo et al., Understanding the Effective Receptive Field",
+      "url": "https://arxiv.org/abs/1701.04128",
+      "supports": "Luo et al., Understanding the Effective Receptive Field (2016/2017), pp. 1–3: possible support versus effective gradient impact."
+    },
+    {
+      "title": "Adebayo et al., Sanity Checks for Saliency Maps",
+      "url": "https://arxiv.org/abs/1810.03292",
+      "supports": "Adebayo et al., Sanity Checks for Saliency Maps (2018), pp. 1–3: parameter and label randomization in the tested settings."
+    },
+    {
+      "title": "Vaswani et al., Attention Is All You Need",
+      "url": "https://arxiv.org/abs/1706.03762",
+      "supports": "Vaswani et al., Attention Is All You Need (2017), p. 4: scaled dot-product attention."
+    },
+    {
+      "title": "Vig, A Multiscale Visualization of Attention in the Transformer Model",
+      "url": "https://arxiv.org/abs/1906.05714",
+      "supports": "Vig, A Multiscale Visualization of Attention in the Transformer Model (2019), pp. 1–2: BertViz views."
+    },
+    {
+      "title": "Jain and Wallace, Attention is not Explanation",
+      "url": "https://arxiv.org/abs/1902.10186",
+      "supports": "Jain and Wallace, Attention is not Explanation and Wiegreffe and Pinter, Attention is not not Explanation (2019), abstracts and introductory scope: competing operational tests in NLP attention models."
+    },
+    {
+      "title": "Wiegreffe and Pinter, Attention is not not Explanation",
+      "url": "https://arxiv.org/abs/1908.04626",
+      "supports": "Jain and Wallace, Attention is not Explanation and Wiegreffe and Pinter, Attention is not not Explanation (2019), abstracts and introductory scope: competing operational tests in NLP attention models."
+    },
+    {
+      "title": "van der Maaten and Hinton, Visualizing Data using t-SNE",
+      "url": "https://www.jmlr.org/papers/v9/vandermaaten08a.html",
+      "supports": "van der Maaten and Hinton, Visualizing Data using t-SNE (2008), pp. 5–7, 20–21: joint KL objective, heavy-tailed low-dimensional similarities and interpretation limits."
+    },
+    {
+      "title": "Elhage et al., A Mathematical Framework for Transformer Circuits",
+      "url": "https://transformer-circuits.pub/2021/framework/index.html",
+      "supports": "Elhage et al., A Mathematical Framework for Transformer Circuits (2021), introduction: attention-only setting and QK/OV decomposition; Olsson et al., In-context Learning and Induction Heads (2022), p. 1: induction behavior and differing causal evidence by model setting."
+    },
+    {
+      "title": "Olsson et al., In-context Learning and Induction Heads",
+      "url": "https://arxiv.org/abs/2209.11895",
+      "supports": "Elhage et al., A Mathematical Framework for Transformer Circuits (2021), introduction: attention-only setting and QK/OV decomposition; Olsson et al., In-context Learning and Induction Heads (2022), p. 1: induction behavior and differing causal evidence by model setting."
+    },
+    {
+      "title": "Kaplan et al., Scaling Laws for Neural Language Models",
+      "url": "https://arxiv.org/abs/2001.08361",
+      "supports": "Kaplan et al., Scaling Laws for Neural Language Models (2020), pp. 5–6: fitted minimum-compute allocation and approximate dense-transformer compute; Hoffmann et al., Training Compute-Optimal Large Language Models (2022), pp. 1–2, 5–6: compute allocation approaches and reported Chinchilla/Gopher budget experiment."
+    },
+    {
+      "title": "Hoffmann et al., Training Compute-Optimal Large Language Models",
+      "url": "https://arxiv.org/abs/2203.15556",
+      "supports": "Kaplan et al., Scaling Laws for Neural Language Models (2020), pp. 5–6: fitted minimum-compute allocation and approximate dense-transformer compute; Hoffmann et al., Training Compute-Optimal Large Language Models (2022), pp. 1–2, 5–6: compute allocation approaches and reported Chinchilla/Gopher budget experiment."
+    },
+    {
+      "title": "Brown et al., Language Models are Few-Shot Learners",
+      "url": "https://arxiv.org/abs/2005.14165",
+      "supports": "Brown et al., Language Models are Few-Shot Learners (2020), p. 43: word-13-gram contamination procedure."
+    },
+    {
+      "title": "OpenAI, Findings from a pilot Anthropic–OpenAI alignment evaluation exercise: OpenAI Safety Tests",
+      "url": "https://openai.com/index/openai-anthropic-safety-evaluation/",
+      "supports": "OpenAI, Findings from a pilot Anthropic–OpenAI alignment evaluation exercise: OpenAI Safety Tests (August 27, 2025): the company's report on the joint pilot, its stress-test framing and limits (product claim)."
+    },
+    {
+      "title": "Mistral, Introducing Mistral 3",
+      "url": "https://mistral.ai/news/mistral-3/",
+      "supports": "Mistral, Introducing Mistral 3 (December 2, 2025): dated announcement identity, not an independently established model ranking."
+    },
+    {
+      "title": "Gao et al., The Pile",
+      "url": "https://arxiv.org/abs/2101.00027",
+      "supports": "Gao et al., The Pile (2020/2021), pp. 1, 3–4: component corpus sizes and sampling weights."
+    },
+    {
+      "title": "Shazeer et al., Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer",
+      "url": "https://arxiv.org/abs/1701.06538",
+      "supports": "Shazeer et al., Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer (2017), pp. 3–5; Fedus, Zoph and Shazeer, Switch Transformers (2021), pp. 6–7: sparse routing, capacity and auxiliary balancing."
+    },
+    {
+      "title": "Fedus, Zoph and Shazeer, Switch Transformers",
+      "url": "https://arxiv.org/abs/2101.03961",
+      "supports": "Shazeer et al., Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer (2017), pp. 3–5; Fedus, Zoph and Shazeer, Switch Transformers (2021), pp. 6–7: sparse routing, capacity and auxiliary balancing."
+    },
+    {
+      "title": "Villalobos et al., Will We Run Out of Data?",
+      "url": "https://arxiv.org/abs/2211.04325",
+      "supports": "Villalobos et al., Will We Run Out of Data? (revised June 2024), p. 1: conditional public-human-text forecast."
+    }
+  ],
+  "local_original_audit": [
+    {
+      "id": "1312.6034",
+      "sha256": "fa812c1af4df881c4ddd94d5435f740d0695eb9e6ebc0f378adde48f3d7a7f65",
+      "bytes": 2262025,
+      "pages_checked": [
+        2,
+        4
+      ],
+      "page_count": 8,
+      "supports": "Score gradients, RGB maximum absolute reduction, regularized class optimization",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1703.01365",
+      "sha256": "f7ebd6fea293c844b94c8ae86ad80e28f48b828d562a316841d4eab8fcd7dee1",
+      "bytes": 3383448,
+      "pages_checked": [
+        3,
+        4,
+        6
+      ],
+      "page_count": 11,
+      "supports": "Integrated-gradient definition, completeness, reference and retinal example",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1311.2901",
+      "sha256": "f85b442009c4378aebce5f7e70a39ef5bbd5d595b36643e261c83c44534e00c0",
+      "bytes": 36235279,
+      "pages_checked": [
+        2,
+        3,
+        4,
+        5,
+        7
+      ],
+      "page_count": 11,
+      "supports": "Backward visualization, switches, feature galleries and occlusion Figure 7",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1512.04150",
+      "sha256": "a8fb37fb5ce642a78df041a9872810562050e410a939b71920c7aea64437f423",
+      "bytes": 2610995,
+      "pages_checked": [
+        1,
+        2,
+        3
+      ],
+      "page_count": 10,
+      "supports": "MIT affiliation and linear pooled-head CAM; sum convention versus mean convention",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1610.02391",
+      "sha256": "eaa0a39291b149ad8653a254087b66edc3d9570b6a695a2619215595553b0df9",
+      "bytes": 7262053,
+      "pages_checked": [
+        4,
+        5
+      ],
+      "page_count": 23,
+      "supports": "Grad-CAM mean-gradient weights, outer ReLU, localization resolution",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1506.06579",
+      "sha256": "2297b20a1a419f753e76f7d3bbf168fdc006d04846a3283dc3339ff8992ae2e7",
+      "bytes": 9406533,
+      "pages_checked": [
+        2,
+        4,
+        5,
+        6
+      ],
+      "page_count": 12,
+      "supports": "Toolbox scope and optimization regularization; no real-time benchmark certified",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1412.6806",
+      "sha256": "c276789a536f7123debb64032c530efc3d6cf54f3ea271db1b97fcc5e9e48d52",
+      "bytes": 4229020,
+      "pages_checked": [
+        9
+      ],
+      "page_count": 14,
+      "supports": "Ordinary, deconv and guided ReLU masks",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1603.07285",
+      "sha256": "dc1709c30722e8d02f0e3dc02984105362a3fcc8772a36618a3f38fd35e0339d",
+      "bytes": 913752,
+      "pages_checked": [
+        19,
+        20,
+        21,
+        23,
+        24
+      ],
+      "page_count": 31,
+      "supports": "Transposed geometry and zero insertion; no inverse claim",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1701.04128",
+      "sha256": "c00ce41d239b1a2fe098084ae4367a4dea39149d1e75c4ad52e9e84865f8ec8b",
+      "bytes": 620447,
+      "pages_checked": [
+        1,
+        2,
+        3
+      ],
+      "page_count": 9,
+      "supports": "Effective gradient impact versus theoretical receptive support",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1810.03292",
+      "sha256": "654cb2393d1e2bf96374c2d8bf85d2561ed9a162ce58249e640d7685701c9ce0",
+      "bytes": 11047575,
+      "pages_checked": [
+        1,
+        3
+      ],
+      "page_count": 30,
+      "supports": "Randomization findings within tested architectures and tasks",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1706.03762",
+      "sha256": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697",
+      "bytes": 2215244,
+      "pages_checked": [
+        4
+      ],
+      "page_count": 15,
+      "supports": "Attention dimensions and variance-based square-root scaling",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1906.05714",
+      "sha256": "bff6b84fc2e55b52cb32d6df687f2f486064317bb46e4dd6a8ded9e5ff2d1dfa",
+      "bytes": 1459055,
+      "pages_checked": [
+        1,
+        2
+      ],
+      "page_count": 6,
+      "supports": "BertViz multi-scale views",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1902.10186",
+      "sha256": "ffc666e7e27ddf832b209027d9b35c5a8525d0bd2b114099d0bec252135fd322",
+      "bytes": 1259036,
+      "pages_checked": [
+        1
+      ],
+      "page_count": 16,
+      "supports": "Attention-explanation tests and introductory NLP scope",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1908.04626",
+      "sha256": "d9e507dfa544d04e2738b069352cad8849246e58650a1f6c19f6ba7091260a47",
+      "bytes": 4984859,
+      "pages_checked": [
+        1
+      ],
+      "page_count": 12,
+      "supports": "Response and alternative tests in recurrent attention models",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "2209.11895",
+      "sha256": "9fa4a667e559431efac5bf1d9463f3b0005633e0b78f3ebbacfb901e4ed36e50",
+      "bytes": 9957060,
+      "pages_checked": [
+        1
+      ],
+      "page_count": 61,
+      "supports": "March 2022 identity; induction behavior; small causal versus large correlational scope",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "2001.08361",
+      "sha256": "a41bd7877fd1a6bcbba096b2619618bd2f90e02488f2365644903eb2f7c6a494",
+      "bytes": 2493004,
+      "pages_checked": [
+        5,
+        6
+      ],
+      "page_count": 30,
+      "supports": "WebText2 minimum-compute allocation .73 parameters and .24+.03=.27 processed exposure; approximate 6 N_param N_tok FLOPs",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "2203.15556",
+      "sha256": "3fd3632a8ef48171bd25282990221d49535d75356192f068b3b2ebe08f2aedd4",
+      "bytes": 6004349,
+      "pages_checked": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "page_count": 36,
+      "supports": "Reported Chinchilla/Gopher budget test; approach1 .50/.50; approach2 .49/.51; approach3 parametric form",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "2005.14165",
+      "sha256": "97fd272f1fdfc18677462d0292f5fbf26ca86b4d1b485c2dba03269b643a0e83",
+      "bytes": 6768044,
+      "pages_checked": [
+        43
+      ],
+      "page_count": 75,
+      "supports": "Word-13-gram normalization and 200-character removal-window procedure",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "2101.00027",
+      "sha256": "f75f972e587cd9dc1ebdc69d11bab0c966fe75a3b0a9b7314abfd7d53cef2f5f",
+      "bytes": 1528989,
+      "pages_checked": [
+        1,
+        3,
+        4
+      ],
+      "page_count": 39,
+      "supports": "22 components, 825.18 GiB and exposure weights; bytes are not tokens",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "1701.06538",
+      "sha256": "2567713d198a376b65b92f0c60b9f58c8c5f66755530b92203533a17c4ec4b8e",
+      "bytes": 544288,
+      "pages_checked": [
+        3,
+        4,
+        5
+      ],
+      "page_count": 19,
+      "supports": "Sparse gating, compute skipping and expert load/bandwidth concerns",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "2101.03961",
+      "sha256": "f340f6ace31abf7d0730ef461404279f40d3c890e9cc2daeb7068b3304afdbd6",
+      "bytes": 1304157,
+      "pages_checked": [
+        7
+      ],
+      "page_count": 40,
+      "supports": "Top-one routing capacity and auxiliary balancing term",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "2211.04325",
+      "sha256": "6e1298ea55338832b113fb3219f624b2cd58a06883e6f0cea7934e00c35cf911",
+      "bytes": 881818,
+      "pages_checked": [
+        1
+      ],
+      "page_count": 22,
+      "supports": "Revised June 2024 conditional public-human-text supply forecast",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    },
+    {
+      "id": "tsne",
+      "sha256": "f05922e427639a08cb5214cc4ef314689ecf2d87333cb5050003323d7631017f",
+      "bytes": 3716712,
+      "pages_checked": [
+        3,
+        5,
+        6,
+        7,
+        20,
+        21
+      ],
+      "page_count": 27,
+      "supports": "Symmetric KL, heavy-tailed map similarities and dimensionality/optimization limits",
+      "reading_status": "Claim-bearing portions read; not full-paper certification"
+    }
+  ],
+  "online_source_audit": [
+    {
+      "url": "https://transformer-circuits.pub/2021/framework/index.html",
+      "final_url": "https://transformer-circuits.pub/2021/framework/index.html",
+      "bytes": 6426186,
+      "sha256": "5b072df765d9dc659068841083d1b1e6012f04ad37f9ea62c11908b30eb61350",
+      "status": "saved",
+      "id": "circuits",
+      "checked_portion": "Introduction, December22 2021, attention-only scope and QK/OV decomposition"
+    },
+    {
+      "url": "https://mistral.ai/news/mistral-3/",
+      "final_url": "https://mistral.ai/news/mistral-3/",
+      "bytes": 268088,
+      "sha256": "76997bf964429e45befca28603d9c415bbf45173f50bfc75914cf67990c6210d",
+      "status": "saved",
+      "id": "mistral3",
+      "checked_portion": "December2 2025 announcement identity only"
+    },
+    {
+      "url": "https://openai.com/index/openai-anthropic-safety-evaluation/",
+      "final_url": "https://openai.com/index/openai-anthropic-safety-evaluation/",
+      "bytes": 942118,
+      "sha256": "b2b0e33b631e095cbdc117631762f14bb195350bbf6af5f8ffa30b4c7c3c8607",
+      "status": "saved",
+      "id": "joint-safety",
+      "checked_portion": "August27 2025 pilot scope, safeguard-relaxed stress tests and threat-model limit"
+    }
+  ],
+  "local_copy_gap": {
+    "sources": [
+      "GPT5 product announcement linked by slide47"
+    ],
+    "exact_error": "HTTPError: HTTP Error 403: Forbidden",
+    "claim_boundary": "No numerical or research result uses this unavailable page; slide URL identity verified in actual PDF annotation",
+    "new_permission_rejections": 0,
+    "new_AbsolutePathBuf_errors": 0
+  },
+  "author_allocation": "Inherited GPT-6-based Codex child agent; exact historical author/editor model names unavailable and not attested",
+  "prose_word_count_without_math_code_svg": 10355,
+  "exercise_count": 6,
+  "original_code": {
+    "filename": "chapter09.py",
+    "sha256": "79d6921ba6d0cfaf0b19c7d22c81d0e2e67d4170809ac33a19041fd2eaa7f440",
+    "dependencies": "Python3 standard library only",
+    "checks": "Stable softmax/finite derivative; exact and coarse IG; adjoint finite difference; padding-specific Gram/pseudoinverse; zero insertion; CAM/GradCAM scale; negative unpool; three ReLU masks; equal-value attention; two overlap denominators; mixture change; paired standard error; toy compute optimum",
+    "embedded_byte_identity": true
+  },
+  "quality_passes": [
+    {
+      "pass": "1-2",
+      "result": "Actual files inspected; full202-segment transcript read sequentially; all50 deck stills viewed; argument coverage maps every segment once"
+    },
+    {
+      "pass": "3-6",
+      "result": "Complete mathematical manuscript, derivations, original fixtures, six reasoned solutions and claim-bearing references prepared"
+    },
+    {
+      "pass": "6a",
+      "result": "Slide stills complete; dynamic video behavior remains source-attributed and independently unverified"
+    },
+    {
+      "pass": "6c",
+      "result": "Claim-bearing portions of23 retained PDFs and3 retained public pages read; GPT5 remote403 is excluded from substantive evidence"
+    },
+    {
+      "pass": "7-8",
+      "result": "Author prose and depth self-audit completed provisionally; post-independent-review pass7/8 remain for root/editor"
+    },
+    {
+      "pass": "6b/9",
+      "result": "Pending independent review and root book-wide integration/validation; no acceptance attestation"
+    }
+  ],
+  "postreview_author_passes": {
+    "pass7": "Repeated after the bounded independent-review repairs: all new sentences checked for assumptions, argument, evidence grade, implications and limits; no additional prose edits required",
+    "pass8": "Repeated parity audit: 20 intellectually developed sections, persistent zoo/checkpoint cases, original derivations/counterexamples, six reasoned solutions, original diagram, fresh isolated numerical checks and claim-bearing references; no padding added",
+    "independent_acceptance": "Pending final technical-editor confirmation; no author self-acceptance",
+    "final_bounded_repairs": "Every omitted Tx/T-transpose and g_i component renamed to defined W_in/upsilon; finite allowed key required in every queried attention row"
+  },
+  "historical_status_before_edition_review_2026_10_02": "Author package complete; independent gate 6b and root integration/pass9 pending",
+  "current_edition": {
+    "date": "2026-10-02",
+    "editorial_review_status": "accepted within recorded scope",
+    "book_review": "2026-10-02-book-wide-independent-review.md",
+    "book_review_sha256": "88ba052236963038aa78c2d0d634cb789f7eaa1dc9292692343056489c0f943b",
+    "reviewed_authored_body_sha256": "00388990c32d0c510f09d9bb683122bed0d94916d63290c9794428de81fe266d",
+    "historical_evidence": "Earlier gate hashes/statuses remain historical; current body identity is recorded here",
+    "reader_and_execution_evidence": "validation-summary.json and reader-validation.json",
+    "publication": "local only; no publication authorization exercised",
+    "course_completion": "incomplete: original archive gaps and human screen-reader review outstanding",
+    "original_archive_gaps": [],
+    "human_screen_reader_review": "not performed",
+    "excluded_source": "GPT5 announcement download HTTP403; supplies no substantive claim or numerical result",
+    "notation": "Chapter9 proposals merged in NOTATION section15"
+  },
+  "technical_acceptance": {
+    "status": "accepted",
+    "gate": "6b",
+    "report": "lecture-09-round2-science-editor-2026-10-02.md",
+    "report_sha256": "54955c50d98a96a45e91395bd90a575258d080e73c7d1e466b349022202f4680",
+    "accepted_authored_body_sha256": "00388990c32d0c510f09d9bb683122bed0d94916d63290c9794428de81fe266d",
+    "reviewer": "Independent Codex reviewer; historical model labels not asserted"
+  }
+}

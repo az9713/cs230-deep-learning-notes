@@ -1,0 +1,483 @@
+{
+  "course": "CS230",
+  "edition": "local reading edition, 2026-10-02",
+  "finished_at_utc": "2026-10-02T19:04:40.527715+00:00",
+  "validation_status": "passed within recorded scope",
+  "course_complete": false,
+  "publication": "not published; no live-site validation",
+  "chapter_count": 9,
+  "exercise_count": 53,
+  "worked_solution_count": 53,
+  "embedded_program_count": 9,
+  "editorial_review": {
+    "independent_chapter_and_book_review": "accepted within recorded scope",
+    "review_scope": "All nine manuscripts and 53 solutions; high-risk mathematics, dependencies, notation and bounded source reconciliation",
+    "review_limit": "Independent editorial review is not formal peer review or exhaustive fresh re-reading of every historical research ledger"
+  },
+  "chapters": [
+    {
+      "file": "lecture-01-introduction-to-deep-learning.html",
+      "html_sha256": "bb2cbc9f008e2839b1450b74e65d6040b6bde5f4f337aaf2b329ffc389689ac3",
+      "authored_body_sha256": "0ecdd137ebb463fd0bd95942bf1717f6e9bd7faa9135b14b1a29ecf94214eadb",
+      "metadata_sha256": "62cacef7b57e600e4b4201688ff7699a2b33405a7ab237e8c683a1733aa5aa2a",
+      "h1_count": 1,
+      "sections": 14,
+      "exercises": 6,
+      "solutions": 6,
+      "bad_source_spans": [],
+      "programs": [
+        {
+          "index": 0,
+          "status": "passed",
+          "code_sha256": "ba500c3124c786fb9ea6a53dce2853606cfb27390df071baccdb31823a00e491",
+          "exit_code": 0,
+          "stdout": "floors: {1: 0.3085, 4: 0.1587, 16: 0.0228}\nErr, n_feat=1: [0.3238, 0.3148, 0.3111, 0.3097, 0.3094, 0.3089, 0.3087, 0.3086]\nErr, n_feat=4: [0.1825, 0.1703, 0.165, 0.1618, 0.1601, 0.1594, 0.159, 0.1588]\nErr, n_feat=16: [0.0723, 0.0415, 0.0305, 0.0261, 0.0245, 0.0236, 0.0232, 0.023]\nmean J, R*, mean R at m=40, n_feat=16: (0.0284, 0.05, 0.088)\nlocal exponents: [1.4, 1.27, 1.19, 0.95, 1.08, 0.9, 1.08]\nfloor known: floor 0.0228, xi 1.2877, Lam 5.5073, m(0.025) 428, m(0.022) inf, Err at 429 = 0.0255\nfloor zero: floor 0.0000, xi 0.4843, Lam 0.3882, m(0.025) 288, m(0.022) 375, Err at 289 = 0.0269\nfloor estimated: floor 0.0236, xi 1.4090, Lam 8.7388, m(0.025) 485, m(0.022) inf, Err at 486 = 0.0251\nzero-floor fit reaches the true floor at m = 350\neig_max = 9.955 | threshold eta = 0.2009 | distance after 300 steps: {0.9: '9.0e-16', 1.1: '1.1e+23'}\nP(>=1 success): independent 0.8784 | common cause 0.6149\n",
+          "stderr": "",
+          "printed_output_matches": true
+        }
+      ]
+    },
+    {
+      "file": "lecture-02-supervised-self-supervised-and-weakly-supervised-learning.html",
+      "html_sha256": "07abd500c0cd2c0c723d15d8cc8bed1699ed2fae2b8df8860f5b17178b8fff24",
+      "authored_body_sha256": "8f1c2c7f3d27111ecad7b554e02a834ed60a123d246d4aa66da03730ebe19696",
+      "metadata_sha256": "60f6726d859b0ac1759c634b2295d5b062987861c5c42256cec4b45737b37cfc",
+      "h1_count": 1,
+      "sections": 13,
+      "exercises": 6,
+      "solutions": 6,
+      "bad_source_spans": [],
+      "programs": [
+        {
+          "index": 0,
+          "status": "passed",
+          "code_sha256": "db78a616ff5ac56f937ea3c10aa6cd77d7934beed21ca7105967334bee9e63d5",
+          "exit_code": 0,
+          "stdout": "slide 17 clip: p+ = 0.0196 | acc(all 0) = 0.9804 | best constant BCE = 0.0965\nface block, c = 1: FRR 0.2349 FAR 0.0226\nEER (rate, c): pixels (0.352, 5.213) face block (0.056, 1.279)\nEER (rate, c): face block on the unit sphere (0.081, 0.755)\nEER (rate, c): random (0.397, 1.28)\nEER (rate, c): triplet (0.087, 0.761)\nEER (rate, c): contrastive, full (0.088, 0.75)\nEER (rate, c): contrastive, lighting only (0.394, 1.29)\nshare of norm of W: face block, triplet 0.998 | scene block, lighting only 0.836\n1-NN identification accuracy by N_id: {10: 0.616, 100: 0.403, 1000: 0.091}\n",
+          "stderr": "",
+          "printed_output_matches": true
+        }
+      ]
+    },
+    {
+      "file": "lecture-03-full-cycle-of-a-deep-learning-project.html",
+      "html_sha256": "eef5102b3c61e5de704588879c581e1065d189304652dd24722b5edc3cc45d13",
+      "authored_body_sha256": "b9d2c48c74e621617783026d2c30e4977006cc011a3cdc78ce5f7711b5692559",
+      "metadata_sha256": "2a0f093f3911f341572d7a88fd1d6e2ed0da698525cb2beb19c8dab675044625",
+      "h1_count": 1,
+      "sections": 9,
+      "exercises": 6,
+      "solutions": 6,
+      "bad_source_spans": [],
+      "programs": [
+        {
+          "index": 0,
+          "status": "passed",
+          "code_sha256": "8347a199916ef9d71b61c5726c8f817409e4a5a04b95fe961a4c67b6c5fe8a34",
+          "exit_code": 0,
+          "stdout": "gate fraction changed: {'empty': 0.0, 'person': 0.312, 'person+glasses': 0.312, 'light wind': 0.023, 'strong wind': 0.118, 'distant car': 0.008, 'cat': 0.152, 'lights on': 1.0}\ncascade: P(fire) = 0.625 | exact recall = 0.527 | product = 0.5563 | recall given fire = 0.8432\nrelevant-region MSE: {(3, 'relevant'): 0.0004, (3, '+irrelevant'): 0.0863, (3, '+wrong labels'): 0.5494, (9, 'relevant'): 0.0005, (9, '+irrelevant'): 0.0002, (9, '+wrong labels'): 0.5498}\nimportance weighting (estimate, truth, ESS, m*exp(-mu^2)): {1.0: (0.311, 0.309, 3896, 3679), 2.0: (0.639, 0.691, 511, 183)}\nband = (0.0173, 0.0827) | counts (7, 33)\nper-metric false alarm = 0.00227 | P(any of 50) = 0.107 | pages in 365 days = 37\ndaily detection of a drift to 8% = 0.382\n",
+          "stderr": "",
+          "printed_output_matches": true
+        }
+      ]
+    },
+    {
+      "file": "lecture-04-adversarial-robustness-and-generative-models.html",
+      "html_sha256": "e39a554aa59bf1c73c83dcc5a30b2e160898feb01d89820a74882b34a4ceffff",
+      "authored_body_sha256": "346212b9d06e641c232584c3dcbe16645058020c160188679c8adc92f0889eee",
+      "metadata_sha256": "6ef9d923874d52bb43fbfa49a151e7da7314a782d77b56120ed995fe800dbb0b",
+      "h1_count": 1,
+      "sections": 19,
+      "exercises": 6,
+      "solutions": 6,
+      "bad_source_spans": [],
+      "programs": [
+        {
+          "index": 0,
+          "status": "passed",
+          "code_sha256": "0a31f17daf3e3a273d67e5cad8fe6a66672f7f0fe1ec1a28fde7438a9fdb3ffc",
+          "exit_code": 0,
+          "stdout": "l-inf attack, rho=0.05 (clean, attacked, formula): {2: (0.976, 0.972, 0.973), 3072: (0.975, 0.226, 0.22)}\nJS(p_data, collapsed p_g) = 0.1947 nats\nabar_T = 4.036e-05 | fraction in + mode = 0.4924\nmax |cov - (I + mu mu^T)| = 0.024\nlargest one-shot |x0_hat| = 0.116\neps-loss floor at t=100 = 1.822 | single-Gaussian floor n_x*abar = 1.794\n",
+          "stderr": "",
+          "printed_output_matches": true
+        }
+      ]
+    },
+    {
+      "file": "lecture-05-deep-reinforcement-learning.html",
+      "html_sha256": "feca923f498512fed600a86b1d249ca719041289984f870bc7ecb3d4f592be92",
+      "authored_body_sha256": "532a926590267fe25a19b3c9bf93a5b27a2e1e11bc0e9d296a0409357f9103ae",
+      "metadata_sha256": "c6b77103b429848ea0377de1665e0ce5a89ff7f8b1cd82f61e313f3be3470a0f",
+      "h1_count": 1,
+      "sections": 16,
+      "exercises": 6,
+      "solutions": 6,
+      "bad_source_spans": [],
+      "programs": [
+        {
+          "index": 0,
+          "status": "passed",
+          "code_sha256": "ea3b03b9a93bcb985517bfe20b006f852ac14f28328f59d6f0fc8f5a92f4622c",
+          "exit_code": 0,
+          "stdout": "Q* by value iteration: sweeps to exact from 0 = 4 | gap after 10, 20 sweeps from 100 = [29.196, 7.681]\ndeadline, gamma=1: V(2, 3) = 11.0 | gamma=0.9: Q(2,3,R) = 9.0 Q(2,1,R) = 0.0 Q(3,2,L) = 1.8 Q(4,1,L) = 0.0\ncritical chocolate reward = 2.1111 | greedy action at state 4: {2.101: 'right', 2.121: 'left'}\none-hot Q-network: max |Q_theta - Q*| = 2.7e-14\nP(a3 tried within 100 episodes), eps=0.05: simulated 0.817 formula 0.814\npi* = [0.179  0.2919 0.5291] | log Z = 1.0272 | E[r] = 1.3501\nBradley-Terry: P(y_w preferred) = 0.69 loss = 0.3711 dloss/dr_w = -0.31\n",
+          "stderr": "",
+          "printed_output_matches": true
+        }
+      ]
+    },
+    {
+      "file": "lecture-06-ai-project-strategy.html",
+      "html_sha256": "acd4030cbf965d04a2391ee0cfa4b6db00083cf02d2c6018dfaeb29b2253b3e7",
+      "authored_body_sha256": "0f43975f4c5b58f8c444f3cdb57a88fc2a35a9bdf90571da17d58b9bf3bedce7",
+      "metadata_sha256": "811c2c55ee53d4233b0d84d750e0945dd75a31865464f777cfa27e2af9921f45",
+      "h1_count": 1,
+      "sections": 13,
+      "exercises": 6,
+      "solutions": 6,
+      "bad_source_spans": [],
+      "programs": [
+        {
+          "index": 0,
+          "status": "passed",
+          "code_sha256": "1a49292366b887c2edbe341ac284b42155d901674cc8988760b322bb1776890a",
+          "exit_code": 0,
+          "stdout": "constant-0 accuracy, best constant loss: 0.9667 0.1461\nomega=1: recall 0.047 false act 0.0010 precision 0.617 accuracy 0.967\nomega=29: recall 0.760 false act 0.2398 precision 0.099 accuracy 0.760\n2nd-moment coefs (pos w, pos dup, neg w, neg dup): [0.28033, 0.01869, 0.00033, 0.00064]\nfresh windows (recall, precision) unweighted, weighted, shift: ((0.054, 0.607), (0.733, 0.103), 3.38)\n300k windows: shift 3.369 slopes [1.001 1.024] [0.987 1.008]\nP_fg, P_bg: 0.3 0.0891 | SNR dB at A=1, 0.5: 5.27 -0.75 | cross/(P_fg+P_bg): 0.0053\ndev optimism, bound, gaussian E max: 0.079 0.129 1.539\nsd of fetch share: 0.0649 | fetch share largest in 1.0 of sheets\n",
+          "stderr": "",
+          "printed_output_matches": true
+        }
+      ]
+    },
+    {
+      "file": "lecture-07-agents-prompts-and-rag.html",
+      "html_sha256": "8329007cf394f7865adcd5b42fb864279fd590eaa1f835ae038e2e404266279f",
+      "authored_body_sha256": "cd30182cc6ac934a7ec22cb33b4aa044f2cd728dcc4a370c9efb25dbfb3bee71",
+      "metadata_sha256": "1550e622f8f4b0050d3752c0ed5ba70bbee4c762a870913b3d9859f56037d95c",
+      "h1_count": 1,
+      "sections": 16,
+      "exercises": 6,
+      "solutions": 6,
+      "bad_source_spans": [],
+      "programs": [
+        {
+          "index": 0,
+          "status": "passed",
+          "code_sha256": "36d0f974014721231fe117a41d5b0e631d8cd99e40f65c87d1a54b8451d6aa1b",
+          "exit_code": 0,
+          "stdout": "Recall@n_nb for n_nb = 1, 2, 3: [0.667, 0.833, 0.833]\nmissed at n_nb = 1 (query, top 3): [(3, [5, 4, 0]), (5, [2, 1, 7])]\nhypothetical document retrieves doc 4\nchain: product 0.8703 | bounds 0.865 0.93 | latency 9.0 s\nsimulated: independent 0.8703 | correlated 0.9163\njudge: p_o 0.91 p_e 0.796 kappa 0.559\npairwise judge: simulated 0.5607 formula 0.56\norder-ID checks: [False, True]\n",
+          "stderr": "",
+          "printed_output_matches": true
+        }
+      ]
+    },
+    {
+      "file": "lecture-08-career-advice-in-ai.html",
+      "html_sha256": "57456514d0ff05e73ce3127a12484dfab05a998b23630e32f9250361982b9abf",
+      "authored_body_sha256": "a65741afb0eae9e43f86fcee6caf45c6774c97777566f1694896686c18134993",
+      "metadata_sha256": "36e78831f655b4f9644188ab36e6797568fcfd165c32bfe247c9514f09b145b9",
+      "h1_count": 1,
+      "sections": 18,
+      "exercises": 5,
+      "solutions": 5,
+      "bad_source_spans": [],
+      "programs": [
+        {
+          "index": 0,
+          "status": "passed",
+          "code_sha256": "b7a26a3235523bde5db317ad93cb0311ac39c9cb738409ccaa7bd3efd1daa0d2",
+          "exit_code": 0,
+          "stdout": "synthetic fit: anchor 2.0 min; doubling 7.0 months\n24-month sensitivity, doubling 8 / 7 / 6 months: [16.0, 21.534, 32.0]\nannual factors, 7 months / 70 days: [3.281, 37.124]\n20 prototypes: independent 0.8784 | identical shared outcome 0.1\ncycle: speedup 3.5714 | feedback limit 5.0\nillustrative payment: monthly 2776.52 | total/principal 1.9991\nnominal annual rate for doubled total: 5.304 %\nselling shares / relative gains: [(0.28, 0.4), (0.32, 0.6)]\n",
+          "stderr": "",
+          "printed_output_matches": true
+        }
+      ]
+    },
+    {
+      "file": "lecture-09-whats-going-on-inside-my-model.html",
+      "html_sha256": "f6d31ef64f873ef91abe5fa1b2c2190fba25730bc77698d5c4a6d1e007ba1c84",
+      "authored_body_sha256": "00388990c32d0c510f09d9bb683122bed0d94916d63290c9794428de81fe266d",
+      "metadata_sha256": "dcb8ed49db77b36108f99eb58de0b67a2e2b18c1d1b03112c3a41e3ef2234220",
+      "h1_count": 1,
+      "sections": 20,
+      "exercises": 6,
+      "solutions": 6,
+      "bad_source_spans": [],
+      "programs": [
+        {
+          "index": 0,
+          "status": "passed",
+          "code_sha256": "79d6921ba6d0cfaf0b19c7d22c81d0e2e67d4170809ac33a19041fd2eaa7f440",
+          "exit_code": 0,
+          "stdout": "softmax: 0.268941 -> 0.731059\nIG: [2.666667, -0.166667] sum 2.5\ntranspose: [2, 3, 3, 3, -7] minimum-norm preimage: [-1.5, 2.0, -1.5, 1.5, -1.5, 1.5, 7.0, 1.5]\nCAM: [-2, 1, 4, 7] logit: 3.0\nmixture: 1.5 -> 1.75 paired gain: 0.3 SE: 0.213437\nAll chapter 9 numerical checks passed.\n",
+          "stderr": "",
+          "printed_output_matches": true
+        }
+      ]
+    }
+  ],
+  "source_integrity": [
+    {
+      "chapter": 1,
+      "video_id": "_NLHFoVNlbg",
+      "segments": 121,
+      "checks": {
+        "audio_sha256_matches": true,
+        "transcript_text_sha256_matches": true,
+        "intervals_in_bounds": true,
+        "starts_monotone": true,
+        "endpoint_gap_under_60s": true,
+        "duration_matches_playlist": true
+      },
+      "recognition_accuracy": "Not established by hashes or interval checks"
+    },
+    {
+      "chapter": 2,
+      "video_id": "DNCn1BpCAUY",
+      "segments": 196,
+      "checks": {
+        "audio_sha256_matches": true,
+        "transcript_text_sha256_matches": true,
+        "intervals_in_bounds": true,
+        "starts_monotone": true,
+        "endpoint_gap_under_60s": true,
+        "duration_matches_playlist": true
+      },
+      "recognition_accuracy": "Not established by hashes or interval checks"
+    },
+    {
+      "chapter": 3,
+      "video_id": "MGqQuQEUXhk",
+      "segments": 126,
+      "checks": {
+        "audio_sha256_matches": true,
+        "transcript_text_sha256_matches": true,
+        "intervals_in_bounds": true,
+        "starts_monotone": true,
+        "endpoint_gap_under_60s": true,
+        "duration_matches_playlist": true
+      },
+      "recognition_accuracy": "Not established by hashes or interval checks"
+    },
+    {
+      "chapter": 4,
+      "video_id": "aWlRtOlacYM",
+      "segments": 202,
+      "checks": {
+        "audio_sha256_matches": true,
+        "transcript_text_sha256_matches": true,
+        "intervals_in_bounds": true,
+        "starts_monotone": true,
+        "endpoint_gap_under_60s": true,
+        "duration_matches_playlist": true
+      },
+      "recognition_accuracy": "Not established by hashes or interval checks"
+    },
+    {
+      "chapter": 5,
+      "video_id": "4E27qlfYw0A",
+      "segments": 217,
+      "checks": {
+        "audio_sha256_matches": true,
+        "transcript_text_sha256_matches": true,
+        "intervals_in_bounds": true,
+        "starts_monotone": true,
+        "endpoint_gap_under_60s": true,
+        "duration_matches_playlist": true
+      },
+      "recognition_accuracy": "Not established by hashes or interval checks"
+    },
+    {
+      "chapter": 6,
+      "video_id": "s6JVGzABKho",
+      "segments": 145,
+      "checks": {
+        "audio_sha256_matches": true,
+        "transcript_text_sha256_matches": true,
+        "intervals_in_bounds": true,
+        "starts_monotone": true,
+        "endpoint_gap_under_60s": true,
+        "duration_matches_playlist": true
+      },
+      "recognition_accuracy": "Not established by hashes or interval checks"
+    },
+    {
+      "chapter": 7,
+      "video_id": "k1njvbBmfsw",
+      "segments": 245,
+      "checks": {
+        "audio_sha256_matches": true,
+        "transcript_text_sha256_matches": true,
+        "intervals_in_bounds": true,
+        "starts_monotone": true,
+        "endpoint_gap_under_60s": true,
+        "duration_matches_playlist": true
+      },
+      "recognition_accuracy": "Not established by hashes or interval checks"
+    },
+    {
+      "chapter": 8,
+      "video_id": "AuZoDsNmG_s",
+      "segments": 235,
+      "checks": {
+        "audio_sha256_matches": true,
+        "transcript_text_sha256_matches": true,
+        "intervals_in_bounds": true,
+        "starts_monotone": true,
+        "endpoint_gap_under_60s": true,
+        "duration_matches_playlist": true
+      },
+      "recognition_accuracy": "Not established by hashes or interval checks"
+    },
+    {
+      "chapter": 9,
+      "video_id": "Ozb1AR_F5MU",
+      "segments": 202,
+      "checks": {
+        "audio_sha256_matches": true,
+        "transcript_text_sha256_matches": true,
+        "intervals_in_bounds": true,
+        "starts_monotone": true,
+        "endpoint_gap_under_60s": true,
+        "duration_matches_playlist": true
+      },
+      "recognition_accuracy": "Not established by hashes or interval checks"
+    }
+  ],
+  "post_validation_metadata_descriptor_updates": [
+    {
+      "chapter": 6,
+      "before_metadata_sha256": "571eb9f713c988f0d55f11312d8915d6db35be5172153dd86ab37f0e9f84dd55",
+      "after_metadata_sha256": "a204e11eff9085158c092980ea0e45765bbfa2c669a5b0cb3a2851a7bad4fbfa",
+      "scope": "Two administrative source/notation descriptors only; historical strings preserved; source spans, HTML, code and reader inputs unchanged"
+    },
+    {
+      "chapter": 8,
+      "before_metadata_sha256": "891c1fb283d4d7eb1a83bff7baf5bee621765087bc42e672024492cfda7d319c",
+      "after_metadata_sha256": "7bed92ce98372be2db4d2576dfd68f2dfcf3b7a1dd5528bc3085e3b0d98b5b3e",
+      "scope": "Two administrative source/notation descriptors only; historical strings preserved; source spans, HTML, code and reader inputs unchanged"
+    }
+  ],
+  "post_validation_metadata_checkpoint_status_updates": [
+    {
+      "file": "lecture-01-introduction-to-deep-learning.meta.json",
+      "before_metadata_sha256": "a6c972ac4bd89f0d15c770d482bc0958248c78cf3086a6b5fd4efdc14817cc1a",
+      "after_metadata_sha256": "62cacef7b57e600e4b4201688ff7699a2b33405a7ab237e8c683a1733aa5aa2a",
+      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
+    },
+    {
+      "file": "lecture-02-supervised-self-supervised-and-weakly-supervised-learning.meta.json",
+      "before_metadata_sha256": "442f94644d75d70abccf0db8e8968abcd9a65baf8e3fef8c7bd7ef29d66d3791",
+      "after_metadata_sha256": "60f6726d859b0ac1759c634b2295d5b062987861c5c42256cec4b45737b37cfc",
+      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
+    },
+    {
+      "file": "lecture-03-full-cycle-of-a-deep-learning-project.meta.json",
+      "before_metadata_sha256": "37f8460bcc7fbaf493e4c16b37fc42e36f7ca19e17fa5bff730f25996874a71c",
+      "after_metadata_sha256": "2a0f093f3911f341572d7a88fd1d6e2ed0da698525cb2beb19c8dab675044625",
+      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
+    },
+    {
+      "file": "lecture-04-adversarial-robustness-and-generative-models.meta.json",
+      "before_metadata_sha256": "1f433b319db17a9ec73f38989a20288f2c62b992b79a59cb83291dfec79b00f0",
+      "after_metadata_sha256": "6ef9d923874d52bb43fbfa49a151e7da7314a782d77b56120ed995fe800dbb0b",
+      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
+    },
+    {
+      "file": "lecture-05-deep-reinforcement-learning.meta.json",
+      "before_metadata_sha256": "78c993e3734e1ff35819f9bd08dbcdcc4e870d6e8702bc84cf809360b44858c5",
+      "after_metadata_sha256": "c6b77103b429848ea0377de1665e0ce5a89ff7f8b1cd82f61e313f3be3470a0f",
+      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
+    },
+    {
+      "file": "lecture-06-ai-project-strategy.meta.json",
+      "before_metadata_sha256": "a204e11eff9085158c092980ea0e45765bbfa2c669a5b0cb3a2851a7bad4fbfa",
+      "after_metadata_sha256": "811c2c55ee53d4233b0d84d750e0945dd75a31865464f777cfa27e2af9921f45",
+      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
+    },
+    {
+      "file": "lecture-07-agents-prompts-and-rag.meta.json",
+      "before_metadata_sha256": "724787c580a3ecc31caddc1ff21cd7fc83c18f91c75c887a4b0702620face4c7",
+      "after_metadata_sha256": "1550e622f8f4b0050d3752c0ed5ba70bbee4c762a870913b3d9859f56037d95c",
+      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
+    },
+    {
+      "file": "lecture-08-career-advice-in-ai.meta.json",
+      "before_metadata_sha256": "7bed92ce98372be2db4d2576dfd68f2dfcf3b7a1dd5528bc3085e3b0d98b5b3e",
+      "after_metadata_sha256": "36e78831f655b4f9644188ab36e6797568fcfd165c32bfe247c9514f09b145b9",
+      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
+    },
+    {
+      "file": "lecture-09-whats-going-on-inside-my-model.meta.json",
+      "before_metadata_sha256": "16c28ec8b953bd59081137d933665981c31c48758dba538721a63ff9038004b6",
+      "after_metadata_sha256": "dcb8ed49db77b36108f99eb58de0b67a2e2b18c1d1b03112c3a41e3ef2234220",
+      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
+    }
+  ],
+  "cumulative_lab": {
+    "status": "passed",
+    "code_sha256": "62a05936e8602b7f788af586ef4f0911163bba59fdc998f2a9c8562447664967",
+    "exit_code": 0,
+    "stdout": "Portfolio and detector checks passed.\n20 independent attempts, p=0.1: 0.878423\n20 shared-outcome attempts, p=0.1: 0.100000\nPrecision at 1% prevalence: 0.153846\n",
+    "stderr": ""
+  },
+  "reader": {
+    "static_status": "passed",
+    "local_links_checked": 239,
+    "timestamps_checked": 125,
+    "page_viewport_checks": 26,
+    "browser_status": "passed",
+    "MathJax_errors": 0,
+    "horizontal_overflow_findings": 0,
+    "detail_report": "reader-validation.json",
+    "accessibility": "Keyboard theme/text/solutions controls tested; print events/state tested; screen-reader user study not performed"
+  },
+  "remaining_gates": [
+    {
+      "gate": "local original archive",
+      "chapter": 7,
+      "source": "McKinsey",
+      "outcome": "Direct article/PDF GET timed out after 25 seconds; official PDF parsed claim text checked separately; slide comparison remains slide-attributed"
+    },
+    {
+      "gate": "local original archive",
+      "chapter": 7,
+      "source": "Cohen (1960)",
+      "outcome": "Publisher HTTP 403; institutional routes HTTP 404 and TLS CERTIFICATE_VERIFY_FAILED; bibliographic identity verified, original formula page unavailable"
+    },
+    {
+      "gate": "local original archive",
+      "chapter": 7,
+      "source": "Victor/NYT",
+      "outcome": "Publisher HTTP 403; episode remains recording/slide-attributed"
+    },
+    {
+      "gate": "human accessibility audit",
+      "outcome": "Human screen-reader review not performed"
+    }
+  ],
+  "other_evidence_limits": [
+    "ASR hashes/timing do not establish recognition accuracy",
+    "Chapter9 external video behavior not independently viewed; still/recording attribution retained",
+    "Excluded GPT-5 announcement ordinary GET HTTP 403; no substantive claim depends on that page",
+    "Finite numerical fixtures do not reproduce neural benchmark results"
+  ],
+  "errors_and_restrictions": {
+    "permission_rejections_this_continuation": 0,
+    "AbsolutePathBuf_errors_this_continuation": 0,
+    "user_browser_control": "none; disposable task headless renderer only",
+    "renderer_recovery": "Preinstalled Chromium loader failed 0x7E; separate official headless task bundle used, with HTTP/HTTPS blocked"
+  },
+  "artifacts_sha256": {
+    "source-manifest.json": "2a62dbed1a1012f01ea82f7df21e51813a687a4d0385f28c98414f824754f2ae",
+    "source-map.json": "0ba4274468147c8a57f748b28b52731425a1eee86bbccb09ae1cb48224822da9",
+    "index.html": "126929e181e414224631d5f9fbdd556c6ef5e59d8452ea7b7d1b4844be58b991",
+    "references.html": "239e020f9037ecd04ceb0679c7362ba114558e4d6dcd4ac9dda1cb0621f7c30d",
+    "source-map.html": "2750cc5b401168babbe077652ff7f511a0ca882ab11b2acfe928a02f55c7f102",
+    "numerical-lab.html": "1ba5f11baf2b8710e6999f44fd586e78752b5458717d525b30920bf66e51ad87",
+    "numerical_lab.py": "62a05936e8602b7f788af586ef4f0911163bba59fdc998f2a9c8562447664967",
+    "chapter09.py": "79d6921ba6d0cfaf0b19c7d22c81d0e2e67d4170809ac33a19041fd2eaa7f440",
+    "assets/book.css": "49b7761ea3dbcd02688a453ca555ece6697d8591d71b9c93654884619144e167",
+    "assets/book.js": "7a7c3ba2766e09ceae27bd5f960fa43c33289c647d800de4d1b3777533aaaad7",
+    "assets/lab.js": "8dae606cfdeb303797583b5264ff00d67b45624ca26e3760a7d809c9a613c7bc",
+    "assets/mathjax-tex-svg.js": "d4295dc33744836935c1399feece5159577b34c5c8ffb9f1c6324cd82e03a882"
+  }
+}

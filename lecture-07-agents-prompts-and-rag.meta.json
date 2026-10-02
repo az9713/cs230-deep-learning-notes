@@ -1,0 +1,765 @@
+{
+  "video_id": "k1njvbBmfsw",
+  "title": "Building a reliable application around a frozen language model",
+  "chapter_order": 7,
+  "recording_lecture_number": 8,
+  "recording_title": "Stanford CS230 | Autumn 2025 | Lecture 8: Agents, Prompts, and RAG",
+  "speaker": "Kian Katanforoosh",
+  "date": "2025-11-11",
+  "status": "Independent chapter/book review accepted; local reading edition; course completion gates incomplete",
+  "model_allocation": {
+    "author": "gpt-6.1-sol",
+    "effort": "high",
+    "source": "Explicit parent delegation allocation; not runtime attestation",
+    "independent_reviewer": "Parent owns independent review; requested gpt-6-astra xhigh; no review conducted by this author"
+  },
+  "transcript_provenance": "Local machine transcription; not publisher captions; all 245 segments read sequentially during author preparation on 2026-10-02",
+  "transcription_model": "Systran/faster-whisper-small.en",
+  "second_transcription": "Not performed in this stage; uncertain spellings checked against slides and existing primary sources",
+  "audio_sha256": "f2354b0140813327e5b52b16d187eb5d30279fb9cc19cf457597b2131854abb4",
+  "audio_duration_seconds_transcript_json": 6593.8346875,
+  "playlist_duration_seconds": 6594,
+  "transcript_sha256": "10b19357b066fefa96e442dfcaf49a879727c878796d35628e2063f8cca8fd3f",
+  "transcript_sha256_format": "plain-text companion",
+  "transcript_json_sha256": "14582d584be8b4f3c8d90e1f143e4033ef429bd9d90e484b085032fdbe0a6883",
+  "transcript_hash_note": "The existing source-manifest hash identifies the plain-text transcript. The sequential segment audit used the JSON transcript; both byte hashes were independently checked on 2026-10-02.",
+  "transcript_segment_count": 245,
+  "transcript_first_start_seconds": 5.17,
+  "transcript_last_end_seconds": 6588.53,
+  "slides": {
+    "aligned_deck": "https://cs230.stanford.edu/syllabus/fall_2025/7/lecture_7.pdf",
+    "sha256": "67d2cdc87741f87dfbb591a0efffb1c708d9d929812f60b91a090ee2ccdc741f",
+    "pages": 41,
+    "alignment": "Recording follows the eight-part Beyond the model outline; book chapter 7 is recording Lecture 8, with deck file numbered 7",
+    "pages_rendered_and_inspected": [
+      3,
+      4,
+      5,
+      6,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      20,
+      21,
+      22,
+      23,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      32,
+      33,
+      34,
+      35,
+      37,
+      38,
+      41
+    ],
+    "viewing_record": {
+      "date": "2026-10-02",
+      "method": "Local PyMuPDF renders inspected in eight labelled contact sheets; no browser or UI used",
+      "remaining_pages": "Cover and repeated outline/recap pages checked as extracted slide text"
+    },
+    "visual_findings": [
+      "Page 5 overlays a post and needle graphic on a context table; four lower rows remain partly visible; other values are extracted text.",
+      "Page 14 rendered screenshot shows 6/17, 15/17, 8/17, 9/17 passes; its extracted text contains a different illustrative score table.",
+      "Page 15 reproduces judge prompts, including a 1-to-10 single-answer rubric.",
+      "Page 27 credit-memo graphic says agents could reduce time 20-60%; this is a projection.",
+      "Pages 32/33 show five decomposed tasks but a four-stage implementation with no separate policy check.",
+      "Page 35 presents five failure examples; no underlying measured trace dataset is supplied.",
+      "Page 29 proposes a provider-wrapping flight MCP schema; the server, not the general protocol, defines the flight schema.",
+      "Pages 4 and 28 carry misplaced DQN citations; page 41 carries a misplaced Wei citation."
+    ]
+  },
+  "evidence_scheme": "Empirical result with source page; engineering check for the original fixture only; dated product claim; speaker judgment with recording time. Definitions and on-page proofs are unlabelled. Section provenance separates lecture material, research extensions and original teaching constructions.",
+  "running_case": "Thread 3: address-change request for order A127 and 325 Mission Street; extract, CRM update, draft, send. Original illustrative success rates .95/.99/.93/.995 and latencies 1.2/.3/2.5/5 seconds. Secondary retrieval case is a fictional drug-X corpus; no actual medical model or live API is used.",
+  "sections": [
+    {
+      "section": "model",
+      "start": 5.17,
+      "end": 693.17,
+      "lecture_material": "Base-model limitations and controllability anecdotes; support case introduced early from the later recording.",
+      "research_extension": "None",
+      "teaching_construction": "Fixed conditional model, input parts, mechanism table and Figure 1."
+    },
+    {
+      "section": "context",
+      "start": 693.17,
+      "end": 1085.39,
+      "lecture_material": "Document drive, slide context table, needle test, RAG/long-context forecasts, improvement axes.",
+      "research_extension": "Vendor captures, GPT reports, Liu position experiment",
+      "teaching_construction": "Token budget and worked 43-example bound."
+    },
+    {
+      "section": "prompting",
+      "start": 1085.39,
+      "end": 1933.23,
+      "lecture_material": "Consultants, instructions, role/reflection prompts, templates, zero/few shot, conversation summaries.",
+      "research_extension": "Wei exemplars, Brown no-weight-updates, MemGPT summaries; DellAcqua three-arm outcomes and within/outside-frontier distinctions checked in original working paper.",
+      "teaching_construction": "Each technique mapped to one input component."
+    },
+    {
+      "section": "chaining",
+      "start": 1933.23,
+      "end": 2475.74,
+      "lecture_material": "Prompt-chain distinction, review response, intermediate inspection, latency, testing, judge variants.",
+      "research_extension": "Zheng judge types",
+      "teaching_construction": "Proposition 1, dependence examples, latency, paired-count limitation."
+    },
+    {
+      "section": "finetuning",
+      "start": 2475.74,
+      "end": 2691.41,
+      "lecture_material": "Costs/uses, lecturer preference, Slack anecdote.",
+      "research_extension": "Historical Lazerowitz blog capture",
+      "teaching_construction": "Fine-tuning objective and qualified interpretation."
+    },
+    {
+      "section": "rag",
+      "start": 2691.41,
+      "end": 3186.48,
+      "lecture_material": "Index/embed/retrieve/augment pipeline, dimension tradeoff, chunking, HyDE, survey tree.",
+      "research_extension": "DPR, Lewis trained RAG, Gao survey, HyDE, Liu",
+      "teaching_construction": "Proposition 2, cost/recall, eight-item word-count corpus, four-way metric distinction."
+    },
+    {
+      "section": "agentic",
+      "start": 3186.48,
+      "end": 4019.26,
+      "lecture_material": "Definition, distinction from RL agents, refund workflow, deterministic/fuzzy design, appeals, credit memo.",
+      "research_extension": "None",
+      "teaching_construction": "Effect of stage rate on bounds; recovery violates A1."
+    },
+    {
+      "section": "anatomy",
+      "start": 4019.26,
+      "end": 4740.53,
+      "lecture_material": "Travel agent, prompts/memory/tools/resources, autonomy, MCP discussion, Paris loop.",
+      "research_extension": "MemGPT, ReAct, historical MCP specification/announcement",
+      "teaching_construction": "Memory access accounting; path-conditioned stage probabilities."
+    },
+    {
+      "section": "evals",
+      "start": 4740.53,
+      "end": 5132.0,
+      "lecture_material": "User ratings, preferences, error analysis and politeness judges comparing models/prompts.",
+      "research_extension": "Zheng agreement and bias experiments; Cohen original remains unverified",
+      "teaching_construction": "Detection probability, Propositions 3/4, kappa table, conservative margin criterion, Figure 2."
+    },
+    {
+      "section": "casestudy",
+      "start": 5132.0,
+      "end": 5660.64,
+      "lecture_material": "Task decomposition, four stages, traces, three eval axes and failure examples.",
+      "research_extension": "None",
+      "teaching_construction": "Stage/instrument mapping, missing-policy diagnosis and order-ID fixture."
+    },
+    {
+      "section": "multiagent",
+      "start": 5660.64,
+      "end": 6184.58,
+      "lecture_material": "Parallelism/reuse, smart-home ideas, topology, slide comparison claims.",
+      "research_extension": "Dorri organizational taxonomy; McKinsey six-row comparison remains slide attribution.",
+      "teaching_construction": "Sum/max latency with preserved joint-outcome-distribution hypothesis."
+    },
+    {
+      "section": "next",
+      "start": 6184.58,
+      "end": 6588.53,
+      "lecture_material": "Plateau, architectures, multimodality, mixed methods, brain-inspired approaches, learning velocity.",
+      "research_extension": "None",
+      "teaching_construction": "None; forecasts and analogies labelled."
+    },
+    {
+      "section": "implementation",
+      "start": null,
+      "end": null,
+      "lecture_material": "None",
+      "research_extension": "None",
+      "teaching_construction": "Standard-library Python with original fixtures, seeded simulations and assertions."
+    },
+    {
+      "section": "limits",
+      "start": null,
+      "end": null,
+      "lecture_material": "None",
+      "research_extension": "None",
+      "teaching_construction": "Model, retrieval, judge and source boundaries."
+    },
+    {
+      "section": "exercises",
+      "start": null,
+      "end": null,
+      "lecture_material": "None",
+      "research_extension": "None",
+      "teaching_construction": "Six worked exercises: geometry, recall/precision, dependence, agreement, position bias and eval design."
+    },
+    {
+      "section": "sources",
+      "start": null,
+      "end": null,
+      "lecture_material": "Slide sources distinguished",
+      "research_extension": "Primary-source bibliography",
+      "teaching_construction": "Claim-to-page descriptions."
+    }
+  ],
+  "research_ledger": [
+    {
+      "id": "radford-2018-gpt",
+      "pages": [
+        5
+      ],
+      "claim": "512-token training sequences",
+      "status": "Local PDF claim page checked 2026-10-02"
+    },
+    {
+      "id": "radford-2019-gpt2",
+      "pages": [
+        4
+      ],
+      "claim": "Context increases from 512 to 1024",
+      "status": "Local PDF claim page checked 2026-10-02"
+    },
+    {
+      "id": "arxiv-2005.14165",
+      "pages": [
+        1,
+        6,
+        8
+      ],
+      "claim": "No weight updates; few-shot definition and 10-100 examples; 2048-token context",
+      "status": "Local PDF claim pages checked 2026-10-02"
+    },
+    {
+      "id": "arxiv-2307.09288",
+      "pages": [
+        6
+      ],
+      "claim": "Table 1: four Llama 2 sizes have 4k context",
+      "status": "Local PDF claim page checked 2026-10-02"
+    },
+    {
+      "id": "arxiv-2201.11903",
+      "pages": [
+        1,
+        4
+      ],
+      "claim": "NeurIPS 2022/v6 Jan 2023; demonstrations; eight exemplars; measured scale dependence",
+      "status": "Local PDF claim pages checked 2026-10-02"
+    },
+    {
+      "id": "arxiv-2307.03172",
+      "pages": [
+        1,
+        5
+      ],
+      "claim": "Position effect; worst 20/30-document accuracy below 56.1% closed-book result",
+      "status": "Local PDF claim pages checked 2026-10-02"
+    },
+    {
+      "id": "arxiv-2306.05685",
+      "pages": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        14
+      ],
+      "claim": "Three judge types; position/verbosity findings and tentative self-enhancement; swapping; 85/81 agreement; 50% random baseline; 1-10 scale",
+      "status": "Local PDF claim pages checked 2026-10-02"
+    },
+    {
+      "id": "arxiv-2005.11401",
+      "pages": [
+        1,
+        3,
+        4
+      ],
+      "claim": "Parametric/nonparametric memory; approximate MIPS; train query encoder/generator with document index fixed",
+      "status": "Local PDF claim pages checked 2026-10-02"
+    },
+    {
+      "id": "arxiv-2004.04906",
+      "pages": [
+        2,
+        3,
+        5,
+        6,
+        7
+      ],
+      "claim": "Top-k retrieval accuracy; dot product/768 dimensions; 78.4 vs 59.1; similarity ablation; 21M/995 QPS",
+      "status": "Local PDF claim pages checked 2026-10-02"
+    },
+    {
+      "id": "arxiv-2312.10997",
+      "pages": [
+        1,
+        2
+      ],
+      "claim": "Three RAG paradigms and prompt-based naive RAG; version v5 Mar 2024",
+      "status": "Local PDF claim pages checked 2026-10-02"
+    },
+    {
+      "id": "arxiv-2212.10496",
+      "pages": [
+        1
+      ],
+      "claim": "Unreal hypothetical document, contrastive encoder, retrieval neighbourhood and bounded experimental result",
+      "status": "Local PDF claim page checked 2026-10-02"
+    },
+    {
+      "id": "arxiv-2310.08560",
+      "pages": [
+        2,
+        3
+      ],
+      "claim": "Main/external context, recursive FIFO summary, working/recall/archival storage",
+      "status": "Local PDF claim pages checked 2026-10-02"
+    },
+    {
+      "id": "arxiv-2210.03629",
+      "pages": [
+        1
+      ],
+      "claim": "Interleaved reasoning and actions; version v3 March 2023",
+      "status": "Local PDF claim page checked 2026-10-02"
+    },
+    {
+      "id": "dellacqua-2023-working-paper",
+      "pages": [
+        3,
+        11,
+        12,
+        18,
+        20,
+        38,
+        39,
+        41,
+        55,
+        56
+      ],
+      "sha256": "81614bb0eedad198ebce811c521a6ef303db56a2698660d68b2e70d0293eeb42",
+      "claim": "Three randomized arms; task/outcome-qualified effects; qualitative collaboration types",
+      "status": "Original checked; bounded manuscript wording independently accepted 2026-10-02"
+    },
+    {
+      "id": "dorri-2018-survey",
+      "pages": [
+        1,
+        2,
+        3,
+        13,
+        14,
+        15
+      ],
+      "sha256": "7df0e3dfa853c784772ac3f8f8a739b13ff9d8d13b6cfd37f9b93aa397520a72",
+      "claim": "Historical MAS background; seven organizational forms distinct from lecture drawings",
+      "status": "Original checked; bounded manuscript wording independently accepted 2026-10-02"
+    }
+  ],
+  "web_source_verification": {
+    "capture_date": "2026-09-28",
+    "local_recheck_date": "2026-10-02",
+    "status": "Claims checked in existing local captures; no live website freshness assertion",
+    "sources": [
+      "OpenAI GPT-3.5 Turbo/GPT-4/GPT-4o model pages",
+      "Anthropic Claude 100K/Claude 2/Claude 3 announcements",
+      "Meta Llama 3 model card",
+      "MCP 2025-06-18 specification and 2024-11-25 announcement",
+      "Lazerowitz blog",
+      "Kamradt README"
+    ]
+  },
+  "unverified_claims": [
+    "Daniel Victor/New York Times March 2016 original report: speaker/slide account only.",
+    "Vendor and repository captures establish dated statements, not current capabilities or guarantees.",
+    "Workera anecdotes, prompting preferences, release economics and future trends remain speaker judgments.",
+    "McKinsey original not retained locally; credit-memo exhibit corroborated by official PDF text; slide-38 comparison remains slide attribution; no controlled improvement certified.",
+    "Cohen publisher-deposited bibliographic identity verified; original formula page unavailable; chapter definition and proof explicitly supplied."
+  ],
+  "source_discrepancies_recorded": [
+    "Lecture 7 is a no-class syllabus row; chapter 7 is recording Lecture 8; aligned deck numbered 7.",
+    "GPT-4o/Llama 3/initial Claude figures conflict with the dated maker statements; older GPT-3.5 4096 not certified by the captured model page.",
+    "Wei first publication is 2022, slide gives 2023 matching PDF revision; Lewis 2020 first version vs 2021 revision; Gao survey 2023 first version vs 2024 revision.",
+    "Promptfoo screenshot and extracted table differ; both explicitly scoped.",
+    "MCP is host/client/server communication; lecture agent-to-agent account qualified.",
+    "Five decomposed support tasks versus four stages; missing policy stage discussed.",
+    "Dell Acqua September 22, 2023 working-paper version differs from slide 2024 label; overview quality/arm effects depend on task, outcome and specification.",
+    "Dorri seven-part taxonomy is distinct from slide-37 four drawings."
+  ],
+  "asr_uncertainties": [
+    "Andrew Eng/Enzo -> Andrew Ng; confirmed slide attribution.",
+    "PROM/front templates -> prompt templates; prompt food -> Promptfoo; work era/work here -> Workera.",
+    "hide -> HyDE; Ross Lazarowicz -> Ross Lazerowitz; Entropic/Anthropik -> Anthropic.",
+    "Yaofu -> Yao Fu; Ilyas/opening icon founder -> Ilya Sutskever; names cross-checked in slides.",
+    "GPT 4.0/GPT-40 -> GPT-4o; GROC/LAMA -> Grok/Llama.",
+    "thrift store hotels around 4740s remains acoustically uncertain; chapter uses slide 30's four-star example.",
+    "Thanksgiving calendar remark at the end is not used to date the recording; the chapter uses the official syllabus's 11/11/2025 row."
+  ],
+  "notation_decisions": [
+    "Registry additions merged in NOTATION section 13; bounded source review and book-wide notation review accepted.",
+    "Component p_j is a marginal on reference inputs over one request population, distinguished from prefix-conditioned factors.",
+    "A/B prompt names local; phi_q/phi_j encode query/documents; no unlabelled scalar p introduced in mathematical prose."
+  ],
+  "figures": [
+    "Figure 1: original four-stage support chain with illustrative probabilities/latencies; 5-second email example comes from recording.",
+    "Figure 2: exact affine judge-win curves for judge accuracy 1/.8/.6/.5; original construction, no model measurement."
+  ],
+  "pass_log": [
+    {
+      "pass": "1 coverage",
+      "result": "Full 245-segment sequential transcript read; all eight lecture topic blocks mapped; source numbering/date checked locally."
+    },
+    {
+      "pass": "2 prose",
+      "result": "Existing draft retained and read end to end; local repairs to scope and source attribution; no blind rewrite."
+    },
+    {
+      "pass": "3 section coverage",
+      "result": "Sixteen sections preserve lecture/research/construction distinctions; fine-tuning and forecasts stay proportional to the short recording spans."
+    },
+    {
+      "pass": "4 mathematics",
+      "result": "Four proofs, six solutions and fixtures checked; chain coupling/zero-prefix, paired tests, judge criterion and parallel-outcome assumptions clarified; independent review pending."
+    },
+    {
+      "pass": "5 exercises/code",
+      "result": "Six varied worked exercises and one fresh isolated Python run; checks report provides additional mathematical enumeration."
+    },
+    {
+      "pass": "6 author self-audit",
+      "result": "Source limits, hypotheses and reader claims checked against author brief/domain/notation; this is not independent gate 6b."
+    },
+    {
+      "pass": "6a slide verification",
+      "result": "31 claim-dependent slide pages rendered and viewed locally; no browser QA inferred."
+    },
+    {
+      "pass": "6c reference verification",
+      "result": "13 local PDFs page-checked and historical web captures checked; five named originals explicitly remain unverified and qualified."
+    },
+    {
+      "pass": "6b independent review",
+      "result": "Pending parent-owned independent review; no acceptance claimed."
+    },
+    {
+      "pass": "7 prose",
+      "result": "Post-acceptance pass pending; preparatory full reading and advisory checker completed."
+    },
+    {
+      "pass": "8 parity",
+      "result": "Post-acceptance pass pending; preparatory metrics supplied, no quota used."
+    },
+    {
+      "pass": "9 integration/browser",
+      "result": "Chapter 7 excluded by guarded reader build; browser checks 0, blocked/unverified; integration not complete."
+    }
+  ],
+  "code_check": {
+    "status": "passed",
+    "exit_code": 0,
+    "stderr_empty": true,
+    "stdout_matches_printed": true,
+    "code_unchanged": true,
+    "code_sha256": "36d0f974014721231fe117a41d5b0e631d8cd99e40f65c87d1a54b8451d6aa1b",
+    "python": "3.13.5",
+    "stdout": [
+      "Recall@n_nb for n_nb = 1, 2, 3: [0.667, 0.833, 0.833]",
+      "missed at n_nb = 1 (query, top 3): [(3, [5, 4, 0]), (5, [2, 1, 7])]",
+      "hypothetical document retrieves doc 4",
+      "chain: product 0.8703 | bounds 0.865 0.93 | latency 9.0 s",
+      "simulated: independent 0.8703 | correlated 0.9163",
+      "judge: p_o 0.91 p_e 0.796 kappa 0.559",
+      "pairwise judge: simulated 0.5607 formula 0.56",
+      "order-ID checks: [False, True]"
+    ]
+  },
+  "technical_acceptance": {
+    "status": "accepted with independent source-reconciliation review",
+    "prior_round": "lecture-07-agents-prompts-and-rag-round3.md",
+    "prior_verdict": "yes, zero blocking defects",
+    "prior_html_sha256": "10fa63d8a0033fbb43a04744b6f7c83acc5f001a35a636ab5a9903cdc694b966",
+    "current_review": "2026-10-02-book-wide-independent-review.md",
+    "accepted_authored_body_sha256": "cd30182cc6ac934a7ec22cb33b4aa044f2cd728dcc4a370c9efb25dbfb3bee71"
+  },
+  "privacy_note": "Reader HTML has no personal local paths or credentials. Metadata contains source hashes/provenance, not transcript contents or media. This stage is local and uncommitted; no upload/publication performed.",
+  "references": [
+    {
+      "title": "Radford, Narasimhan, Salimans and Sutskever, \"Improving Language Understanding by Generative Pre-Training\", 2018, OpenAI report ",
+      "url": "https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf",
+      "supports": "Radford, Narasimhan, Salimans and Sutskever, \"Improving Language Understanding by Generative Pre-Training\", 2018, OpenAI report . Training sequences of 512 tokens (p. 5)."
+    },
+    {
+      "title": "Radford et al., \"Language Models are Unsupervised Multitask Learners\", 2019, OpenAI report ",
+      "url": "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf",
+      "supports": "Radford et al., \"Language Models are Unsupervised Multitask Learners\", 2019, OpenAI report . Context size of 1,024 tokens (p. 4)."
+    },
+    {
+      "title": "Brown et al., \"Language Models are Few-Shot Learners\", 2020, arXiv:2005.14165 ",
+      "url": "https://arxiv.org/abs/2005.14165",
+      "supports": "Brown et al., \"Language Models are Few-Shot Learners\", 2020, arXiv:2005.14165 . No gradient updates (p. 1); few-shot definition and the 10–100 examples that fit in 2,048 tokens (p. 6); \\(n_{\\mathrm{ctx}}=2048\\) (p. 8)."
+    },
+    {
+      "title": "Touvron et al., \"Llama 2: Open Foundation and Fine-Tuned Chat Models\", 2023, arXiv:2307.09288 ",
+      "url": "https://arxiv.org/abs/2307.09288",
+      "supports": "Touvron et al., \"Llama 2: Open Foundation and Fine-Tuned Chat Models\", 2023, arXiv:2307.09288 . Context length \"4k\" (p. 6, Table 1)."
+    },
+    {
+      "title": "Wei et al., \"Chain-of-Thought Prompting Elicits Reasoning in Large Language Models\", arXiv January 2022, NeurIPS 2022 (version read: v6, 10 January 2023; slides: 2023), arXiv:2201.11903 ",
+      "url": "https://arxiv.org/abs/2201.11903",
+      "supports": "Wei et al., \"Chain-of-Thought Prompting Elicits Reasoning in Large Language Models\", arXiv January 2022, NeurIPS 2022 (version read: v6, 10 January 2023; slides: 2023), arXiv:2201.11903 . Definition and exemplars, eight-exemplar GSM8K result (p. 1); eight exemplars (p. 4); gains only at about 100B parameters (p. 4)."
+    },
+    {
+      "title": "Liu et al., \"Lost in the Middle: How Language Models Use Long Contexts\", 2023, arXiv:2307.03172 ",
+      "url": "https://arxiv.org/abs/2307.03172",
+      "supports": "Liu et al., \"Lost in the Middle: How Language Models Use Long Contexts\", 2023, arXiv:2307.03172 . Position effect (p. 1); below closed-book accuracy of 56.1% at the worst position (p. 5)."
+    },
+    {
+      "title": "Zheng et al., \"Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena\", 2023, arXiv:2306.05685 ",
+      "url": "https://arxiv.org/abs/2306.05685",
+      "supports": "Zheng et al., \"Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena\", 2023, arXiv:2306.05685 . Three judge types (p. 4); position, verbosity and self-enhancement results (p. 5, Tables 2 and 3); swapping remedy (p. 6); agreement definition and 85% vs 81% (p. 7); random baseline 50% (p. 8); 1-to-10 scale (p. 14, Figure 6)."
+    },
+    {
+      "title": "Lewis et al., \"Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks\", arXiv May 2020 (version read: v4, 12 April 2021; slide: 2021), arXiv:2005.11401 ",
+      "url": "https://arxiv.org/abs/2005.11401",
+      "supports": "Lewis et al., \"Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks\", arXiv May 2020 (version read: v4, 12 April 2021; slide: 2021), arXiv:2005.11401 . Parametric and non-parametric memory (p. 1); approximate MIPS (p. 3); fixed document encoder, fine-tuned query encoder and generator (p. 4)."
+    },
+    {
+      "title": "Karpukhin et al., \"Dense Passage Retrieval for Open-Domain Question Answering\", 2020, arXiv:2004.04906 ",
+      "url": "https://arxiv.org/abs/2004.04906",
+      "supports": "Karpukhin et al., \"Dense Passage Retrieval for Open-Domain Question Answering\", 2020, arXiv:2004.04906 . Top-k retrieval accuracy (p. 2); inner-product score, cosine equivalence for unit vectors, dimension 768 (p. 3); Table 2 (p. 5); similarity ablation (p. 6); 21 million passages and 995 questions per second (p. 7)."
+    },
+    {
+      "title": "Gao et al., \"Retrieval-Augmented Generation for Large Language Models: A Survey\", arXiv December 2023 (version read: v5, 27 March 2024; slides: 2024), arXiv:2312.10997 ",
+      "url": "https://arxiv.org/abs/2312.10997",
+      "supports": "Gao et al., \"Retrieval-Augmented Generation for Large Language Models: A Survey\", arXiv December 2023 (version read: v5, 27 March 2024; slides: 2024), arXiv:2312.10997 . Naive, Advanced and Modular RAG (pp. 1–2); prompt-based naive RAG (p. 2)."
+    },
+    {
+      "title": "Gao, Ma, Lin and Callan, \"Precise Zero-Shot Dense Retrieval without Relevance Labels\" (HyDE), 2022, arXiv:2212.10496 ",
+      "url": "https://arxiv.org/abs/2212.10496",
+      "supports": "Gao, Ma, Lin and Callan, \"Precise Zero-Shot Dense Retrieval without Relevance Labels\" (HyDE), 2022, arXiv:2212.10496 . Method and results (p. 1)."
+    },
+    {
+      "title": "Packer et al., \"MemGPT: Towards LLMs as Operating Systems\", arXiv 2023 (version read: v2, 12 February 2024), arXiv:2310.08560 ",
+      "url": "https://arxiv.org/abs/2310.08560",
+      "supports": "Packer et al., \"MemGPT: Towards LLMs as Operating Systems\", arXiv 2023 (version read: v2, 12 February 2024), arXiv:2310.08560 . Main and external context, recursive summary (p. 2); working context, recall and archival storage (p. 3)."
+    },
+    {
+      "title": "Yao et al., \"ReAct: Synergizing Reasoning and Acting in Language Models\", arXiv 2022 (version read: v3, 10 March 2023), arXiv:2210.03629 ",
+      "url": "https://arxiv.org/abs/2210.03629",
+      "supports": "Yao et al., \"ReAct: Synergizing Reasoning and Acting in Language Models\", arXiv 2022 (version read: v3, 10 March 2023), arXiv:2210.03629 . Interleaved reasoning and actions (p. 1)."
+    },
+    {
+      "title": "Model Context Protocol specification, version 2025-06-18, modelcontextprotocol.io , and Anthropic, \"Introducing the Model Context Protocol\", 25 November 2024, announcement ",
+      "url": "https://modelcontextprotocol.io/specification/2025-06-18",
+      "supports": "Model Context Protocol specification, version 2025-06-18, modelcontextprotocol.io , and Anthropic, \"Introducing the Model Context Protocol\", 25 November 2024, announcement . Roles, features and security principles; product documentation."
+    },
+    {
+      "title": "Vendor pages for context windows: OpenAI GPT-3.5 Turbo , GPT-4 , GPT-4o ; Anthropic, \"Introducing 100K context windows\" (11 May 2023), \"Claude 2\" (11 July 2023), \"Introducing the next generation of Claude\" (4 March 2024); Meta, Llama 3 model card ",
+      "url": "https://platform.openai.com/docs/models/gpt-3.5-turbo",
+      "supports": "Vendor pages for context windows: OpenAI GPT-3.5 Turbo , GPT-4 , GPT-4o ; Anthropic, \"Introducing 100K context windows\" (11 May 2023), \"Claude 2\" (11 July 2023), \"Introducing the next generation of Claude\" (4 March 2024); Meta, Llama 3 model card . Product claims."
+    },
+    {
+      "title": "Lazerowitz, \"Fine-tuning GPT3.5-turbo based on 140k slack messages\", blog, 4 September 2023, rosslazer.com ",
+      "url": "https://rosslazer.com/posts/fine-tuning/",
+      "supports": "Lazerowitz, \"Fine-tuning GPT3.5-turbo based on 140k slack messages\", blog, 4 September 2023, rosslazer.com . The Slack fine-tuning anecdote of slide 18."
+    },
+    {
+      "title": "Kamradt, Needle In A Haystack, GitHub repository ",
+      "url": "https://github.com/gkamradt/LLMTest_NeedleInAHaystack",
+      "supports": "Kamradt, Needle In A Haystack, GitHub repository . The test's design (README)."
+    },
+    {
+      "title": "Dell'Acqua et al., Navigating the Jagged Technological Frontier , HBS working paper 24-013, September 22, 2023 version (slide: 2024). PDF pp. 11–12, 18, 38–39 and 41 support the arm and outcome qualifications above; pp. 20 and 55–56 describe collaboration styles.",
+      "url": "https://mitsloan.mit.edu/sites/default/files/2023-10/SSRN-id4573321.pdf",
+      "supports": "Dell'Acqua et al., Navigating the Jagged Technological Frontier , HBS working paper 24-013, September 22, 2023 version (slide: 2024). PDF pp. 11–12, 18, 38–39 and 41 support the arm and outcome qualifications above; pp. 20 and 55–56 describe collaboration styles."
+    },
+    {
+      "title": "Dorri, Kanhere and Jurdak, Multi-Agent Systems: A Survey , IEEE Access 6 (2018), 28573–28593, DOI 10.1109/ACCESS.2018.2831228. PDF pp. 1–3 and 13–15 support the historical background and seven-part organizational taxonomy.",
+      "url": "https://eprints.qut.edu.au/131739/1/08352646-1.pdf",
+      "supports": "Dorri, Kanhere and Jurdak, Multi-Agent Systems: A Survey , IEEE Access 6 (2018), 28573–28593, DOI 10.1109/ACCESS.2018.2831228. PDF pp. 1–3 and 13–15 support the historical background and seven-part organizational taxonomy."
+    },
+    {
+      "title": "Original-access limits: McKinsey Quarterly, Why agents are the next frontier of generative AI , July 2024 (official PDF p. 5 corroborates the credit-memo exhibit; no local original); Victor, New York Times, March 2016 (report unverified); Cohen, A Coefficient of Agreement for Nominal Scales , Educational and Psychological Measurement 20(1), 37–46, April 1960 (publisher-deposited identity verified; original formula page unavailable). Slides 4 and 28 also cite Mnih et al. (2015), which supports nothing on those pages.",
+      "url": "https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/why-agents-are-the-next-frontier-of-generative-ai",
+      "supports": "Original-access limits: McKinsey Quarterly, Why agents are the next frontier of generative AI , July 2024 (official PDF p. 5 corroborates the credit-memo exhibit; no local original); Victor, New York Times, March 2016 (report unverified); Cohen, A Coefficient of Agreement for Nominal Scales , Educational and Psychological Measurement 20(1), 37–46, April 1960 (publisher-deposited identity verified; original formula page unavailable). Slides 4 and 28 also cite Mnih et al. (2015), which supports nothing on those pages."
+    }
+  ],
+  "author_preflight": {
+    "checked_at_utc": "2026-10-02T04:20:08.834224+00:00",
+    "current_html_sha256": "10fa63d8a0033fbb43a04744b6f7c83acc5f001a35a636ab5a9903cdc694b966",
+    "authored_body_sha256": "810df405fcafe830e6a38ed17ba4b311ef54c22b7f2976547942e02ae2f24ff3",
+    "metrics": {
+      "prose_words_excluding_tex_code_svg": 17772,
+      "h2": 16,
+      "h3": 42,
+      "displays": 9,
+      "propositions": 4,
+      "python_blocks": 1,
+      "exercises": 6,
+      "solutions": 6,
+      "figures": 2,
+      "tables": 4,
+      "section_median_words": 978.5,
+      "section_min_words": 347,
+      "sections": [
+        {
+          "heading": "A frozen model, and what can change around it 0:05",
+          "words": 903
+        },
+        {
+          "heading": "Context windows, long inputs, and two axes of improvement 11:33",
+          "words": 1073
+        },
+        {
+          "heading": "Prompts: instructions, templates and examples 18:05",
+          "words": 1375
+        },
+        {
+          "heading": "Chains: several calls instead of one, and how to test them 32:13",
+          "words": 1519
+        },
+        {
+          "heading": "Fine-tuning: changing the weights 41:15",
+          "words": 472
+        },
+        {
+          "heading": "Retrieval-augmented generation: choosing \\(x_{\\mathrm{doc}}\\) per query 44:51",
+          "words": 2049
+        },
+        {
+          "heading": "From one call to an agentic workflow 53:06",
+          "words": 893
+        },
+        {
+          "heading": "Anatomy of an agent: prompts, memory, tools, autonomy and MCP 1:06:59",
+          "words": 1441
+        },
+        {
+          "heading": "How would you know it works? Evals for an agent 1:19:00",
+          "words": 1678
+        },
+        {
+          "heading": "Case study: the customer-support agent 1:25:32",
+          "words": 1054
+        },
+        {
+          "heading": "Multi-agent workflows: parallelism and reuse 1:34:20",
+          "words": 602
+        },
+        {
+          "heading": "What next: the lecturer's view 1:43:04",
+          "words": 347
+        },
+        {
+          "heading": "A running-case laboratory in Python",
+          "words": 420
+        },
+        {
+          "heading": "What the models capture and what they miss",
+          "words": 471
+        },
+        {
+          "heading": "Exercises",
+          "words": 2024
+        },
+        {
+          "heading": "Primary sources",
+          "words": 669
+        }
+      ]
+    },
+    "static_status": "passed",
+    "prose_advisory_flags": 0,
+    "post_acceptance_passes_7_8": "pending",
+    "browser_qa": "blocked/unverified; zero attempts/checks/screenshots",
+    "html_sha256": "14edcf1c3788c2d71c94416a64f28f3d17f88f57dff70e2854690805013cc141"
+  },
+  "round1_repair": {
+    "changed_reviewed_lines": [
+      19,
+      45,
+      102,
+      164,
+      197,
+      214,
+      236,
+      403,
+      404,
+      411,
+      417,
+      419
+    ],
+    "passage_count": 12,
+    "passage_ledger": "chapter-07-round1-repair-2026-10-02-passages.json",
+    "source_originals_unverified": [
+      "Dell Acqua",
+      "McKinsey",
+      "Victor",
+      "Dorri",
+      "Cohen"
+    ],
+    "source_gate": "Original qualifications retained; complete gate 6c not certified"
+  },
+  "round2_repair": {
+    "changed_reviewed_lines": [
+      93
+    ],
+    "passage_count": 1,
+    "passage_ledger": "chapter-07-round2-repair-2026-10-02-passages.json",
+    "source_originals_unverified": [
+      "Dell Acqua",
+      "McKinsey",
+      "Victor",
+      "Dorri",
+      "Cohen"
+    ],
+    "source_gate": "Original qualifications retained; complete gate 6c not certified"
+  },
+  "gate_6c": "Two newly retained originals reconciled; official McKinsey PDF text corroborates memo exhibit; three local originals still unavailable: McKinsey, Cohen, Victor",
+  "source_reconciliation": {
+    "audit": "source-reconciliation-2026-10-02",
+    "status": "Bounded source wording independently accepted; original access limits preserved",
+    "local_original_gaps": [
+      "McKinsey",
+      "Cohen",
+      "Victor"
+    ],
+    "claims_from_recording_or_deck": [
+      "Victor bot episode and timing: recording/deck",
+      "McKinsey six-row comparison: slide 38",
+      "over-reliance and future-career judgments: recording"
+    ],
+    "McKinsey_memo_evidence": "Official eight-page PDF parsed text p.5 Exhibit2 checked 2026-10-02; raw local PDF acquisition timed out; no screenshot claim",
+    "Cohen_identity_evidence": "Publisher Crossref DOI 10.1177/001316446002000104; original formula page not read",
+    "independent_review": "2026-10-02-book-wide-independent-review.md"
+  },
+  "historical_status_before_edition_review_2026_10_02": "Source reconciliation prepared; prior round-3 technical acceptance preserved as history; new source wording awaits independent review",
+  "current_edition": {
+    "date": "2026-10-02",
+    "editorial_review_status": "accepted within recorded scope",
+    "book_review": "2026-10-02-book-wide-independent-review.md",
+    "book_review_sha256": "88ba052236963038aa78c2d0d634cb789f7eaa1dc9292692343056489c0f943b",
+    "reviewed_authored_body_sha256": "cd30182cc6ac934a7ec22cb33b4aa044f2cd728dcc4a370c9efb25dbfb3bee71",
+    "historical_evidence": "Earlier gate hashes/statuses remain historical; current body identity is recorded here",
+    "reader_and_execution_evidence": "validation-summary.json and reader-validation.json",
+    "publication": "local only; no publication authorization exercised",
+    "course_completion": "incomplete: original archive gaps and human screen-reader review outstanding",
+    "original_archive_gaps": [
+      "McKinsey",
+      "Cohen",
+      "Victor"
+    ],
+    "human_screen_reader_review": "not performed"
+  }
+}

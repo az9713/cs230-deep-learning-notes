@@ -6,7 +6,7 @@
   "recording_title": "Stanford CS230 | Autumn 2025 | Lecture 1: Introduction to Deep Learning",
   "speaker": "Andrew Ng",
   "date": "2025-09-23",
-  "status": "complete: passes 1-9, gates 6a, 6b (science-editor round 2 verdict yes, 0 blocking) and 6c passed; committed with chapters 2 and 3",
+  "status": "Independent chapter/book review accepted; local reading edition; course completion gates incomplete",
   "transcript_provenance": "Local machine transcription; not publisher captions",
   "transcription_model": "Systran/faster-whisper-small.en",
   "audio_sha256": "cd8d98221029958f742a2893c55c33d532151d7382796072eb3ace346469f87f",
@@ -799,7 +799,14 @@
         "figures": 2,
         "tables": 2,
         "exercises": 6,
-        "solution_words": [144, 154, 99, 155, 199, 298],
+        "solution_words": [
+          144,
+          154,
+          99,
+          155,
+          199,
+          298
+        ],
         "solution_words_median": 154.5,
         "solution_words_min": 99,
         "evidence_label_mentions": 75,
@@ -820,7 +827,14 @@
         "figures": 3,
         "tables": 5,
         "exercises": 6,
-        "solution_words": [95, 125, 113, 69, 143, 225],
+        "solution_words": [
+          95,
+          125,
+          113,
+          69,
+          143,
+          225
+        ],
         "solution_words_median": 119.0,
         "solution_words_min": 69,
         "evidence_label_mentions": 51,
@@ -862,5 +876,19 @@
     "blocking": 0,
     "style": "S13-S16 applied in pass 7 with the report text.",
     "structural": "N4 applied: eig_min and Err_208/Err_512 in symbol_ledger; parity_audit refreshed in pass 8."
+  },
+  "historical_status_before_edition_review_2026_10_02": "complete: passes 1-9, gates 6a, 6b (science-editor round 2 verdict yes, 0 blocking) and 6c passed; committed with chapters 2 and 3",
+  "current_edition": {
+    "date": "2026-10-02",
+    "editorial_review_status": "accepted within recorded scope",
+    "book_review": "2026-10-02-book-wide-independent-review.md",
+    "book_review_sha256": "88ba052236963038aa78c2d0d634cb789f7eaa1dc9292692343056489c0f943b",
+    "reviewed_authored_body_sha256": "0ecdd137ebb463fd0bd95942bf1717f6e9bd7faa9135b14b1a29ecf94214eadb",
+    "historical_evidence": "Earlier gate hashes/statuses remain historical; current body identity is recorded here",
+    "reader_and_execution_evidence": "validation-summary.json and reader-validation.json",
+    "publication": "local only; no publication authorization exercised",
+    "course_completion": "incomplete: original archive gaps and human screen-reader review outstanding",
+    "original_archive_gaps": [],
+    "human_screen_reader_review": "not performed"
   }
 }

@@ -1,0 +1,667 @@
+{
+  "video_id": "AuZoDsNmG_s",
+  "title": "Building a career by showing useful work",
+  "chapter_order": 8,
+  "recording_lecture_number": 9,
+  "recording_title": "Stanford CS230 | Autumn 2025 | Lecture 9: Career Advice in AI",
+  "speakers": [
+    "Andrew Ng",
+    "Laurence Moroney"
+  ],
+  "date": "2025-11-18",
+  "status": "Independent chapter/book review accepted; local reading edition; course completion gates incomplete",
+  "model_allocation": {
+    "author": "gpt-6.1-sol",
+    "effort": "high",
+    "source": "Explicit parent allocation; not runtime attestation",
+    "independent_reviewer": "Parent owns independent Astra xhigh review; no independent verdict supplied by author"
+  },
+  "transcript_provenance": "Local machine transcription; not publisher captions; all 235 segments sequentially read during preparation on 2026-10-02",
+  "transcription_model": "Systran/faster-whisper-small.en",
+  "second_transcription": "Not performed; uncertain entity names omitted where unnecessary; speaker and tool spellings checked against deck/source identities",
+  "audio_sha256": "e7827af0e0cbdfe72c872c7613bc08dd48a0e5b3c04f2c48d70496031af7d59d",
+  "audio_duration_seconds_transcript_json": 6308.288,
+  "playlist_duration_seconds": 6309,
+  "transcript_sha256": "028e6590e10f8e4732344fb603e93d5193ef6b869c1ca59d415b0723ad2890ee",
+  "transcript_sha256_format": "plain-text companion",
+  "transcript_json_sha256": "c0711c92258d5dca99cd06491f574790ceb23bf013088b26498ecfcbefd60e5a",
+  "transcript_segment_count": 235,
+  "transcript_first_start_seconds": 4.14,
+  "transcript_last_end_seconds": 6302.16,
+  "syllabus_mapping": "Official row Lecture 9, 2025-11-18: Career Advice + Reading research papers + Guest Lecture; this recording does not cover reading research papers; matched deck filenames numbered 8",
+  "slides": [
+    {
+      "speaker_deck": "Ng",
+      "url": "https://cs230.stanford.edu/syllabus/fall_2025/8/lecture_8.pdf",
+      "local_basename": "fall_2025_8_lecture_8.pdf",
+      "sha256": "2a2e7fb6b58e2765843dd72e7d3309df29f0165ca8c3d6661e32e15c8cf1d5a6",
+      "pages": 3,
+      "pages_rendered_and_inspected": [
+        1,
+        2,
+        3
+      ],
+      "viewing_record": {
+        "date": "2026-10-02",
+        "method": "PyMuPDF renders in labelled contact sheets, visually read; no browser or laptop UI",
+        "guest_extracted_text": "Slide-only count/speed advice identified"
+      }
+    },
+    {
+      "speaker_deck": "guest",
+      "url": "https://cs230.stanford.edu/syllabus/fall_2025/8/lecture_8_guest.pdf",
+      "local_basename": "fall_2025_8_lecture_8_guest.pdf",
+      "sha256": "1f956a5951a08033085554c6f9eee31c97e7de7db80b6bca57ffb7208ac0bdc2",
+      "pages": 30,
+      "pages_rendered_and_inspected": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "viewing_record": {
+        "date": "2026-10-02",
+        "method": "PyMuPDF renders in labelled contact sheets, visually read; no browser or laptop UI",
+        "guest_extracted_text": "Corrupted body extraction not used to reconstruct prose"
+      }
+    }
+  ],
+  "evidence_scheme": "Empirical results with checked source pages; engineering checks for original arithmetic only; dated product statements; attributed speaker judgments and historical accounts. Definitions and proofs state their assumptions. Section notes distinguish lecture, research and original construction.",
+  "running_case": "Moroney sales-research pilot joined to an original student brief generator; no supplied pilot data or hiring dataset. Secondary video comparison kept explicitly uncontrolled.",
+  "sections": [
+    {
+      "section": "opportunity",
+      "start": 4.14,
+      "end": 86.62,
+      "lecture_material": "Ng opportunity and metric ceilings",
+      "research_extension": "None",
+      "teaching_construction": "Running project and three evidence audiences"
+    },
+    {
+      "section": "horizon",
+      "start": 86.62,
+      "end": 167.49,
+      "lecture_material": "METR headline and coding remark",
+      "research_extension": "METR v1 pp. 2,9,10,12,15",
+      "teaching_construction": "Exponential model, least-squares derivation, synthetic points, sensitivity Figure 1"
+    },
+    {
+      "section": "prototypes",
+      "start": 167.49,
+      "end": 339.09,
+      "lecture_material": "Building blocks and slide-only twenty prototypes/speed figures",
+      "research_extension": "None",
+      "teaching_construction": "Independent-attempt proof, shared-outcome counterexample"
+    },
+    {
+      "section": "bottleneck",
+      "start": 339.09,
+      "end": 554.66,
+      "lecture_material": "Build-feedback loop and PM bottleneck",
+      "research_extension": "Amdahl 1967 article in 2007 reprint, both pages",
+      "teaching_construction": "Serial cycle proof and original schedule Figure 2"
+    },
+    {
+      "section": "teams",
+      "start": 554.66,
+      "end": 1122.38,
+      "lecture_material": "People, team-selection anecdote and qualified effort advice",
+      "research_extension": "Retained Christakis/Fowler publisher-formatted PDF p1/journal2249; Shalizi/Thomas pp1-3",
+      "teaching_construction": "Team comparison and causal counterexample"
+    },
+    {
+      "section": "market",
+      "start": 1150.59,
+      "end": 1752.59,
+      "lecture_material": "Moroney interview anecdote and hiring narrative",
+      "research_extension": "Google Gemini 3 announcement date only",
+      "teaching_construction": "Project relevance and causal limits"
+    },
+    {
+      "section": "pillars",
+      "start": 1753.49,
+      "end": 2177.65,
+      "lecture_material": "Depth, business focus, delivery and output framing",
+      "research_extension": "None",
+      "teaching_construction": "Namesake case, complete-task times, evidence table"
+    },
+    {
+      "section": "production",
+      "start": 2177.81,
+      "end": 2860.62,
+      "lecture_material": "Four realities and reported historical image behaviour",
+      "research_extension": "None",
+      "teaching_construction": "Risk/support/causal-mechanism distinctions; sensitive allegation omitted"
+    },
+    {
+      "section": "debt",
+      "start": 2860.62,
+      "end": 3395.23,
+      "lecture_material": "Trusted advisor and technical-debt illustration",
+      "research_extension": "Cunningham original HTML; Sculley pp. 1,4",
+      "teaching_construction": "Maintenance dependencies; loan arithmetic only"
+    },
+    {
+      "section": "agent",
+      "start": 3395.23,
+      "end": 3896.19,
+      "lecture_material": "Sales pilot and practitioner four-step workflow",
+      "research_extension": "ReAct pp. 1-2; Reflexion pp. 1-2",
+      "teaching_construction": "Bounded brief criteria and conditional time allocation"
+    },
+    {
+      "section": "forecasts",
+      "start": 3896.19,
+      "end": 4905.87,
+      "lecture_material": "Hype, pyramid, hosted/self-hosted forecast and diversification",
+      "research_extension": "None",
+      "teaching_construction": "Deployment/size/task and advice/guarantee distinctions"
+    },
+    {
+      "section": "hardware",
+      "start": 4905.87,
+      "end": 5097.14,
+      "lecture_material": "Embedded devices and SME accounts",
+      "research_extension": "Retained Arm dated architecture overview; no device-speed or energy-performance inference",
+      "teaching_construction": "Hardware/data boundary distinctions; no measured phone claim"
+    },
+    {
+      "section": "video",
+      "start": 5098.13,
+      "end": 5572.98,
+      "lecture_material": "Artificial understanding and video accounts; comparison challenge",
+      "research_extension": "None",
+      "teaching_construction": "Uncontrolled-comparison analysis and proposed matched evaluation"
+    },
+    {
+      "section": "questions",
+      "start": 5573.07,
+      "end": 6302.16,
+      "lecture_material": "Education, nonprofit, scarce-compute, research and equality Q&A",
+      "research_extension": "None",
+      "teaching_construction": "Access/output/outcome distinctions; downstream outcome stays unknown"
+    },
+    {
+      "section": "implementation",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching; no recording span",
+      "research_extension": "Uses previously scoped chapter references",
+      "teaching_construction": "Original finite numerical fixture and printed output",
+      "evidence_class": "original teaching construction"
+    },
+    {
+      "section": "limits",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching; no recording span",
+      "research_extension": "Uses previously scoped chapter references",
+      "teaching_construction": "Assumptions and evidence limits",
+      "evidence_class": "original teaching construction"
+    },
+    {
+      "section": "exercises",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching; no recording span",
+      "research_extension": "Uses previously scoped chapter references",
+      "teaching_construction": "Five worked exercises",
+      "evidence_class": "original teaching construction"
+    },
+    {
+      "section": "sources",
+      "start": null,
+      "end": null,
+      "lecture_material": "Original teaching; no recording span",
+      "research_extension": "Uses previously scoped chapter references",
+      "teaching_construction": "Claim-scoped bibliography",
+      "evidence_class": "source provenance"
+    }
+  ],
+  "original_sections": [
+    "implementation",
+    "limits",
+    "exercises",
+    "sources"
+  ],
+  "derivations": [
+    "Constant exponential rate, dimensionless log line, centered OLS slope and sensitivity ratio",
+    "Independent-attempt complement proof and exact shared-cause counterexample",
+    "Sequential build-feedback speedup, bound and limiting case"
+  ],
+  "arithmetic_checks": [
+    "Stipulated loan recurrence and zero-interest boundary; no model of technical debt",
+    "Sales time reallocation; no causal sales or employment model"
+  ],
+  "exercise_count": 5,
+  "exercise_count_reason": "Explicit low-math domain decision: three supported models and two arithmetic checks; advice and forecasts receive no artificial formalism",
+  "notation_proposal": "ch08.md retained; shared-registry additions merged in NOTATION section13 and independently checked 2026-10-02",
+  "source_uncertainties": [
+    "Interview company identity and nonprofit name unresolved in machine transcription; omitted rather than guessed",
+    "No pilot dataset, interview records, time-use denominator, sales outcome definition or video attempt log",
+    "Guest videos not included in PDF; no frame inspection claimed",
+    "Project-failure and model-adoption press recollections not certified or reproduced as statistics",
+    "Phone power/vendor adoption claims are attributed; Arm documentation supports architecture definition only",
+    "Cunningham DOI not checked or cited; original short HTML checked",
+    "METR 70-day estimate now page-supported in v1 p.15, with benchmark and timing-bias caveat; supersedes older brief gap",
+    "Sensitive office allegation omitted entirely and not searched"
+  ],
+  "technical_acceptance": {
+    "status": "accepted with independent source-reconciliation review",
+    "prior_round": "lecture-08-career-advice-in-ai-round2.md",
+    "prior_verdict": "yes, zero blocking defects",
+    "prior_html_sha256": "0e6aaf3874ba7fd9d02a3fa2280f8c6a7a783dd858ff1a69a9896523dc2f917b",
+    "current_review": "2026-10-02-book-wide-independent-review.md",
+    "accepted_authored_body_sha256": "a65741afb0eae9e43f86fcee6caf45c6774c97777566f1694896686c18134993"
+  },
+  "gate_6a": "Complete author visual audit: all three Ng and all thirty guest slides rendered and viewed",
+  "gate_6c": "Three approved original gaps resolved and independent claim review accepted; prior six PDF/Cunningham evidence retained",
+  "gate_6b": "Prior round2 accepted recorded hash; new bibliography/source metadata awaits independent review",
+  "pass_7": "Pending after technical acceptance",
+  "pass_8": "Pending after technical acceptance",
+  "pass_9": "Integrated with all nine chapters; actual outcomes in validation-summary.json",
+  "browser_qa": {
+    "evidence": "reader-validation.json",
+    "scope": "Disposable local renderer; human screen-reader review not performed"
+  },
+  "references": [
+    {
+      "url": "https://www.youtube.com/watch?v=AuZoDsNmG_s",
+      "supports": "Stanford CS230, recording Lecture 9: Career Advice in AI , 2025-11-18. Andrew Ng’s introduction and Laurence Moroney’s guest talk and Q&A. Matched Ng deck , three pages, and guest deck , thirty pages."
+    },
+    {
+      "url": "https://arxiv.org/pdf/2503.14499v1",
+      "supports": "Kwa et al., Measuring AI Ability to Complete Long Tasks , March 2025 version 1. PDF pp. 1–2, 9–10, 12 and 15 checked for source identity, task suite, fitted horizon, release-date doubling, success thresholds and the SWE-bench timing-bias caveat. A later July 2026 revision is not used for the lecture's historical figures."
+    },
+    {
+      "url": "https://www3.cs.stonybrook.edu/~rezaul/Spring-2012/CSE613/reading/Amdahl-1967.pdf",
+      "supports": "Amdahl, Validity of the Single Processor Approach to Achieving Large Scale Computing Capabilities , 1967 article reprinted in IEEE Solid-State Circuits Newsletter, 2007, pp. 19–20 (both PDF pages checked). Supports the constraint from unaccelerated work. The product-feedback equation here is an original application, not an equation quoted from that article."
+    },
+    {
+      "url": "https://humannaturelab.net/sites/default/files/pdf/paper/084-The-Collective-Dynamics-of-Smoking-in-a-Large-Social-Network.pdf",
+      "supports": "Christakis and Fowler, The Collective Dynamics of Smoking in a Large Social Network , New England Journal of Medicine 358 (2008), 2249–2258. The authors' publisher-formatted PDF, p. 1 (journal p. 2249), supports the smoking clusters in the studied longitudinal network. It supplies no study of hard-working friends or career success."
+    },
+    {
+      "url": "https://arxiv.org/abs/1004.4704",
+      "supports": "Shalizi and Thomas, Homophily and Contagion Are Generically Confounded in Observational Social Network Studies , 2011 journal publication, preprint PDF pp. 1–3 checked. Supports the distinction between observed clustering and identified influence when latent traits affect relationships and behaviour."
+    },
+    {
+      "url": "http://c2.com/doc/oopsla92.html",
+      "supports": "Cunningham, The WyCash Portfolio Management System , OOPSLA 1992 experience report. Complete short original HTML checked for the debt metaphor and consolidation of understanding. It supplies no numerical software-interest model."
+    },
+    {
+      "url": "https://papers.nips.cc/paper/5656-hidden-technical-debt-in-machine-learning-systems",
+      "supports": "Sculley et al., Hidden Technical Debt in Machine Learning Systems , 2015, PDF pp. 1 and 4 checked. Supports system-level maintenance dependencies and feedback risks, not a measured generated-versus-handwritten-code comparison."
+    },
+    {
+      "url": "https://arxiv.org/abs/2210.03629",
+      "supports": "Yao et al., ReAct: Synergizing Reasoning and Acting in Language Models , ICLR 2023, PDF pp. 1–2 checked. Supports interleaving reasoning, actions and observations; no benchmark percentage is imported into the sales example."
+    },
+    {
+      "url": "https://arxiv.org/abs/2303.11366",
+      "supports": "Shinn et al., Reflexion: Language Agents with Verbal Reinforcement Learning , 2023, PDF pp. 1–2 checked. Supports feedback retained as text without weight updates and the absence of a formal guarantee. It does not validate the lecture's pilot."
+    },
+    {
+      "url": "https://blog.google/products-and-platforms/products/gemini/gemini-3/",
+      "supports": "Google, A new era of intelligence with Gemini 3 , 2025-11-18. The dated official announcement corroborates the calendar remark through its opening release statements. No current model-quality, price or safety claim is inferred."
+    },
+    {
+      "url": "https://developer.arm.com/community/arm-community-blogs/b/architectures-and-processors-blog/posts/arm-scalable-matrix-extension-introduction",
+      "supports": "Arm, Part 1: Arm Scalable Matrix Extension (SME) Introduction , Zenon (Zhilong) Xiu, 2024-05-23. Its architecture overview, ZA array and instruction sections support matrix storage and outer-product operations. No complete-device benchmark or power claim is imported."
+    }
+  ],
+  "research_page_audit": [
+    {
+      "id": "arxiv-2503.14499v1",
+      "pages_checked": [
+        1,
+        2,
+        9,
+        10,
+        12,
+        15
+      ],
+      "sha256": "a630a66414b2e7651c7c7473de0aecf2c2161fca88c7d7d2f16e92c5ae0864c5"
+    },
+    {
+      "id": "amdahl-1967",
+      "pages_checked": [
+        1,
+        2
+      ],
+      "sha256": "81a363deb884ca23e495280eb9229df1064b4b3f79d662f270be35b50bea5318"
+    },
+    {
+      "id": "arxiv-1004.4704",
+      "pages_checked": [
+        1,
+        2,
+        3
+      ],
+      "sha256": "7cf9569b5317b498b2c5e28399c3a989bfed27972856e7d381bc916c256dc260"
+    },
+    {
+      "id": "sculley-2015-hidden-debt",
+      "pages_checked": [
+        1,
+        4
+      ],
+      "sha256": "1a67da09a8bd5ba9a3577176e30aa2fbd88534e6baf0bc31522b4999f643d2a1"
+    },
+    {
+      "id": "arxiv-2210.03629",
+      "pages_checked": [
+        1,
+        2
+      ],
+      "sha256": "f285b0971ae4a790e402fb93966bed3adde2cf0a04977d08b2b40d6ab0cace69"
+    },
+    {
+      "id": "arxiv-2303.11366",
+      "pages_checked": [
+        1,
+        2
+      ],
+      "sha256": "6059b6f89fea9959bd3dab553fbb97756a3dfb1b15e3cbab2fbf3ab6664333bd"
+    }
+  ],
+  "online_source_audit": [
+    {
+      "id": "christakis-fowler-2008",
+      "url": "https://humannaturelab.net/sites/default/files/pdf/paper/084-The-Collective-Dynamics-of-Smoking-in-a-Large-Social-Network.pdf",
+      "publication": "2008",
+      "checked_portion": "journal p. 2249 abstract and study framing",
+      "supports": "Observed smoking clusters; no hard-work or career-success estimate"
+    },
+    {
+      "id": "google-gemini3",
+      "url": "https://blog.google/products-and-platforms/products/gemini/gemini-3/",
+      "publication": "2025-11-18",
+      "checked_portion": "date and announcement identity",
+      "supports": "Calendar corroboration only"
+    },
+    {
+      "id": "arm-sme",
+      "url": "https://developer.arm.com/community/arm-community-blogs/b/architectures-and-processors-blog/posts/arm-scalable-matrix-extension-introduction",
+      "publication": "2024-05-23",
+      "checked_portion": "architecture overview, matrix storage and outer-product operations",
+      "supports": "Architecture definition; no phone benchmark, power or vendor-adoption claim"
+    }
+  ],
+  "local_copy_gap": {
+    "sources": [],
+    "status": "resolved for three approved references; directly authorized user run 2026-10-02",
+    "historical_rejection": "Earlier automatic approval review treated delegated authorization as insufficient; retained historical evidence is preserved",
+    "new_permission_rejections": 0
+  },
+  "code_check": {
+    "status": "passed",
+    "exit_code": 0,
+    "stderr_empty": true,
+    "stdout_matches_printed": true,
+    "stdout": [
+      "synthetic fit: anchor 2.0 min; doubling 7.0 months",
+      "24-month sensitivity, doubling 8 / 7 / 6 months: [16.0, 21.534, 32.0]",
+      "annual factors, 7 months / 70 days: [3.281, 37.124]",
+      "20 prototypes: independent 0.8784 | identical shared outcome 0.1",
+      "cycle: speedup 3.5714 | feedback limit 5.0",
+      "illustrative payment: monthly 2776.52 | total/principal 1.9991",
+      "nominal annual rate for doubled total: 5.304 %",
+      "selling shares / relative gains: [(0.28, 0.4), (0.32, 0.6)]"
+    ],
+    "code_unchanged": true,
+    "code_sha256": "b7a26a3235523bde5db317ad93cb0311ac39c9cb738409ccaa7bd3efd1daa0d2",
+    "python": "3.13.5"
+  },
+  "author_preflight": {
+    "checked_at_utc": "2026-10-02T04:11:00.434919+00:00",
+    "html_sha256": "fb500e37e43f9dd70b11f4f654e11f53d2cf213c7a2e6cf3d2dee13515c97f8e",
+    "authored_body_sha256": "8e67828d5a4bae17e94a02464ed5a68e4cd3f2bfcfb4a7eb3717c1c9fd7f7861",
+    "metrics": {
+      "prose_words_excluding_tex_code_svg": 13039,
+      "h2": 18,
+      "h3": 19,
+      "displays": 4,
+      "propositions": 2,
+      "python_blocks": 1,
+      "exercises": 5,
+      "solutions": 5,
+      "figures": 2,
+      "tables": 2,
+      "section_median_words": 692.0,
+      "section_min_words": 265,
+      "sections": [
+        {
+          "heading": "Choose a useful question before choosing a tool 0:04",
+          "words": 600
+        },
+        {
+          "heading": "Measure a task horizon, then distinguish a fit from a forecast 1:26",
+          "words": 1025
+        },
+        {
+          "heading": "Twenty attempts help only under a model of their outcomes 2:47",
+          "words": 703
+        },
+        {
+          "heading": "Faster building changes the limit of the feedback loop 5:39",
+          "words": 754
+        },
+        {
+          "heading": "Choose people and projects without turning an anecdote into a law 9:14",
+          "words": 681
+        },
+        {
+          "heading": "Interview evidence and a speaker's reading of the job market 19:10",
+          "words": 663
+        },
+        {
+          "heading": "Depth, business focus and delivery need different evidence 29:13",
+          "words": 928
+        },
+        {
+          "heading": "Production work exposes risks that a demonstration can hide 36:17",
+          "words": 774
+        },
+        {
+          "heading": "Generated code still leaves obligations to understand and maintain it 47:40",
+          "words": 1004
+        },
+        {
+          "heading": "Ask why the sales staff need an agent 56:35",
+          "words": 1153
+        },
+        {
+          "heading": "Read the bubble and skill forecasts as judgments, not estimates 1:04:56",
+          "words": 764
+        },
+        {
+          "heading": "Local execution has a hardware boundary and a data boundary 1:21:45",
+          "words": 403
+        },
+        {
+          "heading": "A planned video workflow is not a controlled comparison 1:24:58",
+          "words": 455
+        },
+        {
+          "heading": "Access to tools is useful when the work can be checked 1:32:53",
+          "words": 486
+        },
+        {
+          "heading": "Reproduce the quantitative checks without calling a model",
+          "words": 349
+        },
+        {
+          "heading": "Keep the inference as narrow as the evidence",
+          "words": 265
+        },
+        {
+          "heading": "Five exercises with worked solutions",
+          "words": 925
+        },
+        {
+          "heading": "Sources and the claims they support",
+          "words": 476
+        }
+      ]
+    },
+    "static_status": "passed",
+    "prose_advisory_flags": 0,
+    "post_acceptance_passes_7_8": "pending",
+    "browser_qa": "blocked/unverified, zero checks"
+  },
+  "round1_repair": {
+    "changed_reviewed_lines": [
+      14,
+      58,
+      81,
+      94,
+      207,
+      208,
+      210,
+      211,
+      212,
+      339,
+      367,
+      379
+    ],
+    "passage_count": 12,
+    "review_items": "B1, S1-S5 and N3 process-commentary cuts",
+    "passage_ledger": "chapter-08-round1-repair-2026-10-02-passages.json"
+  },
+  "q_and_a_provenance": [
+    {
+      "topic": "certificate",
+      "segments": [
+        211,
+        215
+      ],
+      "start": 5597.79,
+      "end": 5724.14
+    },
+    {
+      "topic": "nonprofit",
+      "segments": [
+        216,
+        222
+      ],
+      "start": 5724.53,
+      "end": 5895.12
+    },
+    {
+      "topic": "research",
+      "segments": [
+        225,
+        227
+      ],
+      "start": 5968.86,
+      "end": 6059.12
+    },
+    {
+      "topic": "gpu",
+      "segments": [
+        228,
+        232
+      ],
+      "start": 6062.93,
+      "end": 6191.34
+    },
+    {
+      "topic": "equality",
+      "segments": [
+        233,
+        235
+      ],
+      "start": 6194.22,
+      "end": 6302.16
+    }
+  ],
+  "local_original_audit": [
+    {
+      "id": "christakis-fowler-2008",
+      "sha256": "cef52516fa750caaa03a49aa4e893fc384d1f79de6ddd24db148b5c621816e93",
+      "bytes": 1426111,
+      "checked_portion": "journal p. 2249 abstract and study framing",
+      "supports": "Observed smoking clusters; no hard-work or career-success estimate",
+      "status": "locally retained original checked 2026-10-02",
+      "pages_checked": [
+        1
+      ],
+      "journal_page": 2249
+    },
+    {
+      "id": "google-gemini3",
+      "sha256": "2710a9e30bc515446dc764e1d66947e5e44c01638a36b1ccec63569b0092fa0a",
+      "bytes": 432496,
+      "checked_portion": "date and announcement identity",
+      "supports": "Calendar corroboration only",
+      "status": "locally retained original checked 2026-10-02"
+    },
+    {
+      "id": "arm-sme",
+      "sha256": "0bfeef489228cc174d76525a791b9e99065c8c292a119b024557935738415a1e",
+      "bytes": 183073,
+      "checked_portion": "architecture overview, matrix storage and outer-product operations",
+      "supports": "Architecture definition; no phone benchmark, power or vendor-adoption claim",
+      "status": "locally retained original checked 2026-10-02"
+    }
+  ],
+  "source_reconciliation": {
+    "audit": "source-reconciliation-2026-10-02",
+    "scope": "three named originals only; six older PDFs and Cunningham evidence retained",
+    "status": "Bounded source wording independently accepted; original access limits preserved",
+    "bibliography_changed_only": true,
+    "historical_advice": "No current model quality, phone performance, career causality or speaker pilot validation inferred",
+    "independent_review": "2026-10-02-book-wide-independent-review.md"
+  },
+  "historical_status_before_edition_review_2026_10_02": "Three authorized local originals saved and checked; bibliography wording awaits independent source review; reader integration pending",
+  "current_edition": {
+    "date": "2026-10-02",
+    "editorial_review_status": "accepted within recorded scope",
+    "book_review": "2026-10-02-book-wide-independent-review.md",
+    "book_review_sha256": "88ba052236963038aa78c2d0d634cb789f7eaa1dc9292692343056489c0f943b",
+    "reviewed_authored_body_sha256": "a65741afb0eae9e43f86fcee6caf45c6774c97777566f1694896686c18134993",
+    "historical_evidence": "Earlier gate hashes/statuses remain historical; current body identity is recorded here",
+    "reader_and_execution_evidence": "validation-summary.json and reader-validation.json",
+    "publication": "local only; no publication authorization exercised",
+    "course_completion": "incomplete: original archive gaps and human screen-reader review outstanding",
+    "original_archive_gaps": [],
+    "human_screen_reader_review": "not performed"
+  },
+  "historical_reader_qa_before_2026_10_02": {
+    "pass_9": "Chapter 8 excluded; no build or shared reader edits in this stage",
+    "browser_qa": {
+      "status": "blocked/unverified",
+      "attempts": 0,
+      "checks": 0,
+      "screenshots": 0
+    }
+  },
+  "historical_notation_proposal_before_edition_merge": "ch08.md; pending parent review and shared-registry merge"
+}

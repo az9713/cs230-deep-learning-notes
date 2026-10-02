@@ -1,0 +1,1219 @@
+{
+  "video_id": "4E27qlfYw0A",
+  "title": "Learning which actions are good from a delayed reward",
+  "chapter_order": 5,
+  "recording_lecture_number": 5,
+  "recording_title": "Stanford CS230 | Autumn 2025 | Lecture 5: Deep Reinforcement Learning",
+  "speaker": "Kian Katanforoosh",
+  "date": "2025-10-21",
+  "status": "Independent chapter/book review accepted; local reading edition; course completion gates incomplete",
+  "transcript_provenance": "Local machine transcription; not publisher captions",
+  "transcription_model": "Systran/faster-whisper-small.en",
+  "audio_sha256": "c68d3b14b3344af3fb263b1fee276e038fd775c0fcaef2e18cfb3688001c547c",
+  "audio_duration_seconds": 6300.921,
+  "playlist_duration_seconds": 6301,
+  "transcript_sha256": "56d5ba80812918272fff0af96b3712f2daa17084a84d3faad6349f74669a9293",
+  "transcript_segment_count": 217,
+  "transcript_first_start_seconds": 5.1,
+  "transcript_last_end_seconds": 6295.79,
+  "slides": {
+    "url": "https://cs230.stanford.edu/syllabus/fall_2025/5/lecture_5.pdf",
+    "sha256": "c10fa0483f37665f2e30c237a62edc5b65bba1b49352da6d3757cc11270d65b1",
+    "pages": 55,
+    "alignment": "aligned with the recording; interpretability was moved to Lecture 10 (~5-49 s)",
+    "pages_rendered_and_inspected": [
+      5,
+      6,
+      8,
+      15,
+      16,
+      19,
+      20,
+      25,
+      26,
+      30,
+      31,
+      32,
+      36,
+      40,
+      41,
+      43,
+      45,
+      52,
+      53,
+      54
+    ],
+    "pages_read_as_extracted_text_only": "all other pages",
+    "visual_findings": [
+      "Slide 5: both Go boards have 19 lines each way (star points at the 4th, 10th and 16th lines); the recording calls the board 13 by 13 (~434-458 s).",
+      "Slide 6: agent-environment loop with transition s_t -> a_t -> (o_t, r_t) -> s_{t+1}.",
+      "Slide 8: five cells with rewards +2, 0, 0, +1, +10; cells 1 and 5 terminal; three-minute rule; gamma = 1 strategy right, right, right.",
+      "Slide 15: backward tree; revisited cells (3 -> 2, 4 -> 3) are leaves filled with values copied from elsewhere in the tree (8.1 = 0 + 0.9 x 9; 9 = 0 + 0.9 x 10).",
+      "Slide 16: Q-table rows 1-5, column 1 = left: (0,0), (2,9), (8.1,10), (9,10), (0,0); Bellman optimality equation; policy argmax; memory-cost note.",
+      "Slide 19: one-hot state (0,1,0,0,0), hidden layers of 4 and 3 units, 2 outputs Q(s,<-), Q(s,->); both output units are labelled a_1^[3] (labelling slip).",
+      "Slide 20: target y = r + gamma max Q(s_next, a') with the max term circled 'hold fixed for backprop'; L = (y - Q(s,<-))^2; Melo citation.",
+      "Slide 25: four raw frames, preprocessing list (grayscale, reduce h,w, 4 frames), three outputs Q(s,<-), Q(s,->), Q(s,-).",
+      "Slide 26: grayscale frames still include the score strip; CONV-ReLU x3, FC(ReLU), FC(linear), 3 outputs.",
+      "Slide 30: terminal flag; y = r at terminal, y = r + gamma max Q(s',a') otherwise.",
+      "Slide 31: E1-E3 experiences, replay memory D, training on samples.",
+      "Slide 32: new transition added to D and not necessarily used in the same iteration.",
+      "Slide 36: Q(S1,a1) 0.5 -> 0, Q(S1,a2) 0.4 -> 1, Q(S1,a3) = 0.3; S4 (+1000) never visited.",
+      "Slide 40: Pong, SeaQuest, Space Invaders clips; the Pong and SeaQuest video credits appear attached to each other's images, and one credit names a Double DQN agent.",
+      "Slide 41: imitation learning (Montezuma's Revenge screenshot credited to Bellemare et al.) beside RLHF (InstructGPT first page).",
+      "Slide 43: DQN vs PPO table; cites TRPO as Schulman et al. (2017).",
+      "Slide 45: embedded video (black frame); Bansal et al. citation.",
+      "Slide 52: reward model from SFT with new reward head; loss -log sigma(R_phi(x,y_pref) - R_phi(x,y_dispref)); Christiano et al. (2023).",
+      "Slide 53: slide-6 loop relabelled for RLHF; note that intermediate rewards are zero; PPO citation.",
+      "Slide 54: still from an interview video containing an agent-environment diagram; no slide text."
+    ],
+    "viewing_record": {
+      "initial_draft_by_earlier_author": "source note claimed pages 5, 6, 8, 12, 16, 20, 25, 26, 30, 31, 36, 41, 43, 52, 53; not verifiable; superseded",
+      "this_author_2026-09-28": [
+        5,
+        6,
+        8,
+        15,
+        16,
+        19,
+        20,
+        25,
+        26,
+        30,
+        31,
+        32,
+        36,
+        40,
+        41,
+        43,
+        45,
+        52,
+        53,
+        54
+      ],
+      "papers_rendered": [
+        "mnih-2015 p. 10 (Extended Data Table 1)",
+        "watkins-dayan-1992 p. 282 (theorem)"
+      ]
+    }
+  },
+  "evidence_scheme": "Each claim not proved on the page carries one class: empirical result (paper and page), engineering check (this chapter's code or shown arithmetic), product claim, speaker judgment (with recording time). Definitions and results proved on the page carry no label. Each section opens with a provenance line.",
+  "running_case": "Recycling MDP of slide 8: cells 1-5, start 2, terminal 1 (+2) and 5 (+10), +1 on entering 4, actions left/right, gamma = 0.9, three-minute deadline. Solved by backward planning (Table 1, Propositions 1-2), augmented with n_left (Figure 2, Table 2), learned by a one-hot linear Q-network (Proposition 3, code), varied in exercises 1-3. The slide-33 three-action example carries exploration; a three-response example carries the RLHF optimum.",
+  "sections": [
+    {
+      "section": "why-rl",
+      "start": 5.1,
+      "end": 839.12,
+      "lecture_material": "Plan of the lecture; four results of slide 4; Go by supervised learning and the three issues of slide 5; RL as sequences of good decisions; teaching by experience vs example; applications incl. advertising.",
+      "research_extension": "Silver et al. 2016 (supervised stage 57.0%, RL >80%, 5-0); Silver et al. 2017 (tabula rasa, 100-0); Mnih et al. 2015 (49 games, 29 above 75%).",
+      "teaching_construction": "State-count bound 3^361 ~ 1.7e172; reading of the supervised target via ch. 2 Proposition 9; recording's 13x13 vs slide 5's 19x19 board.",
+      "evidence_class": "definition; empirical result; speaker judgment; engineering check"
+    },
+    {
+      "section": "loop",
+      "start": 839.12,
+      "end": 1072.72,
+      "lecture_material": "Agent, environment, state, action, observation, reward, transition (slide 6); fog of war; restricted observation.",
+      "research_extension": "Markov property (Sutton-Barto p. 49).",
+      "teaching_construction": "Finite MDP definitions as used in the chapter.",
+      "evidence_class": "definition; speaker judgment"
+    },
+    {
+      "section": "recycling",
+      "start": 1072.72,
+      "end": 1436.58,
+      "lecture_material": "Five-state recycling problem, rewards, terminal states, actions, three-minute rule, discounted return, meaning of discount, gamma = 1 strategy and return 11 (slide 8).",
+      "research_extension": "Return notation (Sutton-Barto p. 55).",
+      "teaching_construction": "Reward-on-entry reading; bound r_max/(1-gamma); unboundedness at gamma = 1; enumeration of three-move plans; Figure 1.",
+      "evidence_class": "definition; theorem (shown); engineering check"
+    },
+    {
+      "section": "q-table",
+      "start": 1436.58,
+      "end": 2116.69,
+      "lecture_material": "Q-table, backward computation (slides 9-15), time-remaining concession (~1782-1847 s), Bellman optimality equation, greedy policy, memory cost (slide 16).",
+      "research_extension": "Bellman equations, eq. 3.20, greedy optimality (Sutton-Barto pp. 64-65).",
+      "teaching_construction": "Planning vs learning; copy-back critique of the tree; Propositions 1-2 with proofs; value-iteration sweep counts; deadline state (s, n_left); Figure 2; Table 2.",
+      "evidence_class": "definition; theorem (proved); engineering check; speaker judgment"
+    },
+    {
+      "section": "deep-q",
+      "start": 2116.69,
+      "end": 3209.55,
+      "lecture_material": "Q-network with one-hot input (slide 19), Bellman target by a second forward pass, squared loss, hold-fixed target (slides 20-21), loop (slide 22), answers on discount, look-ahead, learned rewards.",
+      "research_extension": "Semi-gradient (S-B p. 202), naive residual gradient (pp. 269-271), Watkins-Dayan theorem, deadly triad (p. 264), Tsitsiklis-Van Roy, Mnih 2013 held-fixed targets, Mnih 2015 target network (p. 7, p. 10).",
+      "teaching_construction": "Proposition 3 (one-hot linear Q-network is a table).",
+      "evidence_class": "definition; theorem (proved and cited); speaker judgment; engineering check"
+    },
+    {
+      "section": "breakout",
+      "start": 3209.55,
+      "end": 3665.46,
+      "lecture_material": "Breakout input/output (slide 24), cropping, grayscale, resize, 4-frame history (slide 25), CNN (slide 26), pixels vs features, Seaquest anecdote.",
+      "research_extension": "Mnih et al. 2015 preprocessing and architecture (pp. 4, 6); k-th order history (S-B p. 468).",
+      "teaching_construction": "Markov argument for frame stacking; output sizes and 1,685,667 parameters.",
+      "evidence_class": "empirical result; engineering check; speaker judgment"
+    },
+    {
+      "section": "replay",
+      "start": 3665.46,
+      "end": 4228.53,
+      "lecture_material": "Preprocessing in the loop, terminal flag and y = r (slides 28-30), correlation, reuse, replay memory, uniform sampling (slides 31-32), gradient-weighted replay called 'prioritize sweeping'.",
+      "research_extension": "Absorbing state (S-B p. 57); Lin 1992; Mnih 2015 replay advantages (p. 7); Schaul et al. (pp. 1-2); Moore-Atkeson.",
+      "teaching_construction": "Terminal-target failure in the one-hot network; gradient = TD error identity.",
+      "evidence_class": "definition; empirical result; speaker judgment"
+    },
+    {
+      "section": "exploration",
+      "start": 4228.53,
+      "end": 4828.75,
+      "lecture_material": "Stuck example (slides 33-36), exploration vs exploitation, epsilon-greedy 5% (slide 37), infinity initialisation question, full algorithm (slide 38), stopping signals, results (slides 39-40).",
+      "research_extension": "epsilon-greedy and optimistic initial values (S-B pp. 28, 34); Mnih 2015 schedule and tunnel (pp. 4, 6).",
+      "teaching_construction": "Proposition 4; first-visit probability 0.814 and simulation 0.817; Bellman-residual counterexample 999.7.",
+      "evidence_class": "theorem (proved); engineering check; speaker judgment; empirical result"
+    },
+    {
+      "section": "beyond",
+      "start": 4828.75,
+      "end": 5426.62,
+      "lecture_material": "Montezuma's Revenge, prior knowledge, 'imitation learning' naming, slide 41, PPO vs DQN (slides 43-44), reward design, continuous control, self-play sumo (slide 45), OpenAI Five and AlphaStar (slide 46), AlphaGo documentary (slide 47).",
+      "research_extension": "Bellemare et al.; Ho-Ermon; PPO clipped objective; TRPO date; Mnih reward clipping; Bansal et al.; Berner et al.; Vinyals et al.",
+      "teaching_construction": "8^-20 illustration; advantage identity; win-probability reading of a terminal reward.",
+      "evidence_class": "empirical result; speaker judgment; engineering check; definition"
+    },
+    {
+      "section": "pretraining",
+      "start": 5426.62,
+      "end": 5833.17,
+      "lecture_material": "Second-half plan, next-token pretraining (slide 49), problems of slide 50, SFT (slide 51), 13,000 pairs, shortcomings.",
+      "research_extension": "Ouyang et al. dataset sizes (pp. 7, 33).",
+      "teaching_construction": "LM as a policy over tokens; SFT loss; reading via ch. 2 Proposition 9.",
+      "evidence_class": "definition; empirical result; speaker judgment; engineering check"
+    },
+    {
+      "section": "reward-model",
+      "start": 5833.17,
+      "end": 6063.58,
+      "lecture_material": "Reward model from SFT with scalar head, rankings, pairwise comparisons, loss not derived, cost argument (slide 52).",
+      "research_extension": "Bradley-Terry via Christiano et al. (p. 5) and Rafailov et al. (p. 3); Ouyang et al. RM details (pp. 8-9); Christiano <1% (p. 1).",
+      "teaching_construction": "Loss derivation, independent-score derivatives and shared-parameter gradient distinguished; worked numbers (0.690, 0.371, -0.310), shift invariance; sampling temperature defined at use.",
+      "evidence_class": "definition; theorem (derived); engineering check; empirical result; speaker judgment"
+    },
+    {
+      "section": "rlhf",
+      "start": 6063.58,
+      "end": 6295.79,
+      "lecture_material": "LM as agent vs reward model, slide 53 mapping, sparse terminal reward, DPO mention (~5010-5040 s), closing interview recommendation.",
+      "research_extension": "Ouyang et al. environment, KL penalty, objective (p. 9); Rafailov et al. optimum and DPO loss (p. 4).",
+      "teaching_construction": "Token-level decomposition of the KL penalty; Proposition 5 with proof; lambda table; DPO derivation.",
+      "evidence_class": "theorem (proved); engineering check; empirical result; speaker judgment"
+    },
+    {
+      "section": "implementation",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "None.",
+      "teaching_construction": "NumPy laboratory implementing the recycling MDP, T, backward induction, one-hot Q-learning with replay and epsilon-greedy, Proposition 4 learner, Proposition 5 and Bradley-Terry.",
+      "evidence_class": "engineering check"
+    },
+    {
+      "section": "limits",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "Statements already cited above.",
+      "teaching_construction": "Limits of each idealisation; what the reader can now do.",
+      "evidence_class": "original construction"
+    },
+    {
+      "section": "exercises",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "Sutton-Barto optimistic values (ex. 4).",
+      "teaching_construction": "Six exercises with worked solutions.",
+      "evidence_class": "engineering check; theorem (derived)"
+    },
+    {
+      "section": "sources",
+      "start": null,
+      "end": null,
+      "lecture_material": "None.",
+      "research_extension": "Primary-source list.",
+      "teaching_construction": "None.",
+      "evidence_class": "—"
+    }
+  ],
+  "subsection_timestamps": {
+    "bellman": 1847.31,
+    "results": 4568.62,
+    "sft": 5655.22
+  },
+  "references": [
+    {
+      "title": "Sutton, Barto 2018, Reinforcement Learning: An Introduction (2nd ed.)",
+      "url": "http://incompleteideas.net/book/the-book-2nd.html",
+      "supports": "epsilon-greedy, optimistic values, Markov property, return, absorbing state, Bellman optimality, greedy optimality, Q-learning, semi-gradient, deadly triad, residual gradient, k-th order history (printed pp. 28-468; PDF page = printed + 22)."
+    },
+    {
+      "title": "Watkins, Dayan 1992, Q-learning",
+      "url": "https://doi.org/10.1007/BF00992698",
+      "supports": "look-up table assumption (p. 281); convergence theorem (p. 282)."
+    },
+    {
+      "title": "Tsitsiklis, Van Roy 1997, An analysis of temporal-difference learning with function approximation",
+      "url": "https://doi.org/10.1109/9.580874",
+      "supports": "convergence and divergence conditions (pp. 674-675)."
+    },
+    {
+      "title": "Mnih et al. 2013, Playing Atari with Deep Reinforcement Learning",
+      "url": "https://arxiv.org/abs/1312.5602",
+      "supports": "held-fixed targets (p. 3)."
+    },
+    {
+      "title": "Mnih et al. 2015, Human-level control through deep reinforcement learning",
+      "url": "https://doi.org/10.1038/nature14236",
+      "supports": "instability, 49 games, preprocessing, architecture, replay, target network, schedules (pp. 1-10)."
+    },
+    {
+      "title": "Lin 1992, Self-improving reactive agents ...",
+      "url": "https://doi.org/10.1007/BF00992699",
+      "supports": "experience replay (p. 299)."
+    },
+    {
+      "title": "Schaul et al. 2015, Prioritized Experience Replay",
+      "url": "https://arxiv.org/abs/1511.05952",
+      "supports": "TD-error prioritisation, eight replays (p. 1); vs prioritized sweeping (p. 2)."
+    },
+    {
+      "title": "Moore, Atkeson 1993, Prioritized sweeping",
+      "url": "https://doi.org/10.1007/BF00993104",
+      "supports": "prioritised planning sweeps (preprint p. 1)."
+    },
+    {
+      "title": "Silver et al. 2016, Mastering the game of Go with deep neural networks and tree search",
+      "url": "https://doi.org/10.1038/nature16961",
+      "supports": "pp. 1-2."
+    },
+    {
+      "title": "Silver et al. 2017, Mastering the game of Go without human knowledge",
+      "url": "https://doi.org/10.1038/nature24270",
+      "supports": "author manuscript p. 1."
+    },
+    {
+      "title": "Vinyals et al. 2019, Grandmaster level in StarCraft II ...",
+      "url": "https://doi.org/10.1038/s41586-019-1724-z",
+      "supports": "author manuscript pp. 1-2."
+    },
+    {
+      "title": "Berner et al. 2019, Dota 2 with Large Scale Deep Reinforcement Learning",
+      "url": "https://arxiv.org/abs/1912.06680",
+      "supports": "p. 1."
+    },
+    {
+      "title": "Bansal et al. 2017, Emergent Complexity via Multi-Agent Competition",
+      "url": "https://arxiv.org/abs/1710.03748",
+      "supports": "pp. 1, 4-5."
+    },
+    {
+      "title": "Schulman et al. 2015, Trust Region Policy Optimization",
+      "url": "https://arxiv.org/abs/1502.05477",
+      "supports": "venue and revision date (p. 1)."
+    },
+    {
+      "title": "Schulman et al. 2017, Proximal Policy Optimization Algorithms",
+      "url": "https://arxiv.org/abs/1707.06347",
+      "supports": "pp. 1-3."
+    },
+    {
+      "title": "Bellemare et al. 2016, Unifying Count-Based Exploration and Intrinsic Motivation",
+      "url": "https://arxiv.org/abs/1606.01868",
+      "supports": "pp. 7, 16."
+    },
+    {
+      "title": "Ho, Ermon 2016, Generative Adversarial Imitation Learning",
+      "url": "https://arxiv.org/abs/1606.03476",
+      "supports": "p. 1."
+    },
+    {
+      "title": "Christiano et al. 2017, Deep reinforcement learning from human preferences",
+      "url": "https://arxiv.org/abs/1706.03741",
+      "supports": "pp. 1, 5."
+    },
+    {
+      "title": "Ouyang et al. 2022, Training language models to follow instructions with human feedback",
+      "url": "https://arxiv.org/abs/2203.02155",
+      "supports": "pp. 1, 7-9, 33."
+    },
+    {
+      "title": "Rafailov et al. 2023, Direct Preference Optimization",
+      "url": "https://arxiv.org/abs/2305.18290",
+      "supports": "pp. 1-4."
+    }
+  ],
+  "research_ledger": [
+    {
+      "id": "silver-2016 (Nature 529)",
+      "page": 1,
+      "quote": "defeated the human European Go champion by 5 games to 0",
+      "claim": "5-0 against the European champion; full-sized game; board passed as a 19 x 19 image",
+      "status": "page verified"
+    },
+    {
+      "id": "silver-2016 (Nature 529)",
+      "page": 2,
+      "quote": "a 13-layer policy network ... from 30 million positions from the KGS Go Server ... accuracy of 57.0%",
+      "claim": "supervised policy network and its accuracy",
+      "status": "page verified"
+    },
+    {
+      "id": "silver-2016 (Nature 529)",
+      "page": 2,
+      "quote": "the RL policy network won more than 80% of games against the SL policy network",
+      "claim": "RL improvement over the supervised policy",
+      "status": "page verified"
+    },
+    {
+      "id": "silver-2017 (Nature 550, author manuscript)",
+      "page": 1,
+      "quote": "Starting tabula rasa, our new program AlphaGo Zero achieved superhuman performance, winning 100-0 against the previously published, champion-defeating AlphaGo",
+      "claim": "tabula rasa, 100-0",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 1,
+      "quote": "Reinforcement learning is known to be unstable or even to diverge when a nonlinear function approximator such as a neural network is used",
+      "claim": "instability and its three causes",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 2,
+      "quote": "comparable to that of a professional human games tester across the set of 49 games, achieving more than 75% of the human score on more than half of the games (29 games",
+      "claim": "49 games; 29 above 75%",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 4,
+      "quote": "receiving only the pixels and the game score as inputs, and using the same algorithm, network architecture and hyperparameters on each game",
+      "claim": "pixels-only design",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 4,
+      "quote": "the agent learns the optimal strategy, which is to first dig a tunnel around the side of the wall",
+      "claim": "Breakout tunnel",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 4,
+      "quote": "demanding more temporally extended planning strategies still constitute a major challenge",
+      "claim": "Montezuma's Revenge among hard games",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 6,
+      "quote": "we take the maximum value for each pixel colour value over the frame being encoded and the previous frame ... flickering",
+      "claim": "preprocessing: max over two frames, Y channel, 84 x 84, 4 frames",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 6,
+      "quote": "The first hidden layer convolves 32 filters of 8 x 8 with stride 4 ... 64 filters of 4 x 4 with stride 2 ... 64 filters of 3 x 3 with stride 1 ... 512 rectifier units",
+      "claim": "architecture",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 6,
+      "quote": "cannot differentiate between rewards of different magnitude",
+      "claim": "reward clipping",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 6,
+      "quote": "e annealed linearly from 1.0 to 0.1 over the first million frames, and fixed at 0.1 thereafter ... replay memory of 1 million most recent frames",
+      "claim": "exploration schedule; replay size",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 6,
+      "quote": "e-greedy policy with e = 0.05",
+      "claim": "evaluation epsilon",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 6,
+      "quote": "selected by performing an informal search on the games Pong, Breakout, Seaquest, Space Invaders and Beam Rider",
+      "claim": "hyperparameter search incl. Seaquest",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 6,
+      "quote": "We use k = 4 for all games",
+      "claim": "frame skipping",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 7,
+      "quote": "the parameters could get stuck in a poor local minimum, or even diverge catastrophically",
+      "claim": "replay advantages (data efficiency, correlations, feedback loop)",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 7,
+      "quote": "which motivates the choice of Q-learning",
+      "claim": "replay forces off-policy learning",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 7,
+      "quote": "similar to prioritized sweeping",
+      "claim": "prioritized sweeping named as inspiration",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 7,
+      "quote": "making divergence or oscillations much more unlikely",
+      "claim": "target network",
+      "status": "page verified"
+    },
+    {
+      "id": "mnih-2015 (Nature 518)",
+      "page": 10,
+      "quote": "target network update frequency 10000",
+      "claim": "target copy period",
+      "status": "visually verified from existing local PDF page 10 on 2026-10-02"
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 28,
+      "quote": "from among all the actions with equal probability, independently of the action-value estimates",
+      "claim": "epsilon-greedy",
+      "status": "page verified",
+      "pdf_page": 50
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 34,
+      "quote": "Whichever actions are initially selected, the reward is less than the starting estimates; the learner switches to other actions, being “disappointed”",
+      "claim": "optimistic initial values",
+      "status": "page verified",
+      "pdf_page": 56
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 34,
+      "quote": "a simple trick that can be quite effective on stationary problems, but it is far from being a generally useful approach to encouraging exploration",
+      "claim": "limit of optimism",
+      "status": "page verified",
+      "pdf_page": 56
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 49,
+      "quote": "The state must include information about all aspects of the past agent-environment interaction that make a difference for the future",
+      "claim": "Markov property",
+      "status": "page verified",
+      "pdf_page": 71
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 55,
+      "quote": "Gt = Rt+1 + gamma Rt+2 + ...",
+      "claim": "return notation G_t and R_{t+1}",
+      "status": "page verified",
+      "pdf_page": 77
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 57,
+      "quote": "absorbing state that transitions only to itself and that generates only rewards of zero",
+      "claim": "terminal convention",
+      "status": "page verified",
+      "pdf_page": 79
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 64,
+      "quote": "any policy that is greedy with respect to the optimal evaluation function v* is an optimal policy",
+      "claim": "greedy policy; eq. 3.20",
+      "status": "page verified",
+      "pdf_page": 86
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 65,
+      "quote": "without having to know anything about the environment's dynamics",
+      "claim": "action values need no model",
+      "status": "page verified",
+      "pdf_page": 87
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 131,
+      "quote": "Q(St,At) <- Q(St,At) + alpha[Rt+1 + gamma max_a Q(St+1,a) - Q(St,At)] (6.8)",
+      "claim": "Q-learning rule",
+      "status": "page verified",
+      "pdf_page": 153
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 202,
+      "quote": "They take into account the effect of changing the weight vector wt on the estimate, but ignore its effect on the target",
+      "claim": "semi-gradient",
+      "status": "page verified",
+      "pdf_page": 224
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 264,
+      "quote": "the danger of instability and divergence arises whenever we combine all of the following three elements ... If any two elements of the deadly triad are present, but not all three, then instability can be avoided",
+      "claim": "deadly triad",
+      "status": "page verified",
+      "pdf_page": 286
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 269,
+      "quote": "naive residual-gradient algorithm ... converges with B having a value of 3/4 and C having a value of 1/4",
+      "claim": "full-gradient alternative minimises TD error, converges to wrong values",
+      "status": "page verified",
+      "page_range": "269-271",
+      "pdf_page": 291,
+      "pdf_page_range": "291-293"
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 285,
+      "quote": "The deadly triad was first identified by Sutton (1995b) and thoroughly analyzed by Tsitsiklis and Van Roy (1997)",
+      "claim": "attribution",
+      "status": "page verified",
+      "pdf_page": 307
+    },
+    {
+      "id": "Sutton-Barto 2nd ed. (2020 PDF)",
+      "page": 468,
+      "quote": "This kth-order history approach is still very simple, but can greatly increase the agent's capabilities",
+      "claim": "frame history",
+      "status": "page verified",
+      "pdf_page": 490
+    },
+    {
+      "id": "watkins-dayan-1992 (Machine Learning 8)",
+      "page": 281,
+      "quote": "may not converge correctly for other representations",
+      "claim": "look-up table assumption",
+      "status": "page verified"
+    },
+    {
+      "id": "watkins-dayan-1992 (Machine Learning 8)",
+      "page": 282,
+      "quote": "Given bounded rewards |rn| <= R, learning rates 0 <= alpha_n < 1, and sum alpha = infinity, sum alpha^2 < infinity ... with probability 1",
+      "claim": "convergence theorem",
+      "status": "page verified on the rendered page (extracted text garbles the sums)"
+    },
+    {
+      "id": "tsitsiklis-vanroy-1997 (IEEE TAC 42(5))",
+      "page": 674,
+      "quote": "We present a proof of convergence (with probability one)",
+      "claim": "convergence for on-line sampling",
+      "status": "page verified"
+    },
+    {
+      "id": "tsitsiklis-vanroy-1997 (IEEE TAC 42(5))",
+      "page": 674,
+      "quote": "convergence is guaranteed if states are sampled according to the steady-state probabilities, while divergence is possible when states are sampled from distributions independent of the dynamics",
+      "claim": "steady-state vs independent sampling",
+      "status": "page verified",
+      "page_range": "674-675"
+    },
+    {
+      "id": "tsitsiklis-vanroy-1997 (IEEE TAC 42(5))",
+      "page": 675,
+      "quote": "This example should be viewed as a warning rather than a ban ... somewhat contrived",
+      "claim": "nonlinear divergence example",
+      "status": "page verified"
+    },
+    {
+      "id": "1312.5602",
+      "page": 3,
+      "quote": "the parameters from the previous iteration theta_{i-1} are held fixed when optimising the loss function",
+      "claim": "held-fixed targets",
+      "status": "page verified"
+    },
+    {
+      "id": "lin-1992 (Machine Learning 8)",
+      "page": 299,
+      "quote": "the learning agent simply remembers its past experiences and repeatedly presents the experiences to its learning algorithm",
+      "claim": "experience replay",
+      "status": "page verified"
+    },
+    {
+      "id": "1511.05952",
+      "page": 1,
+      "quote": "replay transitions with high expected learning progress, as measured by the magnitude of their temporal-difference (TD) error ... importance sampling",
+      "claim": "prioritized replay",
+      "status": "page verified"
+    },
+    {
+      "id": "1511.05952",
+      "page": 1,
+      "quote": "revisited each transition eight times on average",
+      "claim": "DQN replay count",
+      "status": "page verified"
+    },
+    {
+      "id": "1511.05952",
+      "page": 2,
+      "quote": "model-free RL rather than model-based planning",
+      "claim": "relation to prioritized sweeping",
+      "status": "page verified"
+    },
+    {
+      "id": "moore-atkeson-1993 (preprint)",
+      "page": 1,
+      "quote": "It uses all previous experiences both to prioritize important dynamic programming sweeps",
+      "claim": "prioritized sweeping is planning",
+      "status": "page verified"
+    },
+    {
+      "id": "vinyals-2019 (Nature 575, author manuscript)",
+      "page": 1,
+      "quote": "rated at Grandmaster level for all three StarCraft races and above 99.8% of officially ranked human players",
+      "claim": "AlphaStar result",
+      "status": "page verified"
+    },
+    {
+      "id": "vinyals-2019 (Nature 575, author manuscript)",
+      "page": 2,
+      "quote": "the game includes opponent units seen by the player's own units",
+      "claim": "imperfect observation",
+      "status": "page verified"
+    },
+    {
+      "id": "1912.06680",
+      "page": 1,
+      "quote": "On April 13th, 2019, OpenAI Five became the first AI system to defeat the world champions at an esports game ... train OpenAI Five for 10 months",
+      "claim": "OpenAI Five",
+      "status": "page verified"
+    },
+    {
+      "id": "1710.03748",
+      "page": 1,
+      "quote": "no matter how weak or strong an agent is, an environment populated with other agents of comparable strength provides the right challenge ... perfect curriculum",
+      "claim": "self-play curriculum",
+      "status": "page verified"
+    },
+    {
+      "id": "1710.03748",
+      "page": 4,
+      "quote": "Sumo ... The winner gets +1000 and the other agent gets -1000",
+      "claim": "sumo reward",
+      "status": "page verified"
+    },
+    {
+      "id": "1710.03748",
+      "page": 4,
+      "quote": "We use a policy gradient algorithm, Proximal Policy Optimization (PPO)",
+      "claim": "PPO training",
+      "status": "page verified"
+    },
+    {
+      "id": "1710.03748",
+      "page": 4,
+      "quote": "The exploration reward is gradually annealed to zero, in favor of the competition reward",
+      "claim": "dense-to-sparse curriculum",
+      "status": "page verified",
+      "page_range": "4-5"
+    },
+    {
+      "id": "1710.03748",
+      "page": 5,
+      "quote": "Latest available opponent ... Random old opponent",
+      "claim": "opponent sampling",
+      "status": "page verified"
+    },
+    {
+      "id": "1502.05477",
+      "page": 1,
+      "quote": "Proceedings of the 31st International Conference on Machine Learning, Lille, France, 2015 ... arXiv:1502.05477v5 [cs.LG] 20 Apr 2017",
+      "claim": "venue and revision date",
+      "status": "page verified"
+    },
+    {
+      "id": "1707.06347",
+      "page": 1,
+      "quote": "forms a pessimistic estimate (i.e., lower bound) of the performance of the policy ... significantly better (in terms of sample complexity) than A2C ... has not been demonstrated to perform well on continuous control benchmarks",
+      "claim": "PPO claims",
+      "status": "page verified"
+    },
+    {
+      "id": "1707.06347",
+      "page": 2,
+      "quote": "constraint on the size of the policy update",
+      "claim": "TRPO constraint",
+      "status": "page verified"
+    },
+    {
+      "id": "1707.06347",
+      "page": 3,
+      "quote": "removes the incentive for moving r_t outside of the interval ... (7) ... epsilon = 0.2",
+      "claim": "clipped objective",
+      "status": "page verified"
+    },
+    {
+      "id": "1606.01868",
+      "page": 7,
+      "quote": "most published agents achieve an average score close to zero and completely fail to explore most of the 24 rooms ... within 50 million frames our agent learns a policy which consistently navigates through 15 rooms",
+      "claim": "Montezuma's Revenge",
+      "status": "page verified"
+    },
+    {
+      "id": "1606.01868",
+      "page": 16,
+      "quote": "to escape the very first room, the agent must climb ladders, dodge a creature, pick up a key, then backtrack",
+      "claim": "first room",
+      "status": "page verified"
+    },
+    {
+      "id": "1606.03476",
+      "page": 1,
+      "quote": "without interaction with the expert or access to reinforcement signal",
+      "claim": "imitation learning definition",
+      "status": "page verified"
+    },
+    {
+      "id": "1706.03741",
+      "page": 1,
+      "quote": "providing feedback on less than 1% of our agent's interactions with the environment",
+      "claim": "feedback fraction",
+      "status": "page verified"
+    },
+    {
+      "id": "1706.03741",
+      "page": 1,
+      "quote": "arXiv:1706.03741v4 [stat.ML] 17 Feb 2023",
+      "claim": "slide's 2023 date is revision v4",
+      "status": "page verified"
+    },
+    {
+      "id": "1706.03741",
+      "page": 5,
+      "quote": "This follows the Bradley-Terry model (Bradley and Terry, 1952)",
+      "claim": "Bradley-Terry form",
+      "status": "page verified"
+    },
+    {
+      "id": "2203.02155",
+      "page": 1,
+      "quote": "outputs from the 1.3B parameter InstructGPT model are preferred to outputs from the 175B GPT-3, despite having 100x fewer parameters",
+      "claim": "headline result",
+      "status": "page verified"
+    },
+    {
+      "id": "2203.02155",
+      "page": 7,
+      "quote": "The SFT dataset contains about 13k training prompts",
+      "claim": "SFT size",
+      "status": "page verified"
+    },
+    {
+      "id": "2203.02155",
+      "page": 33,
+      "quote": "Table 6 ... SFT train labeler 11,295; train customer 1,430",
+      "claim": "12,725 SFT training prompts",
+      "status": "page verified"
+    },
+    {
+      "id": "2203.02155",
+      "page": 8,
+      "quote": "Starting from the SFT model with the final unembedding layer removed ... we only use 6B RMs, as this saves a lot of compute, and we found that 175B RM training could be unstable",
+      "claim": "reward-model construction and size",
+      "status": "page verified"
+    },
+    {
+      "id": "2203.02155",
+      "page": 8,
+      "quote": "In Stiennon et al. (2020) ... the difference in rewards represents the log odds that one response will be preferred to the other",
+      "claim": "log-odds reading (of Stiennon et al.'s RM)",
+      "status": "page verified"
+    },
+    {
+      "id": "2203.02155",
+      "page": 8,
+      "quote": "anywhere between K = 4 and K = 9 responses ... train on all (K choose 2) comparisons from each prompt as a single batch element ... loss (1)",
+      "claim": "ranking, batching, loss",
+      "status": "page verified"
+    },
+    {
+      "id": "2203.02155",
+      "page": 9,
+      "quote": "since the RM loss is invariant to shifts in reward, we normalize the reward model using a bias",
+      "claim": "shift normalisation",
+      "status": "page verified"
+    },
+    {
+      "id": "2203.02155",
+      "page": 9,
+      "quote": "bandit environment ... we add a per-token KL penalty from the SFT model at each token to mitigate over-optimization of the reward model. The value function is initialized from the RM",
+      "claim": "RL environment; KL penalty; value init",
+      "status": "page verified"
+    },
+    {
+      "id": "2203.02155",
+      "page": 9,
+      "quote": "objective (2) ... The KL reward coefficient, beta, and the pretraining loss coefficient, gamma ... For \"PPO\" models, gamma is set to 0",
+      "claim": "objective and coefficients",
+      "status": "page verified"
+    },
+    {
+      "id": "2305.18290",
+      "page": 1,
+      "quote": "Stanford University ... 37th Conference on Neural Information Processing Systems (NeurIPS 2023)",
+      "claim": "affiliation and venue",
+      "status": "page verified"
+    },
+    {
+      "id": "2305.18290",
+      "page": 2,
+      "quote": "without explicit reward modeling or reinforcement learning",
+      "claim": "DPO needs no RM or RL",
+      "status": "page verified"
+    },
+    {
+      "id": "2305.18290",
+      "page": 3,
+      "quote": "The BT model stipulates that the human preference distribution p* can be written as ... (1)",
+      "claim": "Bradley-Terry for LM responses",
+      "status": "page verified"
+    },
+    {
+      "id": "2305.18290",
+      "page": 4,
+      "quote": "equations (4), (5), (7)",
+      "claim": "optimum, reparameterisation, DPO loss",
+      "status": "page verified"
+    }
+  ],
+  "unverified_claims": [
+    "Melo, 'Convergence of Q-learning: a simple proof' (slide 20): not obtained; not used as a source.",
+    "Bradley, Terry 1952 (Biometrika): not obtained; the model is cited through Christiano et al. p. 5 and Rafailov et al. p. 3.",
+    "Seaquest colour-preprocessing anecdote (~3469-3498 s): speaker judgment; no source found.",
+    "Advertising is the largest RL application (~778-839 s): speaker judgment.",
+    "DPO more popular than PPO (~5010-5040 s): speaker judgment.",
+    "AlphaGo documentary move interpretation (~5347-5426 s): speaker judgment.",
+    "Closing interview recommendation (Andrej Karpathy, ~6260-6296 s): not among the sources; recorded as the speaker's report.",
+    "Slide 43 comparative entries (e.g. PPO 'generally more stable'): graded speaker judgment."
+  ],
+  "slide_discrepancies_recorded": [
+    "Slide 43/44: TRPO dated 2017; ICML 2015 (arXiv v5 is dated 20 Apr 2017).",
+    "Slide 52: Christiano et al. dated 2023; arXiv 1706.03741 (2017); the PDF stamp is v4, 17 Feb 2023.",
+    "Slide 5 vs recording: recording says 13 x 13 board (~434-458 s); slide shows 19 x 19.",
+    "Slide 19/20: both output units labelled a_1^[3].",
+    "Slide 40: Pong and SeaQuest video credits appear swapped; one credit is a Double DQN agent.",
+    "Slides 9-16: Q-table ignores the deadline; correct only for the problem without it (speaker concedes ~1782-1847 s).",
+    "Slide 53: 'all intermediate rewards are typically zero' omits the per-token KL penalty of Ouyang et al. (p. 9).",
+    "Slides 9-15: backward tree fills revisited cells by copying values (presupposes the fixed point)."
+  ],
+  "asr_uncertainties": [
+    "'Yama' = gamma",
+    "'recycled bean' = recycling bin",
+    "'RLE' = RL",
+    "'Sequest' = Seaquest",
+    "'prioritize sweeping' = speaker's name for gradient-weighted replay (prioritized experience replay)",
+    "'epsilon really' = epsilon-greedy",
+    "'expected advent page' = advantage",
+    "'the mine' = DeepMind",
+    "'critique' = critic",
+    "'human laborer' = human labeler",
+    "'C5' = Coursera course 5",
+    "'Andrej Karpati' = Andrej Karpathy",
+    "'before the time below Teddy is done' = before the garbage collector arrives",
+    "'13 by 13' board: either misspoken or ASR; the slide shows 19 x 19",
+    "'40, 50 games' = DQN evaluated on 49 games",
+    "'from a year ago at Stanford' (DPO): paper is NeurIPS 2023, about two years before the recording"
+  ],
+  "symbol_ledger": [
+    {
+      "symbol": "x, y, theta, f_theta, L, eta, sigma, u",
+      "first_section": "why-rl / deep-q",
+      "definition": "Book-wide rows reused (input, target, parameters, loss, step size, sigmoid, logit)."
+    },
+    {
+      "symbol": "s, a, r, s', a', s_t, a_t, r_t, o_t, S, A, p(s'|s,a), r(s,a), gamma, pi(a|s), pi(s)",
+      "first_section": "loop",
+      "definition": "MDP objects; prime means next."
+    },
+    {
+      "symbol": "R_t, r_max",
+      "first_section": "recycling",
+      "definition": "Discounted return; reward bound."
+    },
+    {
+      "symbol": "Q^pi, V^pi, Q*, V*, T, T^pi, Q_1, Q_2, Q_init, Q_fix, pi_fix, n_it, a^circ",
+      "first_section": "q-table",
+      "definition": "Action/state values, operators, proof-local tables, fixed point and its greedy policy, iteration count, row maximiser."
+    },
+    {
+      "symbol": "n_left",
+      "first_section": "q-table",
+      "definition": "Moves remaining; Markov state (s, n_left)."
+    },
+    {
+      "symbol": "Q_theta, W, W_as, onehot, y (target), theta^-",
+      "first_section": "deep-q",
+      "definition": "Q-network, one-hot linear network, Bellman target, target-network parameters."
+    },
+    {
+      "symbol": "pre(s)",
+      "first_section": "breakout",
+      "definition": "Preprocessing map (slides: phi)."
+    },
+    {
+      "symbol": "B",
+      "first_section": "replay",
+      "definition": "Replay memory (slides: D)."
+    },
+    {
+      "symbol": "a_1, a_2, a_3, Q(a), eps_expl, n_ep",
+      "first_section": "exploration",
+      "definition": "Slide-33 actions and values; exploration probability; episode count."
+    },
+    {
+      "symbol": "Adv^pi, Adv-hat_t, theta_old, c_clip, clip",
+      "first_section": "beyond",
+      "definition": "Advantage, PPO quantities."
+    },
+    {
+      "symbol": "v_t, V (vocabulary), n_seq, pi_theta(v|x,v_1:t), tau",
+      "first_section": "pretraining / reward-model",
+      "definition": "Tokens, LM as policy, sampling temperature."
+    },
+    {
+      "symbol": "r_psi, psi, y_w, y_l, succ, u_pref, n_resp, shift(x)",
+      "first_section": "reward-model",
+      "definition": "Reward model and Bradley-Terry quantities."
+    },
+    {
+      "symbol": "pi_ref, lambda, KL, Z(x), pi*",
+      "first_section": "rlhf",
+      "definition": "KL-regularised objective and its optimum."
+    },
+    {
+      "symbol": "r_choc",
+      "first_section": "exercises",
+      "definition": "Wrapper reward (exercise 3)."
+    }
+  ],
+  "code_check": {
+    "file": "HTML entity-decoded embedded Python block in section implementation; code_sha256 hashes the decoded HTML bytes before scratch-file final-newline normalisation.",
+    "command": "python -I <file> in a fresh process",
+    "python": "3.13.5",
+    "numpy": "2.2.6",
+    "result": "Fresh python -I exit 0; assertions passed; stdout matches printed output ignoring only final newline",
+    "pep8": "passed",
+    "hand_checks": "Independent script recomputed every hand number in the prose and exercises (3^361, parameter counts, 8^-20, 5.26, sweep guarantees, 0.814 and 179 episodes, lambda table rows 0.25 and 4, exercise 1, 3, 5, 6 values): all agree with the page.",
+    "checked_at_utc": "2026-10-02T01:54:09.724851+00:00",
+    "stdout": [
+      "Q* by value iteration: sweeps to exact from 0 = 4 | gap after 10, 20 sweeps from 100 = [29.196, 7.681]",
+      "deadline, gamma=1: V(2, 3) = 11.0 | gamma=0.9: Q(2,3,R) = 9.0 Q(2,1,R) = 0.0 Q(3,2,L) = 1.8 Q(4,1,L) = 0.0",
+      "critical chocolate reward = 2.1111 | greedy action at state 4: {2.101: 'right', 2.121: 'left'}",
+      "one-hot Q-network: max |Q_theta - Q*| = 2.7e-14",
+      "P(a3 tried within 100 episodes), eps=0.05: simulated 0.817 formula 0.814",
+      "pi* = [0.179  0.2919 0.5291] | log Z = 1.0272 | E[r] = 1.3501",
+      "Bradley-Terry: P(y_w preferred) = 0.69 loss = 0.3711 dloss/dr_w = -0.31"
+    ],
+    "code_sha256": "ea3b03b9a93bcb985517bfe20b006f852ac14f28328f59d6f0fc8f5a92f4622c",
+    "elapsed_seconds": 1.19,
+    "status": "passed",
+    "exit_code": 0,
+    "stdout_matches_printed": true,
+    "stderr_empty": true,
+    "code_unchanged": true
+  },
+  "pass_log": [
+    {
+      "pass": "resume",
+      "result": "An earlier author's partial HTML draft (no .meta.json) was treated as unverified material. Kept its structure and most prose after checking; rewrote or corrected the passages listed under notation_decisions and production_notes_removed_from_text.",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "1 coverage",
+      "result": "Transcript read sequentially in full (5.1-6295.79 s, 217 segments); all 55 slide pages read as extracted text; 12 source-grounded sections plus 3 timestamped subsections mapped (spans in sections).",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "2 prose",
+      "result": "Draft checked section by section against the coverage map; added: planning vs learning after Table 1; copy-back critique of the slide tree; 13 x 13 vs 19 x 19; slide 40 and 41 corrections.",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "3 mathematics",
+      "result": "5 numbered propositions with proofs (contraction; fixed point = Q* and greedy optimality; one-hot network = table; greedy learner never tries a3; KL-regularised optimum) plus derived: return bound, unboundedness at gamma = 1, Bellman expectation and optimality equations, semi-gradient step, deadline backward induction, epsilon-greedy first-visit probability, advantage identity, Bradley-Terry loss and gradient, token-level KL decomposition, DPO loss, chocolate threshold. Q* redefined as a supremum attained by Proposition 2. Symbol pass against NOTATION.md; collisions removed (see notation_decisions).",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "4 research",
+      "result": "20 sources, all PDFs present in the private papers folder; 78 page-level claims located (research_ledger); Sutton-Barto printed pages confirmed against the PDF running heads (PDF = printed + 22).",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "5 implementation",
+      "result": "Embedded NumPy program unchanged from the draft; executed in a fresh process; output identical; PEP8 clean; independent hand-check script for all non-code numbers.",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "6 exercises",
+      "result": "Six exercises: computation (1), counterexample with repair (2), derivation (3), assumption checking (4), proof and counterexample about preferences (5), design (6); all numeric answers recomputed; exercise 4 and 5 symbols replaced.",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "6a visual check",
+      "result": "Rendered and viewed slide pages 5, 6, 8, 15, 16, 19, 20, 25, 26, 30, 31, 32, 36, 40, 41, 43, 45, 52, 53, 54; findings in slides.visual_findings. Also rendered DQN p. 10 and Watkins-Dayan p. 282.",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "6c citation pages",
+      "result": "All cited claims page-verified; see research_ledger. Wording aligned where the page supports less than the draft said (Tsitsiklis-Van Roy, Sutton-Barto 11.5, Ouyang log-odds attribution and 6B reward model).",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "checks",
+      "result": "static_checks() in memory: 0 failures and 0 warnings for this chapter (digest refreshed with build_book.digest). Own Playwright run, network blocked: 1280 and 390 px, 0 MathJax errors, 696 math nodes (final text), no horizontal overflow, TOC 16 links, controls present, print opens all 6 solutions, solutions toggle and theme toggle work, 2 copy buttons; figures not clipped. rigorous-explainer checktex, checklt, check_links, check_svg, check_prose: 0 issues. Eight-word overlaps: 0 with the transcript; 6 with slide text, all paper titles.",
+      "verification_scope": "Historical author record predating round-2 repairs; not a fresh check of current chapter bytes."
+    },
+    {
+      "pass": "round-1 author repairs",
+      "result": "Named blocking/style repairs reconciled with current files; independent gate 6b remains pending.",
+      "verification_scope": "Historical round-1 author-repair record; superseded by the round-2 revision entry below."
+    },
+    {
+      "pass": "round-2 author repairs",
+      "result": "B1 shared-parameter gradient and S1 replay/exploration scope repaired; N1 stale metadata repaired. Independent round-3 acceptance pending.",
+      "verification_scope": "Author repairs only; checks are in revision-round2-2026-10-02-checks.json. No browser checks or new citation certification performed."
+    },
+    {
+      "pass": "7 prose after round-3 acceptance",
+      "result": "Complete prose audit; zero advisory flags; no accepted manuscript edits."
+    },
+    {
+      "pass": "8 parity after round-3 acceptance",
+      "result": "Comparable intellectual development against chapter 4; coherent cases, developed derivations, code and six worked exercises. Counts recorded consistently; no padding."
+    },
+    {
+      "pass": "9 permitted local integration",
+      "result": "Guarded build excludes unfinished 07-09; accepted authored bodies preserved. Static/numerical/privacy checks recorded separately. Browser blocked; pass 9 incomplete."
+    }
+  ],
+  "notation_decisions": [
+    "Q, Q' (two tables) -> Q_1, Q_2: a prime means 'next' in ch. 5 (NOTATION rule 6).",
+    "Q-bar, pi-bar (fixed point, greedy policy) -> Q_fix, pi_fix: overbar is the spatial mean in ch. 9.",
+    "f, g in the proof of Proposition 1 -> rows Q_1(s',.), Q_2(s',.) and a maximiser a^circ: f is the network, g the nonlinearity.",
+    "Delta (score difference) -> u_pref: Delta is the triplet margin.",
+    "b(x) (prompt shift) -> shift(x): b is the bias.",
+    "q_0 (exercise 4) -> Q_init: q is diffusion-only.",
+    "k in exercise 2 and in the gamma = 1 bounce argument -> words: k is the class index.",
+    "d_j, f(d), responses A, B, C (exercise 5) -> u_j, u -> log(1+e^-u), y_1, y_2, y_3.",
+    "clip(., l, u) -> interval [1 - c_clip, 1 + c_clip] written out.",
+    "Q* defined as sup over stationary policies; Proposition 2 shows attainment.",
+    "Slide phi(s), D, epsilon, a^[l], R_phi -> pre(s), B, eps_expl, h^[l], r_psi (source note gives the mapping).",
+    "Proposals for new rows in _editorial/cs230/notation-proposals/ch05.md."
+  ],
+  "production_notes_removed_from_text": [
+    "Earlier author's list of viewed slide pages replaced by the pages this author viewed.",
+    "Two quoted slide phrases (slides 32, 51) paraphrased; three transcript-overlapping phrases paraphrased."
+  ],
+  "cross_chapter_dependencies": [
+    "Chapter 2, Proposition 9 ('what next-token cross-entropy rewards'): used in why-rl, pretraining, sft and in the proof of Proposition 5 (KL >= 0). Named by title as well as number; re-check if chapter 2's numbering changes.",
+    "Chapter 2: binary cross-entropy gradient at the logit (reward-model loss).",
+    "Chapter 4: forging-section argument that data do not constrain a model away from the data (over-optimisation paragraph).",
+    "Forward pointers only (no dependency): chapters 7-8 (agentic workflows), chapter 9 (convolution)."
+  ],
+  "parity_audit": "passed 2026-10-02; chapter-4 pilot comparison and qualitative section audit in integration-checkpoint-2026-10-02.md",
+  "privacy_note": "No verbatim recording sentences; recording statements are paraphrased with timestamps. 0 eight-word overlaps with the transcript.",
+  "editorial_revision": {
+    "revised_at_utc": "2026-10-02T01:54:09.724851+00:00",
+    "prior_report": "lecture-05-deep-reinforcement-learning-round2.md",
+    "prior_blocking_defects": 1,
+    "author_repair_status": "round-2 repairs applied; independent acceptance not established",
+    "independent_review_status": "accepted gate 6b in independent round 3; provenance retained in technical_acceptance",
+    "selected_configuration": {
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "source": "delegation instruction; allocation record, not independent runtime attestation"
+    },
+    "validation_record": "revision-round2-2026-10-02-checks.json (internal)",
+    "browser_recheck": "unverified: parent reports cloud Chromium socket runtime blocked before rendering; zero checks/screenshots. No laptop browser or Playwright retry in this author stage.",
+    "publication": "not performed; no upload, build, commit or push",
+    "chapter_sha256": "0bb6dba94af7fbb24c558183177e9adb4adeb3077b90b10eddec3ff5d2f4c193",
+    "source_recheck": "Mnih 2015 Extended Data Table 1, PDF page 10: target-network update frequency 10000 parameter updates, visually verified; no new source downloaded.",
+    "re_review_focus": "Independent-score versus shared-parameter derivatives, intro scope, metadata/source synchronization."
+  },
+  "technical_acceptance": {
+    "gate": "6b",
+    "status": "accepted",
+    "round": 3,
+    "report": "lecture-05-deep-reinforcement-learning-round3.md",
+    "report_sha256": "1881ffe478de60c742cccd63bf2d700c6e5008e1ba6c7c3ebc67a47ca82d90a1",
+    "reviewed_html_sha256": "0bb6dba94af7fbb24c558183177e9adb4adeb3077b90b10eddec3ff5d2f4c193",
+    "reviewed_metadata_sha256": "fa180ff615c0a63897e29a7342059b8a2a5cd0df3d3f2b24af0660e36c518f1f",
+    "reviewer_allocation": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh",
+      "source": "independent report; not runtime attestation"
+    },
+    "accepted_authored_body_sha256": "532a926590267fe25a19b3c9bf93a5b27a2e1e11bc0e9d296a0409357f9103ae"
+  },
+  "post_acceptance": {
+    "checked_at_utc": "2026-10-02T02:22:38.196357+00:00",
+    "prose_pass7": "passed; no manuscript edits",
+    "parity_pass8": "passed against chapter 4; subject-specific differences justified in integration checkpoint",
+    "pass9": "partial: guarded local integration, static/numerical/privacy checks; browser unverified",
+    "record": "integration-checkpoint-2026-10-02.json",
+    "selected_configuration": {
+      "model": "gpt-6.1-sol",
+      "effort": "high",
+      "source": "delegation allocation; not runtime attestation"
+    },
+    "integrated_html_sha256": "feca923f498512fed600a86b1d249ca719041289984f870bc7ecb3d4f592be92",
+    "authored_body_preserved": true,
+    "numerical_check": {
+      "status": "passed",
+      "exit_code": 0,
+      "stderr_empty": true,
+      "stdout_matches_printed": true,
+      "lines": 7,
+      "elapsed_seconds": 0.997,
+      "decoded_code_sha256": "ea3b03b9a93bcb985517bfe20b006f852ac14f28328f59d6f0fc8f5a92f4622c"
+    }
+  },
+  "historical_status_before_edition_review_2026_10_02": "technical gate 6b accepted round 3; passes 7/8 passed; pass 9 partially complete; browser QA blocked; edition incomplete; uncommitted",
+  "current_edition": {
+    "date": "2026-10-02",
+    "editorial_review_status": "accepted within recorded scope",
+    "book_review": "2026-10-02-book-wide-independent-review.md",
+    "book_review_sha256": "88ba052236963038aa78c2d0d634cb789f7eaa1dc9292692343056489c0f943b",
+    "reviewed_authored_body_sha256": "532a926590267fe25a19b3c9bf93a5b27a2e1e11bc0e9d296a0409357f9103ae",
+    "historical_evidence": "Earlier gate hashes/statuses remain historical; current body identity is recorded here",
+    "reader_and_execution_evidence": "validation-summary.json and reader-validation.json",
+    "publication": "local only; no publication authorization exercised",
+    "course_completion": "incomplete: original archive gaps and human screen-reader review outstanding",
+    "original_archive_gaps": [],
+    "human_screen_reader_review": "not performed"
+  }
+}

@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light"><meta name="book-content-sha256" content="00388990c32d0c510f09d9bb683122bed0d94916d63290c9794428de81fe266d"><title>Inspecting a model without mistaking a signal for a cause · CS230</title>
+<link rel="stylesheet" href="assets/book.css"><script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$'],['\\[','\\]']],processEscapes:true},svg:{fontCache:'local'},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script>
+<script defer src="assets/mathjax-tex-svg.js"></script><script defer src="assets/book.js"></script></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><a class="brand" href="index.html">CS230 · Autumn 2025</a><nav class="course-nav" aria-label="Book"><a href="index.html">Lectures</a><a href="source-map.html">Source map</a><a href="references.html">References</a><a href="numerical-lab.html">Numerical lab</a></nav></header>
+<div class="layout"><aside class="toc" id="chapter-toc" aria-label="On this page"><h2>On this page</h2></aside><main id="main">
+<div class="reading-tools" aria-label="Reading controls"><button id="theme-toggle" aria-pressed="false">Light theme</button><button id="text-toggle" aria-pressed="false">Larger text</button><button id="solutions-toggle" aria-pressed="false">Expand solutions</button><button id="print-page">Print with solutions</button></div>
+<article id="chapter-content"><!-- BOOK-CONTENT-START -->
+<header class="chapter-header"><p class="eyebrow">CS230 · Chapter 9 · Recording Lecture 10 · Autumn 2025</p><h1>Inspecting a model without mistaking a signal for a cause</h1>
+<p class="lead">A zoo's classifier labels a dog correctly. Its keepers still hesitate to trust it: perhaps it recognizes a fence that usually appears behind dogs. At a frontier laboratory, a new language-model checkpoint passes routine training checks, yet reasoning scores fall, jailbreak successes rise, and tool-using agents become slower. Both teams ask the same consequential question: which measurement would distinguish a useful hypothesis from an attractive story?</p>
+<p>The zoo case lets us derive exactly what input gradients, path attributions, occlusion, activation maps, synthetic inputs, and backward projections measure. The laboratory case asks how to combine those habits with training telemetry, evaluation and data diagnostics. The transition is from explaining one chosen scalar of a fixed function to investigating changes in a whole system. A bright heatmap and a smooth loss curve each answer a narrower question than whether a deployed model is reliable.</p>
+<div class="note"><p><strong>Source note.</strong> The topic sequence follows <a href="https://www.youtube.com/watch?v=Ozb1AR_F5MU">the Autumn 2025 CS230 recording titled Lecture 10</a>, taught by Kian Katanforoosh on 2025-12-02. The speaker and the aligned 50-page deck call it Lecture 9; this is book chapter 9. Source timing comes from local machine transcription, not human captions. Primary-source results, original mathematical examples and implementation checks are identified beside their use. Timestamps are approximate navigation anchors. Embedded demonstration videos are described by the recording and their papers; this chapter makes no independent claim about unexamined video frames or real-time performance.</p></div></header>
+
+<section id="checkpoint"><h2>1. Three regressions, several possible explanations <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=5s">0:05</a></h2>
+<p><strong>Provenance.</strong> Lecture: the constructed 200-billion-parameter checkpoint, audience hypotheses and four diagnostic categories, approximately 5–898 s. Original construction: the measurement and intervention distinction used throughout this chapter.</p>
+<p>A <em>checkpoint</em> is a saved set of model parameters together with enough configuration to run the model. The opening scenario supplies three observed changes, not a documented training incident. Reasoning is a capability measured on selected tasks; jailbreak success is measured under selected adversarial attempts; agent latency includes the application surrounding the model. They need not share a cause. A damaged training batch might hurt reasoning, an altered safety policy might affect refusal, and a slow tool service might increase latency without changing the network at all.</p>
+<p>Freeze the failing checkpoint and its predecessor before changing anything. For each comparison keep task inputs, decoding policy, tool versions and measurement units explicit. If yesterday's benchmark used a different reasoning budget, a score change cannot be assigned solely to the new parameters. If today's application added an external lookup, end-to-end time has changed even when token generation has not. Reproducible comparison means identifying what was held fixed, rather than merely saving two dashboard screenshots.</p>
+<p>The recording organizes candidate evidence into training and scaling, representations and internals, data and distribution, and capabilities and safety. These categories differ in what is observed. Loss and gradient norms describe optimization. Attention and activations describe a computation on an input. Data ledgers describe exposure and sampling. Evaluations describe outcomes on a stated task population. Agreement among the categories can narrow a hypothesis; no category makes every other one unnecessary.</p>
+<p>An <em>intervention</em> deliberately changes a suspected component while holding relevant alternatives fixed. Replaying the same tool response to both checkpoints tests whether external service variation explains latency. Replacing one training-data tranche in otherwise matched small runs tests a data hypothesis. Removing a neuron and measuring an output change tests a particular computational dependence. Such tests concern the model or experiment being manipulated. They do not automatically establish why an animal behaves as it does, why a person chose a word, or why a real-world distribution changed.</p>
+<p>Our operating rule is therefore precise: name the object measured, the allowed change, and the conclusion supported. The zoo provides an unusually tangible place to practice that rule before returning to frontier-model dashboards.</p></section>
+
+<section id="zoo"><h2>2. A fixed zoo classifier and a scalar to explain <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=897s">14:57</a></h2>
+<p><strong>Provenance.</strong> Lecture: animal classification, human supervision, feature maps and image-level testing, approximately 898–1193 s. Original construction: the persistent formal model and two-feature diagnostic fixture.</p>
+<p>Let an image be a vector \(x\in[0,1]^{n_x}\), where \(n_x\) counts all pixel-channel values after a fixed normalization. Let \(\theta\) denote trained parameters, held fixed during explanation. A convolutional neural network computes hidden activations \(h^{[\ell]}(x)\) at layer index \(\ell\), then real class scores \(u_k(x)\) for animal classes \(k=1,\ldots,K\). Its reported probability is</p>
+\[\hat y_k(x)=\frac{\exp(u_k(x))}{\sum_{j=1}^{K}\exp(u_j(x))}.\]
+<p>A score \(u_k\), also called a logit, is dimensionless and need not be positive. The probabilities sum to one. A convolutional feature volume has height \(n_H\), width \(n_W\), and \(n_{\mathrm{ch}}\) channels; an entry \(h^{[\ell]}_{ij\nu}\) is the activation at spatial row \(i\), column \(j\), channel \(\nu\). A <em>feature map</em> fixes \(\nu\) and retains the spatial array. A rectified linear unit, or ReLU, applies \(\max(0,u)\) to a preactivation \(u\).</p>
+<p>We want to explain the dog score \(u_{\mathrm{dog}}\) on one photograph, while retaining the same \(x,\theta,h,u,\hat y\) across methods. Changing from a logit to a probability changes the question. Changing the image baseline changes the reference. Changing the network head changes the function itself. These are meaningful experimental choices, not interchangeable plot settings.</p>
+<p>For arithmetic, a two-coordinate original fixture stands in for image features. Its coordinates \(x_1,x_2\) lie in \([0,1]\); they could represent normalized fur and background evidence, but those semantic names are stipulated for the example. Initially take \(u_{\mathrm{dog}}(x)=x_1\) and \(u_{\mathrm{cat}}(x)=2x_2\). Later fixtures explicitly replace this simplified score by a small ReLU network or a linear pooling head. Each isolates one mechanism; none is claimed to reproduce a trained zoo network.</p>
+<p>The keepers also need ordinary evaluation: mistakes across species, lighting, camera position and unfamiliar backgrounds, with human review of failures. Classification confidence measures the output distribution of this fixed model; it is not a probability that the explanation is correct. A plausible map on one image is useful for proposing a test, while reliability requires performance evidence over the images and decisions the zoo will actually encounter.</p></section>
+
+<section id="saliency"><h2>3. Saliency: local sensitivity and class competition <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=1192s">19:52</a></h2>
+<p><strong>Provenance.</strong> Lecture: input gradients and pre- versus post-softmax scores, approximately 1193–1390 s. Research extension: <a href="https://arxiv.org/abs/1312.6034">Simonyan, Vedaldi and Zisserman</a>, PDF pp. 2, 4. Original construction: the Jacobian derivation and competing-class counterexample.</p>
+<p>The signed saliency vector is \(S_k(x)=\nabla_xu_k(x)\in\mathbb R^{n_x}\). Its coordinate \(i\) reports the rate of change of the chosen score per unit change in pixel-channel value \(x_i\), with other coordinates fixed. For a small perturbation \(\delta\in\mathbb R^{n_x}\), differentiability gives the first-order expansion</p>
+\[u_k(x+\delta)=u_k(x)+S_k(x)^\top\delta+o(\|\delta\|_2).\]
+<p>The remainder divided by \(\|\delta\|_2\) tends to zero as the perturbation vanishes. This is what makes the gradient locally informative. It gives no bound for a large occluding square unless additional smoothness holds throughout that change. At a ReLU kink, a single ordinary derivative may not exist; implementations choose a backward convention, which must not be confused with a theorem of differentiability.</p>
+<p>For a color display, Simonyan et al. take the maximum absolute derivative over the color channels at each spatial position (p. 4). Other displays sum absolute values or retain a signed channel. An absolute-value display discards whether a pixel increase helps or hurts dog classification. A map normalized separately for each image also discards comparable magnitudes between images. State the channel reduction, sign handling and color scale before interpreting a bright region.</p>
+<h3 id="softmax-jacobian">Why the softmax changes the question</h3>
+<p>Differentiate the softmax quotient with respect to one logit \(u_j\). The numerator contributes \(\mathbb{1}[k=j]\exp(u_k)\), where \(\mathbb{1}[E]\) is one if event \(E\) holds and zero otherwise; the denominator contributes \(\exp(u_j)\). Dividing the resulting quotient by the common denominator twice gives</p>
+\[\frac{\partial\hat y_k}{\partial u_j}=\hat y_k\bigl(\mathbb{1}[k=j]-\hat y_j\bigr),\qquad
+\nabla_x\hat y_k=\hat y_k\left(\nabla_xu_k-\sum_{j=1}^{K}\hat y_j\nabla_xu_j\right).\]
+<p>The second identity is the chain rule summed over all class logits. Its subtraction is the hinge: a dog probability can increase because competing logits decrease. A probability gradient measures relative competition, while a logit gradient measures change in the selected raw score. Both are mathematically legitimate; a claim that they explain the same object is not.</p>
+<p>In the zoo fixture, at \(x=(1,1)\), the dog logit is 1 and the cat logit is 2. The dog probability is \(1/(1+e)=0.268941\). Set the background coordinate \(x_2\) to zero. The dog logit remains exactly 1, the cat logit falls to zero, and dog probability becomes \(e/(1+e)=0.731059\). At the original point the derivatives with respect to \(x_2\) are \(\partial u_{\mathrm{dog}}/\partial x_2=0\) and \(\partial\hat y_{\mathrm{dog}}/\partial x_2=-2\hat y_{\mathrm{dog}}\hat y_{\mathrm{cat}}=-0.393224\). The apparent background importance in the probability map is entirely due to the cat competitor (engineering check).</p>
+<p>A logit itself is also representation dependent. Adding the same input-dependent function to every logit leaves all probabilities unchanged while changing each logit's gradient. Consequently “explain the logit” requires specifying the actual model's score convention. If the operational question concerns a dog-versus-cat decision, the margin \(u_{\mathrm{dog}}-u_{\mathrm{cat}}\) is invariant to that common shift and can be a useful alternative scalar.</p>
+<p>The recording presents saliency as a segmentation sanity check. Localization and segmentation differ: a segmentation assigns a class to each pixel; a gradient assigns local score sensitivity. A flat gradient can reflect saturation, and a background gradient can reflect legitimate context or a shortcut. Neither observation alone determines the zoo's acceptance decision.</p></section>
+
+<section id="ig"><h2>4. Integrated gradients: a reference, a path and an accounting identity <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=1389s">23:09</a></h2>
+<p><strong>Provenance.</strong> Lecture: the black-to-image path and retinal illustration, approximately 1390–1505 s. Research extension: <a href="https://arxiv.org/abs/1703.01365">Sundararajan, Taly and Yan</a>, pp. 2–4, 6–7. Original construction: proofs with explicit regularity, saturation and ReLU fixtures, and a quadrature bound.</p>
+<p>A local derivative can vanish even when an input differs consequentially from a reference. Integrated gradients addresses that question by accumulating gradients between a baseline \(x_{\mathrm{base}}\in\mathbb R^{n_x}\) and the observed input \(x\). The baseline is a chosen reference, such as a black image in the model's input coordinates. Black before normalization need not equal a zero vector after normalization; the preprocessing map is part of the definition.</p>
+<p>Let \(\delta_{\mathrm{path}}=x-x_{\mathrm{base}}\) and let \(\zeta\in[0,1]\) index the straight path \(x_{\mathrm{base}}+\zeta\delta_{\mathrm{path}}\). For coordinate \(i\), the attribution to the dog logit is</p>
+\[\mathrm{IG}_i(x)=\delta_{\mathrm{path},i}\int_0^1\frac{\partial u_{\mathrm{dog}}(x_{\mathrm{base}}+\zeta\delta_{\mathrm{path}})}{\partial x_i}\,d\zeta.\]
+<p>The derivative has score-per-input units, and multiplying by \(\delta_{\mathrm{path},i}\) makes the attribution have score units. A negative contribution is allowed. The formula explains a difference from a specific reference, rather than assigning a baseline-free meaning to every pixel.</p>
+<div class="prop"><p><strong>Proposition 1: completeness along an admissible path.</strong> If the score composed with the path is absolutely continuous, its derivative agrees almost everywhere with the gradient dotted with \(\delta_{\mathrm{path}}\), and the partial derivatives along the path are integrable, then \(\sum_i\mathrm{IG}_i(x)=u_{\mathrm{dog}}(x)-u_{\mathrm{dog}}(x_{\mathrm{base}})\).</p></div>
+<div class="proof"><p><strong>Proof.</strong> The chain rule along the path gives \(d u_{\mathrm{dog}}(x_{\mathrm{base}}+\zeta\delta_{\mathrm{path}})/d\zeta=\sum_i \delta_{\mathrm{path},i}\partial u_{\mathrm{dog}}/\partial x_i\) almost everywhere. There are finitely many coordinates, so exchange the sum and integral. The fundamental theorem of calculus for an absolutely continuous function gives</p>
+\[\sum_i\mathrm{IG}_i(x)=\int_0^1\frac{d}{d\zeta}u_{\mathrm{dog}}(x_{\mathrm{base}}+\zeta\delta_{\mathrm{path}})\,d\zeta=u_{\mathrm{dog}}(x)-u_{\mathrm{dog}}(x_{\mathrm{base}}).\]
+<p>This proves the identity. For a continuous piecewise affine ReLU network, ordinary-gradient integration applies when the chosen path meets its nondifferentiable set only at finitely many crossings: the gradient exists between crossings and those isolated points carry no integral mass. A path can instead lie on a kink for a whole interval. For example, \(\operatorname{ReLU}(x_1-x_2)\) is not ordinarily differentiable on the path \(x_1=x_2\), even though its value along that path is constant. Such a path requires a stated backward convention and verification that its chosen signals obey the path chain rule. Ambient almost-everywhere differentiability alone does not establish that fact. Absolute continuity of the composed score is what licenses the final integral equality.</p></div>
+<h3 id="saturation">What completeness rescues, and what it leaves open</h3>
+<p>Consider the scalar function \(u(x)=\min(1,\max(0,x))\). At \(x=2\), its derivative is zero. From baseline zero, the straight path \(2\zeta\) crosses its increasing region for \(0\lt\zeta\lt1/2\). Hence integrated gradients is \(2\int_0^{1/2}1\,d\zeta=1\), equal to \(u(2)-u(0)\). From baseline 1.5, the path lies entirely on the saturated plateau and the attribution is zero. Neither answer is a contradiction: the two references ask different questions.</p>
+<p>For a two-coordinate fixture, extend the numerical domain temporarily to \([0,2]^2\) and take \(u(x)=\operatorname{ReLU}(2x_1-x_2-1)+\tfrac12\operatorname{ReLU}(x_2)\). At \(x=(2,1)\) from baseline \((0,0)\), the first preactivation along the path is \(3\zeta-1\), active for \(\zeta\gt1/3\). Thus the first coordinate receives \(2\cdot2\cdot(2/3)=8/3\); the second receives \(-1\cdot(2/3)+1/2=-1/6\). Their sum is \(5/2=u(2,1)-u(0,0)\). The endpoint gradient is \((2,-1/2)\); multiplying it by the input gives total \(7/2\), which misses the bias-related region crossing (engineering check).</p>
+<p>Completeness is an accounting constraint, not a guarantee of clinically useful or causal explanation. The recording's retinal example compares highlighted regions with lesions. The primary paper's Figure 3 illustrates that correspondence on a particular retinal image (p. 6); it establishes neither population diagnostic accuracy nor that those highlighted pixels caused disease. For the zoo, test baseline sensitivity as deliberately as score sensitivity: a black background, a blurred image and a reference animal can induce different paths through unfamiliar inputs.</p>
+<h3 id="quadrature">The finite computation</h3>
+<p>With a positive integer \(n_{\mathrm{int}}\) integration steps, a right-endpoint approximation replaces the integral by the mean of gradients at \(\zeta_j=j/n_{\mathrm{int}}\), \(j=1,\ldots,n_{\mathrm{int}}\). Suppose the scalar integrand for coordinate \(i\) is Lipschitz on the path with constant \(B_i\ge0\): changing \(\zeta\) by an amount changes the integrand by at most \(B_i\) times that amount. On one interval of width \(1/n_{\mathrm{int}}\), the integral of the distance to its right endpoint is \(1/(2n_{\mathrm{int}}^2)\). Summing the errors over intervals yields</p>
+\[|\widehat{\mathrm{IG}}_i-\mathrm{IG}_i|\le\frac{|\delta_{\mathrm{path},i}|B_i}{2n_{\mathrm{int}}}.\]
+<p>This bound explains convergence under its smoothness hypothesis. A ReLU gradient that jumps at a region boundary is not globally Lipschitz, so applying the same bound to it would be invalid. One can integrate its affine regions exactly, or refine a grid and monitor the completeness residual. A small residual verifies total accounting; cancellation can conceal large coordinate errors. It is useful evidence about numerical integration, not a complete quality metric for a map.</p></section>
+
+<section id="occlusion"><h2>5. Occlusion: ask a finite counterfactual of the fixed model <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=1505s">25:05</a></h2>
+<p><strong>Provenance.</strong> Lecture: square masking and the Pomeranian, wheel and Afghan-hound examples, approximately 1505–1714 s. Research extension: <a href="https://arxiv.org/abs/1311.2901">Zeiler and Fergus</a>, p. 5 and Figure 7 on p. 7. Original construction: cost arithmetic and the comparison with a derivative.</p>
+<p>Choose a square side \(n_{\mathrm{occ}}\) in pixels and a fill value in the same normalized coordinates as \(x\). For each allowed spatial location \((i,j)\), let \(x^{\mathrm{occ}}_{ij}\) be the image with that square replaced by the fill. Define the logit drop \(u_{\mathrm{dog}}(x)-u_{\mathrm{dog}}(x^{\mathrm{occ}}_{ij})\). A positive drop means this particular replacement lowers the dog logit; a negative drop means it raises it. If instead the map reports the remaining true-class probability, as in the source demonstration, its sign and object of explanation differ from the logit-drop map.</p>
+<p>For image height \(n_H\) and width \(n_W\), square positions fully inside the image, and a scan stride \(n_{\mathrm{str}}\), the number of locations is</p>
+\[n_{\mathrm{loc}}=\left(\left\lfloor\frac{n_H-n_{\mathrm{occ}}}{n_{\mathrm{str}}}\right\rfloor+1\right)
+\left(\left\lfloor\frac{n_W-n_{\mathrm{occ}}}{n_{\mathrm{str}}}\right\rfloor+1\right).\]
+<p>The formula assumes positive stride and a square that fits both dimensions. A 224-by-224 image with a 16-pixel square and an 8-pixel stride has \(27^2=729\) locations. With the original image, that is 730 forward evaluations, which can be batched but still require computation. It is a count of evaluations, not 730 times the latency of one production call: batching and hardware utilization change elapsed time.</p>
+<p>Why can occlusion disagree with saliency? For a differentiable score, the exact difference along a segment is the integral of its gradient dotted with the finite perturbation. The endpoint gradient replaces that varying integrand by one local value. Masking can cross ReLU boundaries and create an input unlike any training image. The finite answer and the local answer measure different changes, so agreement is a useful diagnostic rather than an identity.</p>
+<p>Zeiler and Fergus systematically occlude images with a gray square and monitor the classifier (p. 5). Their Figure 7 illustrates falling true-class probability when the square covers a Pomeranian's face, a car wheel, or an Afghan hound (empirical result for those examples). In the hound scene, the recording points out higher dog probability when a human face is covered, approximately 1652–1714 s. Our competing-logit fixture already shows why this need not mean the human was negative dog evidence: the dog score could stay fixed while a rival score falls.</p>
+<p>For the zoo, repeat an important finding with more than one fill and square size. If a dark square produces a large drop but an inpainted replacement does not, the original conclusion may depend on an artificial edge. Controlled background swaps test a distinct, more semantic hypothesis. None of these manipulations establishes the causal role of a scene feature outside the fixed classifier without further assumptions about how real images are generated.</p></section>
+
+<section id="cam"><h2>6. Class activation maps: an exact decomposition for a particular head <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=1714s">28:34</a></h2>
+<p><strong>Provenance.</strong> Lecture: replacing flattening and three fully connected layers by global average pooling and one linear layer, approximately 1714–2214 s. Research extension: <a href="https://arxiv.org/abs/1512.04150">Zhou et al.</a>, pp. 1–3, and <a href="https://arxiv.org/abs/1610.02391">Selvaraju et al.</a>, pp. 4–5. Original construction: the bias-aware mean identity and a nonlinear counterexample.</p>
+<p>The zoo wants a map on every camera frame. Global average pooling, abbreviated GAP, computes one spatial mean per channel of the final convolutional volume \(h^{[\ell_{\mathrm{conv}}]}\). Here \(\ell_{\mathrm{conv}}\) is the last convolutional layer index. Define \(\bar h_\nu=(n_Hn_W)^{-1}\sum_{i,j}h^{[\ell_{\mathrm{conv}}]}_{ij\nu}\), with \((i,j)\) running over the feature map's height and width. A linear class head with learned weights \(W_{k\nu}\) and bias \(b_k\) gives \(u_k=\sum_\nu W_{k\nu}\bar h_\nu+b_k\).</p>
+<p>Distribute the finite sums to define \(\mathrm{CAM}_k(i,j)=\sum_\nu W_{k\nu}h^{[\ell_{\mathrm{conv}}]}_{ij\nu}\). Then</p>
+\[u_k=\frac1{n_Hn_W}\sum_{i,j}\mathrm{CAM}_k(i,j)+b_k.\]
+<p>This is an exact score decomposition for the stated head. It is not an equality between a softmax probability and a spatial sum. The bias contributes independently of any location. A positive channel weight and a high activation contribute positive evidence to the raw score; negative weights can contribute negative evidence even if all feature activations are nonnegative. Discarding negative map values changes the accounting.</p>
+<p>Take two 2-by-2 maps with entries \((1,2,3,4)\) and \((4,3,2,1)\), in row-major order. For dog weights \((2,-1)\) and bias 0.5, the channel means are both 2.5, so the dog score is \(2(2.5)-2.5+0.5=3\). The four CAM entries are \((-2,1,4,7)\); their mean is 2.5 and adding the bias recovers 3 (engineering check). The negative upper-left region is part of this identity, even though a positive-only display would suppress it.</p>
+<p>The orange channel on slide 13 has 16 integer entries whose sum is 1675. Its GAP value is \(1675/16=104.6875\), rounded to 104.7 (engineering check). The mean loses spatial arrangement: two maps with the same entries permuted have the same pooled value. What remains available for localization is the unpooled feature map, combined with the head's weights. Saying that pooling loses no spatial information would misstate the mechanism.</p>
+<p>Flattening followed by several nonlinear fully connected layers does not generally admit this linear decomposition. For a scalar two-location feature with values 0 and 2, consider the nonlinear head \(u=\operatorname{ReLU}(\bar h-1)=0\). Averaging pointwise \(\operatorname{ReLU}(h-1)\) gives 0.5. The nonlinearity and the spatial mean cannot be exchanged. Replacing a trained head by GAP and a new linear layer therefore changes the classifier and requires training and renewed evaluation. It is not an explanation retrofit that leaves every prediction fixed. Zhou et al.'s affiliation is MIT (p. 1); the recording's Berkeley attribution is a bibliographic error.</p>
+<h3 id="gradcam">Grad-CAM for the unchanged network</h3>
+<p>Grad-CAM starts from a chosen convolutional activation volume in the existing network and its gradient to the selected class logit. Let \(\Gamma_{k\nu}=(n_Hn_W)^{-1}\sum_{i,j}\partial u_k/\partial h_{ij\nu}\) be the mean gradient for channel \(\nu\). Selvaraju et al. form \(\operatorname{ReLU}(\sum_\nu\Gamma_{k\nu}h_{ij\nu})\) (pp. 4–5). The gradient weights provide a local approximation to a possibly nonlinear downstream computation. The outer ReLU deliberately retains positive support.</p>
+<p>For our GAP-linear head, each derivative is \(W_{k\nu}/(n_Hn_W)\), so the mean gradient equals that same value. Before the ReLU, Grad-CAM is CAM divided by \(n_Hn_W\). This constant is often removed by display normalization; it must remain if exact score accounting is claimed. Outside that architecture, there is no corresponding exact sum identity. Upsampling either map to image resolution interpolates a coarse map; it does not recover fine pixel evidence that the feature grid never retained.</p>
+<p>The recording names Grad-CAM and discusses a live CAM video. The fixed slide still and source papers motivate the algorithms here. They do not establish a verified frame rate for the zoo's hardware or correct localization on every moving animal. Test those deployment properties directly after choosing the explanation object and architecture.</p></section>
+
+<section id="ascent"><h2>7. Synthetic inputs: what a score rewards under a regularizer <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=2213s">36:53</a></h2>
+<p><strong>Provenance.</strong> Lecture: class and unit visualization, fixed-weight pixel ascent and goose/flamingo interpretations, approximately 2214–2579 s. Research extension: Simonyan et al., p. 2; <a href="https://arxiv.org/abs/1506.06579">Yosinski et al.</a>, pp. 2, 5–6. Original construction: the analytic optimum and feasibility distinction.</p>
+<p>A map explains a particular input. Activation maximization asks what input produces a large chosen score. With the model parameters fixed, maximize the objective \(J(x)=u_{\mathrm{dog}}(x)-\lambda\Omega(x)\), where \(\lambda\ge0\) controls a chosen penalty \(\Omega\). For the squared Euclidean penalty \(\Omega(x)=\|x\|_2^2\), an ascent step of size \(\eta\gt0\) is</p>
+\[x\leftarrow x+\eta\bigl(\nabla_xu_{\mathrm{dog}}(x)-2\lambda x\bigr).\]
+<p>If image values must lie in \([0,1]\), project the result coordinatewise onto that box after the step. A penalty on magnitude does not enforce the box: it merely discourages large values. Conversely, clipping values into range does not make an image natural. These two constraints solve different problems. On mean-centered inputs, the natural pixel bounds must first be transformed by the same preprocessing.</p>
+<p>For a linear logit \(u(x)=w^\top x+b\) and \(\lambda\gt0\), complete the square:</p>
+\[J(x)=b+\frac{\|w\|_2^2}{4\lambda}-\lambda\left\|x-\frac{w}{2\lambda}\right\|_2^2.\]
+<p>The unconstrained optimum is \(x_{\mathrm{opt}}=w/(2\lambda)\); the box-constrained optimum clips these coordinates to the allowed interval because the squared-distance problem separates by coordinate. For \(w=(2,-1)\), \(\lambda=1\), the unconstrained answer is \((1,-0.5)\), while the \([0,1]^2\) answer is \((1,0)\). For \(\lambda=0\), a nonzero linear score has no finite maximum on all of \(\mathbb R^{n_x}\), although it has a maximum on the box. The penalty's practical purpose is therefore mathematically visible without claiming it produces fur, eyes or anatomy.</p>
+<p>A nonlinear network gives a nonconcave objective; the initial image and optimization schedule can lead to different local maxima. Yosinski et al. describe unnatural high-frequency patterns and large pixel values from unregularized optimization, then investigate penalties and operators that improve visual interpretability (pp. 2, 5–6). Those reported improvements are empirical results describing properties of their network and visualization procedure, not a theorem about natural images.</p>
+<p>The recording interprets repeated geese and flamingos in synthesized images as evidence of how labels may have been learned, approximately 2429–2521 s (speaker judgment). Such a hypothesis should be checked against actual examples and labels: repeated motifs can arise from the optimization procedure and receptive-field geometry as well as dataset frequency. To investigate a unit instead of a class, replace \(u_{\mathrm{dog}}\) in the objective by one defined activation \(h^{[\ell]}_{ij\nu}\). The optimization variable remains the input, and the resulting image still answers “what maximizes this objective under these constraints?”</p></section>
+
+<section id="search"><h2>8. Real examples and the region a unit can access <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=2578s">42:58</a></h2>
+<p><strong>Provenance.</strong> Lecture: dataset search, cropped top activations and increasing receptive fields, approximately 2579–2936 s. Research extension: Zeiler and Fergus, pp. 3–4; <a href="https://arxiv.org/abs/1701.04128">Luo et al.</a>, pp. 1–3. Original construction: receptive-field recurrence and selection counterexample.</p>
+<p>For a fixed channel \(\nu\) and layer \(\ell\), run each validation image through the network and rank its maximum spatial activation \(\max_{i,j}h^{[\ell]}_{ij\nu}(x)\). Retain the maximizing location as well as the image identifier. Ranking each coordinate separately answers a different question from maximizing over locations; both should be stated. The top examples show what strongly activates a channel within the available dataset, which keeps the stimulus on real images rather than on the optimization's synthetic manifold.</p>
+<p>Top examples still suffer selection. Suppose every dog in a validation collection stands beside the same type of fence, while no other species does. A fence detector's strongest five examples are all dogs. Labeling it a “dog neuron” from those examples confounds animal and background. Add fence-only images and dogs without fences, then compare activation and output changes. One channel can also respond to multiple patterns; a clean top gallery does not prove its response is exclusive.</p>
+<p>To crop the area relevant to a selected activation, compute its theoretical receptive field, the input coordinates connected to it through the layer geometry. In one dimension, let \(n_{\mathrm{rf}}^{[\ell]}\) be the receptive-field width in original input entries and \(n_{\mathrm{jump}}^{[\ell]}\) the spacing between neighboring layer-\(\ell\) centers in those entries. Start with both equal to 1 at layer zero. For a nondilated layer with filter width \(n_f^{[\ell]}\) and stride \(n_{\mathrm{str}}^{[\ell]}\),</p>
+\[n_{\mathrm{jump}}^{[\ell]}=n_{\mathrm{str}}^{[\ell]}n_{\mathrm{jump}}^{[\ell-1]},\qquad
+n_{\mathrm{rf}}^{[\ell]}=n_{\mathrm{rf}}^{[\ell-1]}+(n_f^{[\ell]}-1)n_{\mathrm{jump}}^{[\ell-1]}.\]
+<p>The derivation uses the union of \(n_f^{[\ell]}\) consecutive lower-layer receptive intervals. Moving from the first to last adds \(n_f^{[\ell]}-1\) jumps; subsampling changes future spacing by the stride. Thus a 3-wide stride-1 convolution, a 2-wide stride-2 pool, then a 3-wide stride-1 convolution yields widths \(3,4,8\) and jumps \(1,2,2\). Padding changes where the interval sits and how much overlaps real pixels; dilation changes the effective filter span. Width alone cannot locate a crop's center or account for boundaries.</p>
+<p>The theoretical field describes possible dependence. Luo et al. define an effective field through gradient impact, which depends on weights and often the input (p. 2). In their simplified linear stacks, multiple computational paths concentrate impact near the center; their analysis and experiments find effective regions smaller than the full theoretical field (pp. 1–3; theoretical and empirical results within their settings). A large support does not mean equal influence over that support.</p>
+<p>For the zoo, store full images beside cropped patches. The crop explains geometric access; the full scene exposes confounders that cropping could hide. The slide's approximate 80-by-80 third-layer field is an illustrative source number, not a universal CNN constant. The recurrence and actual architecture determine the field of your own network.</p></section>
+
+<section id="linear-convolution"><h2>9. What convolution discards <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=2936s">48:56</a></h2>
+<p><strong>Provenance.</strong> Lecture and slides 23–26: the one-dimensional stride-2 example. Original construction: an explicit distinction between padded coordinates and genuine input coordinates. Dumoulin and Visin, pp. 19–24: transpose geometry.</p>
+<p>To project an activation toward input space, first understand the forward map. For eight genuine entries \(x=(x_1,\ldots,x_8)^\top\), add two zeros on either side and use the four-tap filter \((-1,0,0,1)\), stride 2, without a bias or nonlinear activation. We use the cross-correlation convention usual in neural-network implementations: the filter is not reversed during the forward operation. The slide's printed filter contains an extra zero; its matrix and calculation specify this four-tap operation. The output is</p>
+\[u=W_{\mathrm{in}}x=(x_2,\ x_4-x_1,\ x_6-x_3,\ x_8-x_5,\ -x_7)^\top.\]
+<p>The input length formula gives \(\lfloor(8+2\cdot2-4)/2\rfloor+1=5\). Let \(P:\mathbb R^8\to\mathbb R^{12}\) insert the padding, and let \(W\in\mathbb R^{5\times12}\) put \(-1,+1\) at columns \((1,4),(3,6),(5,8),(7,10),(9,12)\), respectively. Then \(W_{\mathrm{in}}=WP\). Writing \(u=W(Px)\) makes convolution an ordinary linear map on a structured input; it does not make padded zeros into free unknowns.</p>
+<p>There cannot be a unique inverse from five outputs to eight unconstrained inputs. Indeed, adding the same amount to \(x_1,x_4\) leaves \(x_4-x_1\) unchanged. The same is true of the pairs \(x_3,x_6\) and \(x_5,x_8\). These three independent directions constitute the null space of \(W_{\mathrm{in}}\); each row has an independent pivot, so its rank is 5. The unrestricted padded-domain matrix \(W\) instead has a seven-dimensional null space. Counting dimensions in the wrong domain gives the wrong account of what was lost.</p>
+<p>For \(x=(1,2,3,4,5,6,7,8)^\top\), the output is \((2,3,3,3,-7)^\top\). Many different inputs give that output. Even restricting pixels to an interval does not generally identify a unique input: when a pair lies strictly inside the interval, a sufficiently small common displacement remains feasible. Architectural constraints narrow possible preimages; they do not restore information discarded by the operation.</p>
+<p>Upsampling appears in segmentation, image generators and decoder networks because those systems need outputs with more coordinates than a compressed representation. Their decoder learns a useful prediction from retained features. That task is different from proving that every original input can be recovered.</p></section>
+
+<section id="adjoint"><h2>10. A transpose is a backward linear map, not an inverse <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=3298s">54:58</a></h2>
+<p><strong>Provenance.</strong> Lecture and slides 26–28: transposed convolution and zero insertion. Original derivation: adjoints, pseudoinverses and the padding-dependent counterexample. Dumoulin and Visin, pp. 19–24.</p>
+<p>The transpose is characterized by \(\langle W_{\mathrm{in}}x,\upsilon\rangle=\langle x,W_{\mathrm{in}}^\top \upsilon\rangle\) for every \(x\in\mathbb R^8,\upsilon\in\mathbb R^5\), using Euclidean inner products. Consequently, if a differentiable scalar objective depends on \(u=W_{\mathrm{in}}x\), its input gradient is \(W_{\mathrm{in}}^\top\nabla_u J\). This is the chain rule and a statement about sensitivity. It is not a statement that \(W_{\mathrm{in}}^\top u=x\).</p>
+\[W_{\mathrm{in}}^\top \upsilon=(-\upsilon_2,\ \upsilon_1,\ -\upsilon_3,\ \upsilon_2,\ -\upsilon_4,\ \upsilon_3,\ -\upsilon_5,\ \upsilon_4)^\top.\]
+<p>The source's padded-domain rows are mutually orthogonal and have squared norm 2, so \(WW^\top=2I_5\). Its minimum-norm right inverse is \(W^+=\frac12W^\top\), and \(W^+W\) is an orthogonal projection in \(\mathbb R^{12}\). It recovers only the component orthogonal to the null space. It can assign nonzero values to coordinates that were padding in the forward experiment.</p>
+<figure><svg viewBox="0 0 760 215" role="img" aria-labelledby="adjoint-title adjoint-desc" style="width:100%;height:auto;max-width:760px"><title id="adjoint-title">Two input domains and their adjoints</title><desc id="adjoint-desc">Eight genuine input entries become twelve padded entries under P. W maps them to five outputs. The backward adjoint applies W transpose then P transpose, cropping the padded coordinates. A pseudoinverse is a separate reconstruction rule.</desc><defs><marker id="ch9-arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8 Z" fill="currentColor"/></marker></defs><g fill="none" stroke="currentColor" stroke-width="2"><rect x="15" y="45" width="180" height="65" rx="8"/><rect x="290" y="45" width="180" height="65" rx="8"/><rect x="565" y="45" width="180" height="65" rx="8"/><path d="M200 65 H280 M475 65 H555 M555 100 H475 M280 100 H200" marker-end="url(#ch9-arrow)"/></g><g fill="currentColor" text-anchor="middle" font-family="sans-serif" font-size="16"><text x="105" y="72">8 genuine entries</text><text x="105" y="96">x</text><text x="380" y="72">12 padded entries</text><text x="380" y="96">Px</text><text x="655" y="72">5 outputs</text><text x="655" y="96">u = WPx</text><text x="240" y="35">P</text><text x="515" y="35">W</text><text x="240" y="135">P transpose</text><text x="515" y="135">W transpose</text><text x="380" y="176">Forward: padding, then convolution</text><text x="380" y="199">Adjoint: transpose convolution, then crop</text></g></svg><figcaption>Original diagram. The backward arrows specify the adjoint \(W_{\mathrm{in}}^\top=P^\top W^\top\), not a promise to recover \(x\). The domain distinction changes the boundary normalization in the pseudoinverse.</figcaption></figure>
+<p>For the actual eight-dimensional input, \(W_{\mathrm{in}}W_{\mathrm{in}}^\top=\operatorname{diag}(1,2,2,2,1)\), because the first and last rows touch one genuine entry each. Therefore</p>
+\[W_{\mathrm{in}}^+=W_{\mathrm{in}}^\top\operatorname{diag}(1,\tfrac12,\tfrac12,\tfrac12,1),\qquad W_{\mathrm{in}}W_{\mathrm{in}}^+=I_5.\]
+<p>Applying this to our output gives \((-1.5,2,-1.5,1.5,-1.5,1.5,7,1.5)^\top\), not \((1,\ldots,8)^\top\). It has the same output and is the preimage of smallest Euclidean norm. In particular, simply halving \(W_{\mathrm{in}}^\top u\) is wrong at the boundary: it halves the uniquely determined entries \(x_2,x_7\). A pseudoinverse is a reconstruction rule with an explicit norm criterion; it is an inverse only on an appropriate restricted subspace.</p>
+<p>Zero insertion implements the transpose efficiently. Interleave four zeros into \(\upsilon\) to obtain \((\upsilon_1,0,\upsilon_2,0,\upsilon_3,0,\upsilon_4,0,\upsilon_5)\). Full mathematical convolution with \((-1,0,0,1)\) produces the 12 entries \(W^\top \upsilon\); crop two entries from each end to obtain \(W_{\mathrm{in}}^\top \upsilon=P^\top W^\top \upsilon\). A library that expresses this as cross-correlation instead reverses the kernel and sets the corresponding padding. State the convention, rather than trying to remember one diagram's arrows.</p>
+<p>For dilation 1, a transposed-convolution output length is \((n_{\mathrm{in}}-1)n_{\mathrm{str}}-2n_{\mathrm{pad}}+n_f+n_{\mathrm{outpad}}\). Here it is \((5-1)2-4+4=8\). The output-padding parameter resolves an ambiguity in the desired shape when multiple input lengths share a forward output length. It adds no recovered information. A learned decoder can choose its own weights; using the transpose of a particular forward operator is one mathematically defined backward map.</p></section>
+
+<section id="backward-nonlinear"><h2>11. Pooling switches and three different ReLU rules <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=3567s">59:27</a></h2>
+<p><strong>Provenance.</strong> Lecture and slides 29–33; Zeiler and Fergus, pp. 2–3; Springenberg et al., PDF p. 9. Original construction: negative pooling and sign counterexamples.</p>
+<p>Max pooling records the largest entry in a window. Retaining its maximizing position, called a switch, allows a backward projection to place one value at that position and zeros elsewhere. For disjoint windows and a fixed unique maximum, ordinary backpropagation routes the incoming derivative through that switch. Ties need a stated convention. Overlapping windows may send multiple contributions to the same coordinate, which must be added.</p>
+<p>Switch unpooling does not reconstruct the discarded nonmaximal values. It is a right inverse of max pooling under additional conditions: in a nonnegative pooled window, the inserted maximum beats or ties all inserted zeros. If the original window is \((-4,-3,-2,-1)\), its pooled value is \(-1\); zero-filled unpooling gives \((0,0,0,-1)\), whose maximum is 0. Thus even re-pooling equality fails for negative pooled values. A preceding ReLU supplies the nonnegativity condition in the common visualization setting.</p>
+<p>At a ReLU with preactivation \(u\) and incoming backward signal \(\upsilon\), ordinary differentiation uses the forward sign. We choose the conventional derivative 0 at \(u=0\). Deconvolutional visualization instead gates by the backward sign; guided backpropagation gates by both. Their scalar rules are</p>
+\[\begin{aligned}
+\text{ordinary: }&\upsilon\,\mathbb{1}_{\{u>0\}},\\
+\text{deconv visualization: }&\upsilon\,\mathbb{1}_{\{\upsilon>0\}},\\
+\text{guided: }&\upsilon\,\mathbb{1}_{\{u>0\}}\mathbb{1}_{\{\upsilon>0\}}.
+\end{aligned}\]
+<table><caption>Signals for four nonzero sign combinations</caption><thead><tr><th>Forward \(u\)</th><th>Incoming \(\upsilon\)</th><th>Ordinary</th><th>Deconv</th><th>Guided</th></tr></thead><tbody>
+<tr><td>2</td><td>3</td><td>3</td><td>3</td><td>3</td></tr><tr><td>2</td><td>−3</td><td>−3</td><td>0</td><td>0</td></tr>
+<tr><td>−2</td><td>3</td><td>0</td><td>3</td><td>0</td></tr><tr><td>−2</td><td>−3</td><td>0</td><td>0</td><td>0</td></tr></tbody></table>
+<p>Negative ordinary gradients can be meaningful: increasing an active feature may reduce the chosen dog score. Removing that signal changes the question. Deconv can also pass a positive backward signal through a unit that was inactive in the forward pass. Guided backpropagation combines the restrictions and can produce visually sharp contours. Neither modified rule is the ordinary gradient of the original network merely because it uses a backward computational graph.</p>
+<p>Zeiler and Fergus begin a visualization by retaining a selected actual activation and setting other activations at that layer to zero, then applying their backward projection. A saliency gradient instead seeds the derivative of a chosen scalar, usually 1 at that scalar. Starting with an activation value and starting with a derivative seed are distinct operations. Their output magnitudes should not be interpreted as identical quantities.</p>
+<p>For the zoo, label every picture with its scalar or unit, forward checkpoint, seed and backward rule. Otherwise the same label “backprop visualization” can hide three different maps. A fine-looking fur boundary can be a property of a visualization rule without being evidence that the dog prediction depends on fur.</p></section>
+
+<section id="interpretation"><h2>12. Turn a picture into a falsifiable diagnostic <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=3911s">1:05:11</a></h2>
+<p><strong>Provenance.</strong> Lecture's layer galleries and Deep Visualization Toolbox demonstration; Zeiler and Fergus and Yosinski et al. Original synthesis: the comparison protocol. Adebayo et al., pp. 1–3: sanity checks.</p>
+<p>The recording contrasts low-level textures with deeper activations associated with faces, wheels or buildings and shows nine high-activating examples selected from a stated 50,000-image validation collection. That is an empirical result about particular trained networks and that collection. It is not a theorem that channel depth uniquely determines a human concept. The paper's toolbox is an interactive way to inspect activations and optimized stimuli; the recording's live display is not an independently measured performance benchmark here.</p>
+<p>Adebayo et al. compare saliency methods under parameter and label randomization. In their tested settings, some visually convincing methods, including guided backpropagation, are insufficiently sensitive to the learned model or data; ordinary gradients and Grad-CAM behave differently in those experiments. Their empirical result motivates a specific check, not a universal ranking for every architecture. Repeat an explanation after progressively randomizing parameters or retraining on randomized labels, keeping preprocessing and display scales fixed. If a supposed learned explanation scarcely changes, investigate whether it mainly reflects architecture or input edges.</p>
+<table><caption>Choose a method by the quantity needed</caption><thead><tr><th>Method</th><th>Measured quantity</th><th>Main boundary</th></tr></thead><tbody>
+<tr><td>Input gradient</td><td>Local derivative of a declared scalar</td><td>Saturation and scalar choice</td></tr>
+<tr><td>Integrated gradients</td><td>Derivative integral along a reference path</td><td>Reference and path dependence</td></tr>
+<tr><td>Occlusion</td><td>Finite change under a declared replacement</td><td>Replacement and interactions</td></tr>
+<tr><td>CAM / Grad-CAM</td><td>Spatial feature contributions / gradient-weighted features</td><td>Head assumptions or coarse approximation</td></tr>
+<tr><td>Activation ascent</td><td>Optimized stimulus for a unit or score</td><td>Regularizer, constraints, local optima</td></tr>
+<tr><td>Dataset search</td><td>Observed high responses in a collection</td><td>Selection and confounding</td></tr>
+<tr><td>Backward projection</td><td>Signal under a declared backward rule</td><td>Lost information and modified derivatives</td></tr></tbody></table>
+<p>Suppose the dog's saliency highlights the fence. Check the raw score and the probability, inspect dogs without fences and fences without dogs, occlude with several plausible fills, and compare activation maps at fixed scales. Then apply a controlled background replacement while holding the animal foreground fixed, checking that the edit itself has not introduced an artifact. Agreement supports a narrower claim: this model's output depends on this background intervention for these images. It does not prove every dog error has the same cause.</p>
+<p>Record failures as carefully as successes. An explanation that changes with a one-pixel shift may reveal instability. A weak occlusion effect despite a large derivative may reveal a different finite perturbation direction. An activation gallery that switches concepts on another collection may reveal selection. These disagreements are useful experimental evidence, not reasons to select whichever plot best matches the desired story.</p></section>
+
+<section id="transformers"><h2>13. Attention, embeddings and circuits <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=4395s">1:13:15</a></h2>
+<p><strong>Provenance.</strong> Lecture and slides 42–44; Vaswani et al., p. 4; Vig, pp. 1–2; Jain and Wallace and Wiegreffe and Pinter; the 2021 circuits framework and Olsson et al. (2022). Original construction: equal-value attention counterexample.</p>
+<p>A transformer's representations are token vectors rather than spatial image maps, but the measurement discipline survives. Let \(\mathsf Q,\mathsf K\in\mathbb R^{n_{\mathrm{seq}}\times n_{\mathrm{key}}}\) be query and key matrices and \(\mathsf V\in\mathbb R^{n_{\mathrm{seq}}\times n_{\mathrm{val}}}\) the value matrix of one self-attention head. Its attention weights and output are</p>
+\[\mathsf A=\operatorname{softmax}_{\mathrm{row}}\!\left(\frac{\mathsf Q\mathsf K^\top}{\sqrt{n_{\mathrm{key}}}}+\mathsf M\right),\qquad h^{\mathrm{attn}}=\mathsf A\mathsf V.\]
+<p>The mask \(\mathsf M\) has 0 at allowed positions and effectively \(-\infty\) at forbidden positions; a causal decoder forbids future tokens. Assume every queried row has at least one allowed key with a finite score. Then each row of \(\mathsf A\) sums to one over allowed keys; an entirely masked row has an undefined softmax and requires separate implementation handling. Vaswani et al.'s variance motivation assumes independent zero-mean, unit-variance query and key components: the dot product then has variance \(n_{\mathrm{key}}\), and dividing by its square root makes that variance 1. Real learned components need not satisfy those assumptions exactly.</p>
+<p>Attention specifies how values are combined inside this head, not a derivative of the final class score with respect to each input token. If two scalar values both equal 2, attention rows \((0.9,0.1)\) and \((0.1,0.9)\) both produce 2. Distinct attention patterns can therefore have identical head output. Conversely, a small weight can matter when its value is large or when downstream computation amplifies it. Other heads, residual paths, feedforward blocks and later layers also contribute.</p>
+<p>Jain and Wallace's “Attention is not Explanation” investigates attention-based NLP models and presents weak alignment with other importance measures and alternative attention distributions. Wiegreffe and Pinter's response argues that the interpretation claim and its tests must be specified, and supplies alternative tests in recurrent models. These are not a blanket proof that transformer attention never helps. They distinguish a useful inspection display from an unsupported universal explanation claim.</p>
+<p>Vig's BertViz exposes attention at several views, including head and neuron-level relationships. A display can help locate candidate dependencies. Confirm a candidate with a declared intervention, such as changing a token or ablating an attention contribution, and measure the resulting scalar. These interventions are different: changing a token also changes its representation and other computational paths.</p>
+<p>Embedding plots likewise need a declared objective. t-SNE constructs high-dimensional neighborhood probabilities \(p_{ij}^{\mathrm{hi}}\) and low-dimensional heavy-tailed probabilities \(p_{ij}^{\mathrm{map}}\), then minimizes \(\sum_{i\ne j}p_{ij}^{\mathrm{hi}}\log(p_{ij}^{\mathrm{hi}}/p_{ij}^{\mathrm{map}})\). The superscripts name the two spaces. Nearby original points get substantial target probability. If their plotted probability is much smaller, the logarithmic ratio contributes a strong penalty, which explains the emphasis on preserving neighbors. A two-dimensional layout cannot generally reproduce all distances in a much higher-dimensional manifold; the heavy tail gives moderately separated points more room than a Gaussian map would. Distances between separated islands, apparent island areas and coordinates on the display are not automatically calibrated measures of semantic distance, frequency or causal separation. Check neighborhoods in the original representation, stability across plotting settings and examples within each apparent cluster.</p>
+<p>The Transformer Circuits framework published in December 2021 separates query–key routing from output–value transformations and analyzes small attention-only models. Olsson et al.'s March 2022 induction-head work studies a pattern that can complete “A B … A” with “B.” It reports empirical results with stronger causal evidence in small attention-only models and more correlational evidence in larger models with feedforward blocks. The slide's 2023 labels do not change those publication dates. Nor should a teaching focus on small models be converted into a claim that no larger-model circuit analysis is possible. Match each conclusion to the model and intervention actually studied.</p></section>
+
+<section id="telemetry"><h2>14. Training telemetry and compute allocation <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=4686s">1:18:06</a></h2>
+<p><strong>Provenance.</strong> Lecture and slides 45–46; Kaplan et al., p. 6; Hoffmann et al., pp. 1, 5–6. Original construction: constrained allocation and diagnostic ledger.</p>
+<p>Return to the failing checkpoint. Plot training and held-out loss with learning rate, gradient norms, optimizer state anomalies and throughput on a common time axis. Define each denominator: loss in nats per token, throughput in processed tokens per second, utilization relative to a named hardware peak. A spike coinciding with a learning-rate change and a spike coinciding with data replacement imply different next experiments. Synchrony narrows candidates; it does not establish cause.</p>
+<p>For a dense transformer, a useful approximation is \(C_{\mathrm{train}}\approx6N_{\mathrm{param}}N_{\mathrm{tok}}\) FLOPs, counting nonembedding parameters and processed training tokens. A weight's forward multiply-add costs roughly 2 FLOPs per token; backward work for activations and weights adds roughly twice that forward work. This is an estimator with omitted attention/context and other terms, not an exact hardware count. Sparse experts require an active-computation account; multiplying total stored parameters by every token can substantially overestimate their work. Repeated tokens still incur computation and are counted as processed tokens here.</p>
+<p>Kaplan et al.'s WebText2 fits allocate their estimated minimum training compute \(C_{\mathrm{min}}\) approximately as \(N_{\mathrm{param}}\propto C_{\mathrm{min}}^{0.73}\), while processed training-token exposure scales as \(C_{\mathrm{min}}^{0.27}\). The latter exponent adds their fitted batch-size and step exponents \(0.24+0.03\), since exposure is batch tokens times steps (PDF p. 5; empirical result: fitted allocation). Their minimum-compute convention, model family and training procedure must accompany these exponents. They are not universal rates or the constants of Hoffmann et al.'s parametric fit below.</p>
+<p>A scaling fit predicts loss over a stated family and range. It does not diagnose a sudden corrupted batch or prove an individual checkpoint is healthy. Hoffmann et al. revisit compute allocation and find approximately equal scaling of model size and training tokens under their compute-optimal fits: their training-curve-envelope approach gives empirical fitted exponents about 0.50 and 0.50, while their IsoFLOP approach reports about 0.49 and 0.51 (empirical result: fitted allocation). The allocation recommendation depends on the model family, fitting procedure, loss target and compute convention.</p>
+<p>Their empirical test trains Chinchilla with 70 billion parameters using the budget of the 280-billion-parameter Gopher, and reports stronger performance across their evaluated downstream tasks (pp. 1–2). Chinchilla uses 1.4 trillion training tokens; the abstract describes approximately four times Gopher's data. This is the authors' reported same-budget experiment, not a claim that every rounded parameter-and-token product is exactly equal under the simple \(6N_{\mathrm{param}}N_{\mathrm{tok}}\) estimator. This empirical result demonstrates that allocating a fixed training budget to a smaller model and more tokens can improve performance in the studied setting. It does not establish one universal ratio for every dataset, context length or inference-cost objective.</p>
+<p>We can derive why the exponents change. Use an illustrative held-out-risk fit</p>
+\[\mathcal R_{\mathrm{fit}}=\mathcal R_{\mathrm{floor}}+
+\Lambda_{\mathrm{param}}N_{\mathrm{param}}^{-\xi_{\mathrm{param}}}
++\Lambda_{\mathrm{tok}}N_{\mathrm{tok}}^{-\xi_{\mathrm{tok}}},\qquad
+C_{\mathrm{train}}=6N_{\mathrm{param}}N_{\mathrm{tok}},\]
+<p>with positive coefficients and exponents. This uses the functional form of Hoffmann et al.'s third, parametric-fit approach (p. 6), translated into the book's notation. The derivation below is an original teaching derivation; no fitted numerical constants are borrowed from chapter 1's different Kaplan fit. Substitute \(N_{\mathrm{tok}}=C_{\mathrm{train}}/(6N_{\mathrm{param}})\). At a positive interior minimum, differentiating with respect to \(N_{\mathrm{param}}\) gives</p>
+\[\xi_{\mathrm{param}}\Lambda_{\mathrm{param}}N_{\mathrm{param}}^{-\xi_{\mathrm{param}}}
+=\xi_{\mathrm{tok}}\Lambda_{\mathrm{tok}}\left(\frac{6N_{\mathrm{param}}}{C_{\mathrm{train}}}\right)^{\xi_{\mathrm{tok}}}.\]
+<p>Solving yields \(N_{\mathrm{param}}\propto C_{\mathrm{train}}^{\xi_{\mathrm{tok}}/(\xi_{\mathrm{param}}+\xi_{\mathrm{tok}})}\) and \(N_{\mathrm{tok}}\propto C_{\mathrm{train}}^{\xi_{\mathrm{param}}/(\xi_{\mathrm{param}}+\xi_{\mathrm{tok}})}\). Equal fitted exponents give square-root allocation. This stationary point is the unique positive minimum: in log model size the two variable terms are positive exponentials with opposite slopes, whose sum is strictly convex and diverges at both ends. Memory ceilings, inference costs, discrete model sizes or a different risk model change the feasible optimum.</p>
+<p>For the opening incident, compare observed loss with a fit only after checking that tokenizer, held-out mixture and loss aggregation remained fixed. A checkpoint can have ordinary average loss yet fail a narrow reasoning slice. Conversely, a changed held-out mixture can raise aggregate loss with unchanged per-domain performance. The fit is one reference curve; the domain ledger determines whether the comparison has the same meaning.</p></section>
+
+<section id="evaluations"><h2>15. Capability, contamination and safety are separate measurements <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=5114s">1:25:14</a></h2>
+<p><strong>Provenance.</strong> Lecture and slides 47–49; Brown et al., PDF p. 43; OpenAI–Anthropic's August 2025 pilot report. Original construction: paired comparison and contamination estimands.</p>
+<p>A capability evaluation needs more than a model name and a percentage. Save the checkpoint identifier, task version, prompts, tool permissions, decoding and reasoning budgets, scoring procedure, exclusions and repeated-run policy. For each task, compare both checkpoints on the same cases. This reduces variation from case difficulty and makes individual disagreements inspectable.</p>
+<p>For \(n_{\mathrm{test}}\ge2\) independent paired binary outcomes, let \(\mathrm{Diff}_i\) be new correctness minus old correctness, so \(\mathrm{Diff}_i\in\{-1,0,1\}\). The estimated improvement is \(\widehat{\mathrm{Gain}}=\sum_i\mathrm{Diff}_i/n_{\mathrm{test}}\). An estimated standard error is \(\sqrt{\widehat{\mathrm{Var}}_{\mathrm{Diff}}/n_{\mathrm{test}}}\), where \(\widehat{\mathrm{Var}}_{\mathrm{Diff}}=\sum_i(\mathrm{Diff}_i-\widehat{\mathrm{Gain}})^2/(n_{\mathrm{test}}-1)\). Independence is an assumption about test cases, not a reward for having many correlated paraphrases. Stochastic decoding introduces another source of variation; use matched sampling policies and account for repeated runs rather than treating every generated answer as an independent new task.</p>
+<p>A benchmark can be contaminated by training exposure. Define the overlap statistic before computing it. A fraction of distinct test \(n\)-grams found in training differs from the fraction of test examples containing any matching \(n\)-gram. Tokenization, normalization, common phrases and the match threshold change both. Brown et al.'s analysis uses word 13-grams after lowercasing and whitespace normalization without punctuation, then removes 200-character windows around matches. That historical protocol is evidence of one procedure, not a universal definition of contamination.</p>
+<p>A finite original example makes the denominator consequential. Normalize to lowercase whitespace-delimited words and use word bigrams. Training text “the dog sees the fence” has four distinct bigrams. Test cases “the dog runs” and “cat sleeps” have three distinct bigrams between them; only “the dog” matches training. The distinct-bigram overlap is \(1/3\), while the fraction of test examples with any match is \(1/2\). Neither number is a capability score. A different punctuation or tokenizer policy can change the sets, so retain that policy with the statistic.</p>
+<p>High overlap can arise from boilerplate; low exact overlap can coexist with paraphrased exposure. No matching 13-gram therefore does not prove a test is unseen. Nor does removing contaminated examples guarantee an unbiased remaining test: the removed cases may be easier, harder or concentrated in a domain. Report the full and filtered results with removal counts and domain composition, and use fresh private or otherwise controlled evaluations when the intended claim requires stronger evidence of novelty.</p>
+<p>Safety evaluations measure outcomes under specified adversarial and ordinary conditions. OpenAI's report on the joint pilot published August 27, 2025 describes a cross-company pilot (product claim) across areas including jailbreaks, misalignment and instruction hierarchy. Some tests relax safeguards to probe model propensities; the report warns that such stress tests do not directly quantify real-world threat likelihood. Preserve that condition when interpreting results. A password-protection test is an instruction-following probe; its score is not a recommendation to store secrets inside a language-model conversation.</p>
+<p>The recording also uses contemporary product scoreboards. Mistral's “Mistral 3” announcement is dated December 2, 2025, the lecture date (product claim; dated vendor announcement). Such dated vendor announcements provide historical context, with their declared evaluation settings. They do not establish a current model ranking. The slide's label “GPT-5 technical report” points to product-announcement material; no numerical claim here relies on that page.</p>
+<p>For our incident, keep capability loss, adversarial success and agent latency as separate outcome series. If a reasoning task fails only when a tool response is delayed, replaying the same response tests an application hypothesis. If jailbreak success rises with changed refusal prompts while task accuracy stays fixed, the prompt layer deserves examination. If reasoning fails with identical tools and prompts, investigate computation and training exposure. The measurements guide targeted experiments; they do not entitle one dashboard to explain every failure.</p></section>
+
+<section id="data"><h2>16. Data composition and sparse routing <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=5563s">1:32:43</a></h2>
+<p><strong>Provenance.</strong> Lecture: token allocation, The Pile, mixture-of-experts and data feedback. Gao et al., pp. 1, 3–4; Shazeer et al., pp. 3–5; Fedus et al., pp. 6–7. Original construction: mixture decomposition.</p>
+<p>Let bound domain-list index \(j\) identify coding, dialogue, biomedical text or another declared partition, with sampling fraction \(\omega_j\ge0,\sum_j\omega_j=1\). At fixed parameters, aggregate expected loss is exactly \(\sum_j\omega_j\mathcal R_j\), where \(\mathcal R_j\) is expected loss within that domain. This is the law of total expectation, not a fitted scaling law.</p>
+<p>To compare old and new aggregate losses, add and subtract the old domain loss under the new mixture:</p>
+\[\mathcal R_{\mathrm{new}}-\mathcal R_{\mathrm{old}}
+=\sum_j\omega_{j,\mathrm{new}}(\mathcal R_{j,\mathrm{new}}-\mathcal R_{j,\mathrm{old}})
++\sum_j(\omega_{j,\mathrm{new}}-\omega_{j,\mathrm{old}})\mathcal R_{j,\mathrm{old}}.\]
+<p>The first term describes changed within-domain performance under the new weights; the second describes changed composition evaluated on old performance. Suppose coding loss is 1 nat and other-domain loss is 2 nats at both checkpoints. Changing coding share from 0.50 to 0.25 raises average loss from 1.50 to 1.75 nats without any within-domain degradation. A report that says only “loss rose 0.25” hides this distinction. Use fixed-mixture comparison alongside the production mixture.</p>
+<p>The recording describes an illustrative non-English token-share drift from 12% to 19% after a new crawl, approximately 5796–5831 s (speaker judgment, constructed scenario). That is 7 percentage points and a relative increase of \(7/12\approx58.3\%\) (engineering check). It is a detection example rather than a prescribed coding-data allocation. Keep the tokenizer and definition of processed versus unique tokens fixed before comparing shares. A corpus measured in bytes is not automatically a corpus measured in training tokens.</p>
+<p>The Pile paper describes 22 component datasets and about 825.18 GiB of text. Its composition table includes sampling weights that determine exposure, not just raw component sizes. A byte share after weighting is not a token share after a chosen tokenizer, and repeated sampling changes training exposure without increasing unique source material. For the zoo and language model alike, preserve a lineage ledger connecting acquisition, filtering, deduplication, partitioning, tokenization and sampler settings.</p>
+<p>A mixture-of-experts layer routes each token to a subset of expert networks. Shazeer et al. use sparsely gated experts; Switch Transformers simplify routing to one selected expert per token. Sparse activation can increase stored parameter capacity without applying all experts to every token. It introduces its own diagnostics: selected-expert counts, router confidence, expert capacity, dropped or rerouted tokens, per-expert loss or gradients, and communication cost. A router concentrating work on one expert can cause congestion even when total device utilization looks acceptable.</p>
+<p>For a batch with experts indexed by the bound list index \(j\), let \(p_{\mathrm{dispatch},j}\) be the fraction of tokens assigned to expert \(j\) and \(p_{\mathrm{router},j}\) the mean router probability for that expert. Switch's auxiliary term has the form</p>
+\[J_{\mathrm{router}}=\lambda_{\mathrm{router}}n_{\mathrm{expert}}
+\sum_{j=1}^{n_{\mathrm{expert}}}p_{\mathrm{dispatch},j}p_{\mathrm{router},j}.\]
+<p>The assignment fractions involve a discrete selection; the probabilities provide a differentiable training signal. If both distributions are uniform, the term is \(\lambda_{\mathrm{router}}\); if both put all mass on one expert, it is \(\lambda_{\mathrm{router}}n_{\mathrm{expert}}\). This comparison explains the intended pressure against collapsed routing. It is not a proof that a product of two arbitrary distributions has its global minimum at uniformity. Router probabilities and selected assignments are coupled by the implementation, which must be specified when analyzing behavior.</p>
+<p>If evaluations reveal a coding weakness, changing data shares is a hypothesis to test, not a guaranteed repair. Retrain or continue controlled runs with stated budgets, compare fixed-domain tasks, check retention elsewhere and inspect routing. Monitoring the exposure ledger and the dispatch ledger together can distinguish “the expert never saw the needed data” from “the router rarely sent relevant tokens to it.”</p></section>
+
+<section id="closing"><h2>17. What the closing questions leave unresolved <a class="timestamp" href="https://www.youtube.com/watch?v=Ozb1AR_F5MU&amp;t=5949s">1:39:09</a></h2>
+<p><strong>Provenance.</strong> Lecture's final questions through 6407 s, slide 50, and Villalobos et al., revised 2024 version, p. 1. Original synthesis: the final investigation plan.</p>
+<p>The recording asks about proprietary code data, training beyond existing public corpora, synthetic examples and learning while a deployed model runs. Public evidence does not identify every frontier laboratory's code-data source, licensing arrangement or private mixture. The speaker's uncertainty should remain uncertainty. Speculating about a company's hidden corpus cannot substitute for its disclosures.</p>
+<p>Synthetic data is a source category, not a guarantee of correctness or diversity. Generated examples require verification suitable to the task, a record of their generating model and selection process, and evaluation on independently sourced cases. Code with executable specifications permits some strong checks; plausible prose may have no equally cheap correctness oracle. A loop that repeatedly amplifies its own errors is a different training distribution from independently verified new evidence.</p>
+<p>Villalobos et al.'s revised analysis forecasts possible exhaustion of the stock of public human text for prevailing training trends during 2026–2032. This is a conditional research forecast, not a measured exhaustion date. It concerns public human text, with assumptions about reuse and growth; it is not a forecast for every private, synthetic, audio or image source. Extending the conclusion across modalities would require a separate analysis.</p>
+<p>Inference on a deployed model does not by itself update its trained parameters. Updating a retrieval store, changing conversation context, collecting feedback and running an optimizer are different operations. A system may implement one or more, with their own contamination, privacy, reliability and rollback considerations. Describe the actual update mechanism before calling it online learning.</p>
+<p>The last slide lists a December 5, 2025 final and December 10, 2025 poster session. These are historical course announcements, not current scheduling instructions. The intellectual ending is more durable: a model deserves several views, and those views deserve explicit limits.</p>
+<p>For the failing checkpoint, begin with three concrete artifacts: a paired outcome ledger with fixed application settings; a synchronized optimization and hardware timeline; and a versioned data, tokenizer and sampler ledger. For the zoo, begin with a declared scalar, a fixed checkpoint and an intervention table. Then select measurements that could reject a hypothesis. A diagnostic earns its place by helping decide the next experiment, rather than by producing a memorable picture.</p></section>
+
+<section id="numerical-lab"><h2>18. A numerical lab that checks the distinctions</h2>
+<p><strong>Provenance.</strong> Original standard-library fixtures. These tests validate the chapter's finite calculations and selected derivatives. They train no model and do not empirically validate an attribution method on natural images.</p>
+<p>Save the following as <a href="chapter09.py">chapter09.py</a> and run <code>python chapter09.py</code>. The lab checks both successful identities and deliberately failing reconstruction assumptions. Its finite differences test the ordinary derivative independently of the matrix formula. Its coarse integrated-gradient example exposes a quadrature error, rather than rounding an inaccurate result into “completeness.” No network access, package installation or downloaded dataset is required.</p>
+<pre><code class="language-python">&quot;&quot;&quot;Chapter 9 original numerical fixtures. Run with Python 3; standard library only.&quot;&quot;&quot;
+import math
+
+
+def dot(x, y):
+    return sum(a * b for a, b in zip(x, y))
+
+
+def matvec(matrix, x):
+    return [dot(row, x) for row in matrix]
+
+
+def transpose(matrix):
+    return [list(column) for column in zip(*matrix)]
+
+
+def close(actual, expected, tol=1e-10):
+    assert math.isclose(actual, expected, rel_tol=tol, abs_tol=tol), (
+        actual, expected)
+
+
+def dog_probability(x):
+    # Stable two-class softmax for logits x[0] and 2*x[1].
+    margin = x[0] - 2 * x[1]
+    return 1 / (1 + math.exp(-margin))
+
+
+def relu_score(x):
+    return max(0, 2*x[0]-x[1]-1) + 0.5*max(0, x[1])
+
+
+def relu_gradient(x):
+    active = float(2*x[0]-x[1]-1 &gt; 0)
+    return [2*active, -active + 0.5*float(x[1] &gt; 0)]
+
+
+def integrated_gradients(score_gradient, x, baseline, intervals):
+    # Right-endpoint rectangle rule, not exact integration.
+    displacement = [a-b for a, b in zip(x, baseline)]
+    sums = [0.0]*len(x)
+    for step in range(1, intervals+1):
+        fraction = step/intervals
+        point = [b+fraction*d for b, d in zip(baseline, displacement)]
+        for i, value in enumerate(score_gradient(point)):
+            sums[i] += value
+    return [d*s/intervals for d, s in zip(displacement, sums)]
+
+
+def conv_matrix():
+    # Five outputs, eight genuine inputs, two fixed padding zeros per side.
+    return [
+        [0, 1, 0, 0, 0, 0, 0, 0],
+        [-1, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, -1, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, -1, 0, 0, 1],
+        [0, 0, 0, 0, 0, 0, -1, 0],
+    ]
+
+
+def full_convolution(x, kernel):
+    result = [0.0]*(len(x)+len(kernel)-1)
+    for i, value in enumerate(x):
+        for j, weight in enumerate(kernel):
+            result[i+j] += value*weight
+    return result
+
+
+def pooled_and_unpooled(window):
+    maximum = max(window)
+    switch = window.index(maximum)  # deterministic first-maximum convention
+    unpooled = [0.0]*len(window)
+    unpooled[switch] = maximum
+    return maximum, unpooled
+
+
+def word_ngrams(text, length):
+    words = text.lower().split()  # This fixture deliberately keeps punctuation.
+    return {tuple(words[i:i+length]) for i in range(len(words)-length+1)}
+
+
+def run():
+    # Probability can change even though the dog logit stays fixed.
+    before, after = dog_probability([1, 1]), dog_probability([1, 0])
+    close(before, 0.2689414213699951)
+    close(after, 0.7310585786300049)
+    step = 1e-6
+    derivative = (dog_probability([1, 1+step])
+                  - dog_probability([1, 1-step]))/(2*step)
+    close(derivative, -2*before*(1-before), 1e-8)
+    print(&quot;softmax:&quot;, round(before, 6), &quot;-&gt;&quot;, round(after, 6))
+
+    # A path crosses one kink at fraction 1/3.
+    x, baseline = [2, 1], [0, 0]
+    exact = [8/3, -1/6]
+    approx = integrated_gradients(relu_gradient, x, baseline, 3000)
+    for actual, expected in zip(approx, exact):
+        close(actual, expected)
+    close(sum(approx), relu_score(x)-relu_score(baseline))
+    assert dot(relu_gradient(x), x) == 3.5
+    # Deliberately coarse quadrature is detected by a completeness residual.
+    coarse = integrated_gradients(relu_gradient, x, baseline, 2)
+    assert abs(sum(coarse)-relu_score(x)) &gt; 0.1
+    print(&quot;IG:&quot;, [round(value, 6) for value in approx],
+          &quot;sum&quot;, round(sum(approx), 6))
+
+    # Ordinary finite differences validate the adjoint/chain-rule calculation.
+    matrix = conv_matrix()
+    original = list(range(1, 9))
+    output = matvec(matrix, original)
+    assert output == [2, 3, 3, 3, -7]
+    signal = [0.3, -0.7, 1.1, 0.9, -0.2]
+    adjoint = matvec(transpose(matrix), signal)
+    close(dot(output, signal), dot(original, adjoint))
+    for i, expected in enumerate(adjoint):
+        plus, minus = original[:], original[:]
+        plus[i] += step
+        minus[i] -= step
+        observed = (dot(matvec(matrix, plus), signal)
+                    - dot(matvec(matrix, minus), signal))/(2*step)
+        close(observed, expected, 1e-8)
+    gram = [[dot(row, other) for other in matrix] for row in matrix]
+    assert gram == [[1, 0, 0, 0, 0], [0, 2, 0, 0, 0],
+                    [0, 0, 2, 0, 0], [0, 0, 0, 2, 0],
+                    [0, 0, 0, 0, 1]]
+    scaled = [u/d for u, d in zip(output, [1, 2, 2, 2, 1])]
+    minimum_norm = matvec(transpose(matrix), scaled)
+    assert matvec(matrix, minimum_norm) == output
+    assert minimum_norm != original
+    null_direction = [1, 0, 0, 1, 0, 0, 0, 0]
+    assert matvec(matrix, null_direction) == [0]*5
+    close(dot(minimum_norm, null_direction), 0)
+    incorrectly_halved = [a/2 for a in matvec(transpose(matrix), output)]
+    assert matvec(matrix, incorrectly_halved) != output
+    zero_inserted = [value for u in signal for value in (u, 0)][:-1]
+    cropped = full_convolution(zero_inserted, [-1, 0, 0, 1])[2:-2]
+    for actual, expected in zip(cropped, adjoint):
+        close(actual, expected)
+    print(&quot;transpose:&quot;, output, &quot;minimum-norm preimage:&quot;, minimum_norm)
+
+    # Mean-pooling CAM identity, including bias and Grad-CAM scale.
+    maps, weights, bias = [[1, 2, 3, 4], [4, 3, 2, 1]], [2, -1], 0.5
+    pooled = [sum(values)/4 for values in maps]
+    logit = dot(weights, pooled)+bias
+    cam = [dot(weights, pixel) for pixel in zip(*maps)]
+    assert cam == [-2, 1, 4, 7]
+    close(logit, sum(cam)/4+bias)
+    gradcam_weights = [weight/4 for weight in weights]
+    raw_gradcam = [dot(gradcam_weights, pixel) for pixel in zip(*maps)]
+    for actual, expected in zip(raw_gradcam, cam):
+        close(actual, expected/4)
+    orange = [44, 94, 42, 22, 123, 231, 83, 2,
+              34, 255, 232, 92, 34, 76, 187, 124]
+    close(sum(orange)/16, 104.6875)
+    print(&quot;CAM:&quot;, cam, &quot;logit:&quot;, logit)
+
+    # Zero-filled unpool is a right inverse only with the stated conditions.
+    positive, restored = pooled_and_unpooled([1, 6, 2, 4])
+    assert max(restored) == positive
+    negative, restored = pooled_and_unpooled([-4, -3, -2, -1])
+    assert negative == -1 and max(restored) == 0
+    rules = []
+    for preactivation, incoming in [(2, 3), (2, -3), (-2, 3), (-2, -3)]:
+        rules.append((incoming*int(preactivation &gt; 0),
+                      incoming*int(incoming &gt; 0),
+                      incoming*int(preactivation &gt; 0)*int(incoming &gt; 0)))
+    assert rules == [(3, 3, 3), (-3, 0, 0), (0, 3, 0), (0, 0, 0)]
+
+    # Same attention output despite different routing distributions.
+    close(dot([0.9, 0.1], [2, 2]), dot([0.1, 0.9], [2, 2]))
+    old_loss, new_loss = dot([0.5, 0.5], [1, 2]), dot([0.25, 0.75], [1, 2])
+    close(new_loss-old_loss, 0.25)
+    train_grams = word_ngrams(&quot;the dog sees the fence&quot;, 2)
+    test_cases = [&quot;the dog runs&quot;, &quot;cat sleeps&quot;]
+    test_sets = [word_ngrams(case, 2) for case in test_cases]
+    all_test_grams = set().union(*test_sets)
+    close(len(train_grams &amp; all_test_grams)/len(all_test_grams), 1/3)
+    close(sum(bool(train_grams &amp; grams) for grams in test_sets)/len(test_sets), 1/2)
+    # Paired binary capability comparison: 4 wins, 1 loss, 5 ties.
+    differences = [1]*4 + [-1] + [0]*5
+    mean = sum(differences)/len(differences)
+    variance = sum((d-mean)**2 for d in differences)/(len(differences)-1)
+    close(mean, 0.3)
+    close(math.sqrt(variance/len(differences)), math.sqrt(4.1/90))
+    # Equal scaling exponents imply balanced sqrt allocation.
+    compute = 600
+    n_param = math.sqrt(compute/6)
+    n_tok = compute/(6*n_param)
+    close(n_param, 10)
+    close(n_tok, 10)
+    risk = lambda n: 1/n + 1/(compute/(6*n))
+    assert risk(n_param) &lt; risk(5) and risk(n_param) &lt; risk(20)
+    print(&quot;mixture:&quot;, old_loss, &quot;-&gt;&quot;, new_loss,
+          &quot;paired gain:&quot;, mean, &quot;SE:&quot;, round(math.sqrt(variance/10), 6))
+    print(&quot;All chapter 9 numerical checks passed.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    run()
+</code></pre>
+<pre><code class="language-text">softmax: 0.268941 -&gt; 0.731059
+IG: [2.666667, -0.166667] sum 2.5
+transpose: [2, 3, 3, 3, -7] minimum-norm preimage: [-1.5, 2.0, -1.5, 1.5, -1.5, 1.5, 7.0, 1.5]
+CAM: [-2, 1, 4, 7] logit: 3.0
+mixture: 1.5 -&gt; 1.75 paired gain: 0.3 SE: 0.213437
+All chapter 9 numerical checks passed.
+</code></pre>
+<p>The expected summary reports dog probability 0.268941 → 0.731059, integrated gradients \((2.666667,-0.166667)\) with sum 2.5, CAM \((-2,1,4,7)\) and logit 3, aggregate mixture loss 1.5 → 1.75, and paired accuracy gain 0.3 with standard error about 0.213437. The final line confirms that all numerical assertions passed. A failing assertion is evidence to inspect the stated convention or calculation, not a reason to remove the check.</p></section>
+
+<section id="exercises"><h2>19. Six exercises with complete solutions</h2>
+<p>Each exercise asks for a quantity, assumptions and an interpretation. Arithmetic alone is insufficient when two methods compute different objects.</p>
+<div class="exercise"><h3>Exercise 1 · A falling competitor and a saturated detector</h3>
+<p>For \(u_{\mathrm{dog}}=x_1,u_{\mathrm{cat}}=2x_2\), hold \(x_1=1\) and change \(x_2\) from 1 to 0. Calculate both probabilities and both derivatives of the dog probability at the initial point. Then consider \(u(x)=\min(1,\max(0,x))\) at \(x=2\). Calculate local saliency and integrated gradients from baselines 0 and 1.5. Explain what each method can conclude about “dog evidence.”</p>
+<details class="solution"><summary>Solution</summary>
+<p>The dog probability is \(1/(1+\exp(2x_2-x_1))\), hence initially \(1/(1+e)=0.268941\) and finally \(1/(1+e^{-1})=0.731059\). If this probability is \(p_{\mathrm{dog}}\), its derivative with respect to \(x_1\) is \(p_{\mathrm{dog}}(1-p_{\mathrm{dog}})=0.196612\); with respect to \(x_2\) it is \(-2p_{\mathrm{dog}}(1-p_{\mathrm{dog}})=-0.393224\). The dog logit remains 1, with derivatives \((1,0)\). Thus the probability change reflects the competitor's score, and a probability gradient mixes competitors' contributions.</p>
+<p>For the saturated detector, the derivative at 2 is 0. Along the baseline-0 path \(2\zeta\), the derivative is 1 for \(0&lt;\zeta&lt;1/2\) and 0 afterward. Integrated gradients is \(2\int_0^{1/2}1\,d\zeta=1=u(2)-u(0)\). From baseline 1.5, every point on the path is saturated; the integral is 0 and the endpoint difference is also 0. These are consistent statements about different references. Zero local derivative means local insensitivity, not absence of all past or reference-relative contribution. A baseline must be justified for the intended comparison.</p></details></div>
+
+<div class="exercise"><h3>Exercise 2 · Integrated gradients through a kink</h3>
+<p>For \(u(x)=\max(0,2x_1-x_2-1)+\frac12\max(0,x_2)\), explain \(x=(2,1)\) relative to zero. Derive both integrated gradients exactly, compare their sum with the endpoint gradient dotted into the displacement, and calculate the two-interval right-endpoint approximation. Does a small completeness residual guarantee that each coordinate is accurate?</p>
+<details class="solution"><summary>Solution</summary>
+<p>The path is \((2\zeta,\zeta)\). The first preactivation is \(3\zeta-1\), active for \(\zeta&gt;1/3\); the second is active for \(\zeta&gt;0\). Away from the kinks, the gradient is \((0,1/2)\) before \(1/3\) and \((2,-1/2)\) after it. Therefore \(\mathrm{IG}_1=2\int_{1/3}^1 2\,d\zeta=8/3\), while \(\mathrm{IG}_2=\int_0^{1/3}1/2\,d\zeta+\int_{1/3}^1(-1/2)\,d\zeta=-1/6\). Their sum is \(5/2\), matching \(u(2,1)-u(0,0)\).</p>
+<p>The endpoint gradient is \((2,-1/2)\); its dot product with \((2,1)\) is \(7/2\). Extending a local derivative across the full displacement ignores the kink. With two right-endpoint samples at \(1/2,1\), both gradients equal \((2,-1/2)\), so the approximation is \((4,-1/2)\), sum \(7/2\), with residual 1. The coordinate error can be much larger than the sum residual: adding \(c\) to one estimate and subtracting \(c\) from the other leaves the residual unchanged. Check convergence of individual coordinates as well as the sum, and handle known discontinuities explicitly if exact integration is available.</p></details></div>
+
+<div class="exercise"><h3>Exercise 3 · CAM identity, scale and a nonlinear counterexample</h3>
+<p>Use feature maps \((1,2,3,4)\) and \((4,3,2,1)\), head weights \((2,-1)\) and bias 0.5. Compute pooled activations, logit, CAM and raw Grad-CAM before its outer ReLU. Why does averaging CAM recover the logit only after adding the bias? Show that moving a ReLU across spatial averaging changes the function using map \((0,2)\) and threshold 1.</p>
+<details class="solution"><summary>Solution</summary>
+<p>Both pooled activations are 2.5. The logit is \(2(2.5)-2.5+0.5=3\). CAM is the pointwise weighted sum \((-2,1,4,7)\), with mean 2.5. Its definition omits the spatially constant bias; adding 0.5 recovers the logit. Because a mean pool has derivative \(1/4\), the class-score gradient with respect to every entry of a given channel is \(W_{k\nu}/4\). Grad-CAM's mean gradient weights are therefore \((1/2,-1/4)\); its raw map is CAM divided by 4, namely \((-0.5,0.25,1,1.75)\). The outer ReLU removes the negative coordinate, so its mean no longer gives the exact original logit decomposition.</p>
+<p>For \((0,2)\), ReLU after averaging and subtracting 1 gives \(\max(0,(0+2)/2-1)=0\). Averaging pointwise \(\max(0,h-1)\) gives \((0+1)/2=0.5\). Thus the exact linear-head CAM identity cannot be carried through an arbitrary nonlinear head. Retraining a new GAP-and-linear head produces a new function whose identity holds; it does not prove that it explains the former head.</p></details></div>
+
+<div class="exercise"><h3>Exercise 4 · The adjoint, the padding boundary and lost information</h3>
+<p>Use the eight-entry convolution in sections 9–10. Derive \(W_{\mathrm{in}}^\top\), \(W_{\mathrm{in}}W_{\mathrm{in}}^\top\) and the minimum-norm preimage of \(u=(2,3,3,3,-7)\). Give a nonzero null-space vector. Explain why \(\frac12W_{\mathrm{in}}^\top\) fails as a right inverse although \(\frac12W^\top\) works on the unrestricted padded domain. State what transposed convolution contributes to a decoder.</p>
+<details class="solution"><summary>Solution</summary>
+<p>Each output's coefficient is placed back on the input coordinates it touches, giving \(W_{\mathrm{in}}^\top \upsilon=(-\upsilon_2,\upsilon_1,-\upsilon_3,\upsilon_2,-\upsilon_4,\upsilon_3,-\upsilon_5,\upsilon_4)\). Rows touch disjoint coordinates; their squared norms are \(1,2,2,2,1\). Thus \(W_{\mathrm{in}}W_{\mathrm{in}}^\top=\operatorname{diag}(1,2,2,2,1)\), and \(W_{\mathrm{in}}^+=W_{\mathrm{in}}^\top(W_{\mathrm{in}}W_{\mathrm{in}}^\top)^{-1}\). Its application gives \((-1.5,2,-1.5,1.5,-1.5,1.5,7,1.5)\). This vector reproduces \(u\) and lies in the row space, orthogonal to the null space, which proves minimum norm: any other preimage is this vector plus a null-space vector, adding its squared norm by orthogonality.</p>
+<p>One null vector is \((1,0,0,1,0,0,0,0)\). The padded-domain \(W\) uses two nonzero entries in every row, including padding coordinates, so \(WW^\top=2I\). Fixing padding to zero removes one entry from each boundary row. Applying \(\frac12W_{\mathrm{in}}^\top\) therefore yields half the required first and last output on reapplication. Transposed convolution supplies a shape-expanding adjoint operation, or a learned map with that structure; it cannot identify the null-space component that the encoder discarded. Decoder quality must be evaluated as prediction or reconstruction under a stated data distribution.</p></details></div>
+
+<div class="exercise"><h3>Exercise 5 · A gallery, a switch and an attention display</h3>
+<p>A channel's top nine examples all contain dogs and fences. A guided-backprop image highlights fur. A transformer head places 90% attention on one of two positions whose scalar values both equal 2. Give one falsifiable test for each interpretation. Also determine whether switch unpooling recovers a window \((-4,-3,-2,-1)\), and list the three ReLU backward signals at \(u=-2,\upsilon=3\).</p>
+<details class="solution"><summary>Solution</summary>
+<p>Expand the gallery with dogs without fences and fences without dogs, holding channel and preprocessing fixed. If fence-only cases activate strongly while fence-free dogs do not, the exclusive dog-detector hypothesis fails. Selection remains a limitation even if the first added cases agree, so preserve the sampling rule and full images. For guided backpropagation, compare randomized-parameter and trained-model outputs with fixed display scales, then perform foreground or background interventions and measure the ordinary dog logit. An unchanged guided picture under randomization weakens its use as evidence of learned dog dependence.</p>
+<p>The attention output is \(0.9(2)+0.1(2)=2\); swapping the weights gives 2 again. Intervene on a value or on a specific head contribution and measure the downstream scalar, recognizing that token replacement modifies multiple paths. The equal-value example already refutes the inference that the larger weight uniquely explains this head's output value. Zero-filled switch unpooling places \(-1\) at the fourth position, giving \((0,0,0,-1)\); re-pooling gives 0. It is not recovery, nor a right inverse here. At \(u=-2,\upsilon=3\), ordinary backpropagation gives 0, deconv gives 3 and guided gives 0. A visually appealing method cannot silently substitute for ordinary differentiation.</p></details></div>
+
+<div class="exercise"><h3>Exercise 6 · Diagnose an aggregate regression</h3>
+<p>A coding domain has loss 1 nat and another domain loss 2 nats under both checkpoints. Coding weight changes from 0.50 to 0.25. Separately, a paired evaluation of ten independent cases gives four new-model wins, one loss and five ties. Compute the aggregate loss change, paired accuracy change and its estimated standard error. Under \(C_{\mathrm{train}}=6N_{\mathrm{param}}N_{\mathrm{tok}}=600\) and illustrative excess risk \(1/N_{\mathrm{param}}+1/N_{\mathrm{tok}}\), find the optimum. Finish with an investigation plan that separates these quantities from jailbreak and agent-latency changes.</p>
+<details class="solution"><summary>Solution</summary>
+<p>The old aggregate loss is \(0.5(1)+0.5(2)=1.5\); the new is \(0.25(1)+0.75(2)=1.75\). The increase 0.25 comes entirely from composition. On paired cases, \(\widehat{\mathrm{Gain}}=(4-1)/10=0.3\). Since \(\sum_i\mathrm{Diff}_i^2=5\), \(\sum_i(\mathrm{Diff}_i-\widehat{\mathrm{Gain}})^2=5-10(0.3)^2=4.1\). Thus \(\widehat{\mathrm{Var}}_{\mathrm{Diff}}=4.1/9\) and the estimated standard error is \(\sqrt{4.1/90}=0.213437\). This small sample supports considerable uncertainty; it does not establish a precise population improvement. Correlated cases would require a different uncertainty calculation.</p>
+<p>The compute constraint gives \(N_{\mathrm{tok}}=100/N_{\mathrm{param}}\). Excess risk is \(1/N_{\mathrm{param}}+N_{\mathrm{param}}/100\), whose derivative is \(-1/N_{\mathrm{param}}^2+1/100\). Its positive stationary point is \(N_{\mathrm{param}}=10\), \(N_{\mathrm{tok}}=10\), with excess risk 0.2; the second derivative \(2/N_{\mathrm{param}}^3&gt;0\) and divergent boundary behavior establish the minimum. Counts here are toy continuous quantities; actual feasible architectures are discrete.</p>
+<p>First compare domain losses under a fixed evaluation mixture and inspect paired task disagreements. Then freeze adversarial prompts, tool permissions and safeguard settings for a separate jailbreak comparison. For latency, separate model time, queueing and tool time, and replay identical tool responses. Align the optimizer and data timelines to locate candidate causes, then run bounded matched interventions. None of the arithmetic above establishes why jailbreaks or latency changed, and an allocation optimum does not repair an identified corruption event.</p></details></div></section>
+
+<section id="references"><h2>20. Primary references and the claim boundaries</h2>
+<p>Page numbers below count PDF pages unless stated otherwise. The recording supplies the pedagogical sequence; the named originals supply the technical claims. Original examples in this chapter are not claimed as results of these papers.</p>
+<ul>
+<li><a href="https://arxiv.org/abs/1312.6034">Simonyan, Vedaldi and Zisserman, Deep Inside Convolutional Networks</a> (2013), pp. 2, 4: score gradients, channel reduction and regularized class visualization.</li>
+<li><a href="https://arxiv.org/abs/1703.01365">Sundararajan, Taly and Yan, Axiomatic Attribution for Deep Networks</a> (2017), pp. 3–4, 6: integrated gradients, completeness and retinal example.</li>
+<li><a href="https://arxiv.org/abs/1311.2901">Zeiler and Fergus, Visualizing and Understanding Convolutional Networks</a> (2013/2014), pp. 2–7: backward visualization, pooling switches and occlusion.</li>
+<li><a href="https://arxiv.org/abs/1512.04150">Zhou et al., Learning Deep Features for Discriminative Localization</a> (2015/2016), pp. 1–3: global pooling and CAM. Its sum-pooling scale is reconciled with this chapter's mean convention.</li>
+<li><a href="https://arxiv.org/abs/1610.02391">Selvaraju et al., Grad-CAM</a> (2016/2017), pp. 4–5: gradient-weighted feature maps and the final rectifier.</li>
+<li><a href="https://arxiv.org/abs/1506.06579">Yosinski et al., Understanding Neural Networks Through Deep Visualization</a> (2015), pp. 2, 4–6: interactive visualization and regularized optimization.</li>
+<li><a href="https://arxiv.org/abs/1412.6806">Springenberg et al., Striving for Simplicity: The All Convolutional Net</a> (2014/2015), p. 9: guided backpropagation and backward masks.</li>
+<li><a href="https://arxiv.org/abs/1603.07285">Dumoulin and Visin, A Guide to Convolution Arithmetic for Deep Learning</a> (2016), pp. 19–24: transposed-convolution geometry and zero insertion.</li>
+<li><a href="https://arxiv.org/abs/1701.04128">Luo et al., Understanding the Effective Receptive Field</a> (2016/2017), pp. 1–3: possible support versus effective gradient impact.</li>
+<li><a href="https://arxiv.org/abs/1810.03292">Adebayo et al., Sanity Checks for Saliency Maps</a> (2018), pp. 1–3: parameter and label randomization in the tested settings.</li>
+<li><a href="https://arxiv.org/abs/1706.03762">Vaswani et al., Attention Is All You Need</a> (2017), p. 4: scaled dot-product attention.</li>
+<li><a href="https://arxiv.org/abs/1906.05714">Vig, A Multiscale Visualization of Attention in the Transformer Model</a> (2019), pp. 1–2: BertViz views.</li>
+<li><a href="https://arxiv.org/abs/1902.10186">Jain and Wallace, Attention is not Explanation</a> and <a href="https://arxiv.org/abs/1908.04626">Wiegreffe and Pinter, Attention is not not Explanation</a> (2019), abstracts and introductory scope: competing operational tests in NLP attention models.</li>
+<li><a href="https://www.jmlr.org/papers/v9/vandermaaten08a.html">van der Maaten and Hinton, Visualizing Data using t-SNE</a> (2008), pp. 5–7, 20–21: joint KL objective, heavy-tailed low-dimensional similarities and interpretation limits.</li>
+<li><a href="https://transformer-circuits.pub/2021/framework/index.html">Elhage et al., A Mathematical Framework for Transformer Circuits</a> (2021), introduction: attention-only setting and QK/OV decomposition; <a href="https://arxiv.org/abs/2209.11895">Olsson et al., In-context Learning and Induction Heads</a> (2022), p. 1: induction behavior and differing causal evidence by model setting.</li>
+<li><a href="https://arxiv.org/abs/2001.08361">Kaplan et al., Scaling Laws for Neural Language Models</a> (2020), pp. 5–6: fitted minimum-compute allocation and approximate dense-transformer compute; <a href="https://arxiv.org/abs/2203.15556">Hoffmann et al., Training Compute-Optimal Large Language Models</a> (2022), pp. 1–2, 5–6: compute allocation approaches and reported Chinchilla/Gopher budget experiment.</li>
+<li><a href="https://arxiv.org/abs/2005.14165">Brown et al., Language Models are Few-Shot Learners</a> (2020), p. 43: word-13-gram contamination procedure.</li>
+<li><a href="https://openai.com/index/openai-anthropic-safety-evaluation/">OpenAI, Findings from a pilot Anthropic–OpenAI alignment evaluation exercise: OpenAI Safety Tests</a> (August 27, 2025): the company's report on the joint pilot, its stress-test framing and limits (product claim).</li>
+<li><a href="https://mistral.ai/news/mistral-3/">Mistral, Introducing Mistral 3</a> (December 2, 2025): dated announcement identity, not an independently established model ranking.</li>
+<li><a href="https://arxiv.org/abs/2101.00027">Gao et al., The Pile</a> (2020/2021), pp. 1, 3–4: component corpus sizes and sampling weights.</li>
+<li><a href="https://arxiv.org/abs/1701.06538">Shazeer et al., Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer</a> (2017), pp. 3–5; <a href="https://arxiv.org/abs/2101.03961">Fedus, Zoph and Shazeer, Switch Transformers</a> (2021), pp. 6–7: sparse routing, capacity and auxiliary balancing.</li>
+<li><a href="https://arxiv.org/abs/2211.04325">Villalobos et al., Will We Run Out of Data?</a> (revised June 2024), p. 1: conditional public-human-text forecast.</li>
+</ul></section>
+<!-- BOOK-CONTENT-END --></article><nav class="page-turn" aria-label="Chapter navigation"><a rel="prev" href="lecture-08-career-advice-in-ai.html">Previous available chapter</a><a href="index.html">Lecture index</a><span>End of selected recordings</span></nav></main></div>
+<footer class="site-footer">Independent study notes. Stanford course recordings supply the topic sequence; added explanations and teaching constructions are separately attributed. Local edition in progress; a rendered page does not establish editorial completion.</footer></body></html>

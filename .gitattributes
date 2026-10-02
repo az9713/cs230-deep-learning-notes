@@ -1,0 +1,4 @@
+# Content guards and validation records hash the actual file bytes.
+# Preserve those bytes across Git checkouts; do not convert line endings.
+# Treat preserved CRLF endings as endings, while checking real whitespace errors.
+* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
