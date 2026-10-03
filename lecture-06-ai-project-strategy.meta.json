@@ -658,7 +658,7 @@
     "Err(t_cal) is a development curve; its argument distinguishes it from the learning curve Err(m) of chapter 1.",
     "Proposals: _editorial/cs230/notation-proposals/ch06.md."
   ],
-  "privacy_note": "No verbatim recording sentences beyond single quoted words and short phrases the whiteboard also shows; recording statements are paraphrased with timestamps. No local paths in the page.",
+  "privacy_note": "Reader files exclude private paths, credentials, raw transcripts and media. Source and accessibility limits remain explicit.",
   "production_notes_removed_from_text": [
     "ASR spellings kept out of the prose (asr_uncertainties).",
     "Frame-viewing record kept in the source note and slides.viewing_record only."
@@ -728,7 +728,7 @@
     "reviewed_authored_body_sha256": "0f43975f4c5b58f8c444f3cdb57a88fc2a35a9bdf90571da17d58b9bf3bedce7",
     "historical_evidence": "Earlier gate hashes/statuses remain historical; current body identity is recorded here",
     "reader_and_execution_evidence": "validation-summary.json and reader-validation.json",
-    "publication": "local only; no publication authorization exercised",
+    "publication": "Public GitHub reading edition; source-access and accessibility limits remain recorded",
     "course_completion": "incomplete: original archive gaps and human screen-reader review outstanding",
     "original_archive_gaps": [],
     "human_screen_reader_review": "not performed",
@@ -736,5 +736,6 @@
   },
   "historical_chen_record_uncertainty": [
     "Chen, Parada and Heigold: ICASSP/2014 venue-year attribution not independently reverified in round 2; the local PDF establishes title/authors/content but not venue/year. The older Google Research publication-record claim is historical."
-  ]
+  ],
+  "historical_privacy_note_before_publication": "No verbatim recording sentences beyond single quoted words and short phrases the whiteboard also shows; recording statements are paraphrased with timestamps. No local paths in the page."
 }

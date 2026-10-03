@@ -1167,7 +1167,7 @@
     "reviewed_authored_body_sha256": "00388990c32d0c510f09d9bb683122bed0d94916d63290c9794428de81fe266d",
     "historical_evidence": "Earlier gate hashes/statuses remain historical; current body identity is recorded here",
     "reader_and_execution_evidence": "validation-summary.json and reader-validation.json",
-    "publication": "local only; no publication authorization exercised",
+    "publication": "Public GitHub reading edition; source-access and accessibility limits remain recorded",
     "course_completion": "incomplete: original archive gaps and human screen-reader review outstanding",
     "original_archive_gaps": [],
     "human_screen_reader_review": "not performed",

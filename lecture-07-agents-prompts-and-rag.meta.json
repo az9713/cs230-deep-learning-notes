@@ -492,7 +492,7 @@
     "current_review": "2026-10-02-book-wide-independent-review.md",
     "accepted_authored_body_sha256": "cd30182cc6ac934a7ec22cb33b4aa044f2cd728dcc4a370c9efb25dbfb3bee71"
   },
-  "privacy_note": "Reader HTML has no personal local paths or credentials. Metadata contains source hashes/provenance, not transcript contents or media. This stage is local and uncommitted; no upload/publication performed.",
+  "privacy_note": "Reader files exclude private paths, credentials, raw transcripts and media. Source and accessibility limits remain explicit.",
   "references": [
     {
       "title": "Radford, Narasimhan, Salimans and Sutskever, \"Improving Language Understanding by Generative Pre-Training\", 2018, OpenAI report ",
@@ -753,7 +753,7 @@
     "reviewed_authored_body_sha256": "cd30182cc6ac934a7ec22cb33b4aa044f2cd728dcc4a370c9efb25dbfb3bee71",
     "historical_evidence": "Earlier gate hashes/statuses remain historical; current body identity is recorded here",
     "reader_and_execution_evidence": "validation-summary.json and reader-validation.json",
-    "publication": "local only; no publication authorization exercised",
+    "publication": "Public GitHub reading edition; source-access and accessibility limits remain recorded",
     "course_completion": "incomplete: original archive gaps and human screen-reader review outstanding",
     "original_archive_gaps": [
       "McKinsey",
@@ -761,5 +761,6 @@
       "Victor"
     ],
     "human_screen_reader_review": "not performed"
-  }
+  },
+  "historical_privacy_note_before_publication": "Reader HTML has no personal local paths or credentials. Metadata contains source hashes/provenance, not transcript contents or media. This stage is local and uncommitted; no upload/publication performed."
 }

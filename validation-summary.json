@@ -1,10 +1,10 @@
 {
   "course": "CS230",
-  "edition": "local reading edition, 2026-10-02",
-  "finished_at_utc": "2026-10-02T19:04:40.527715+00:00",
+  "edition": "Public reading edition; local validation",
+  "finished_at_utc": "2026-10-03T04:48:03.959181+00:00",
   "validation_status": "passed within recorded scope",
   "course_complete": false,
-  "publication": "not published; no live-site validation",
+  "publication": "Local validation for user-authorized GitHub release; live delivery verified separately",
   "chapter_count": 9,
   "exercise_count": 53,
   "worked_solution_count": 53,
@@ -17,9 +17,9 @@
   "chapters": [
     {
       "file": "lecture-01-introduction-to-deep-learning.html",
-      "html_sha256": "bb2cbc9f008e2839b1450b74e65d6040b6bde5f4f337aaf2b329ffc389689ac3",
+      "html_sha256": "500911e7f275c03f6e7655459fed5213e4ed2908fd1a7fa4fc35f01d1a669f39",
       "authored_body_sha256": "0ecdd137ebb463fd0bd95942bf1717f6e9bd7faa9135b14b1a29ecf94214eadb",
-      "metadata_sha256": "62cacef7b57e600e4b4201688ff7699a2b33405a7ab237e8c683a1733aa5aa2a",
+      "metadata_sha256": "f9e20bf2dad1ab4f5924e36a7c9c3f737baba51d1d1454b7765d3b7e38a5473e",
       "h1_count": 1,
       "sections": 14,
       "exercises": 6,
@@ -39,9 +39,9 @@
     },
     {
       "file": "lecture-02-supervised-self-supervised-and-weakly-supervised-learning.html",
-      "html_sha256": "07abd500c0cd2c0c723d15d8cc8bed1699ed2fae2b8df8860f5b17178b8fff24",
+      "html_sha256": "708fa937c7a843ea9a9d7635c03f600b697883ed75e619dbe780bc2094da2d30",
       "authored_body_sha256": "8f1c2c7f3d27111ecad7b554e02a834ed60a123d246d4aa66da03730ebe19696",
-      "metadata_sha256": "60f6726d859b0ac1759c634b2295d5b062987861c5c42256cec4b45737b37cfc",
+      "metadata_sha256": "5b7b0d8f876f3d47eb61526c37d602f5b83d61212e724d16e1654f7867f0245a",
       "h1_count": 1,
       "sections": 13,
       "exercises": 6,
@@ -61,9 +61,9 @@
     },
     {
       "file": "lecture-03-full-cycle-of-a-deep-learning-project.html",
-      "html_sha256": "eef5102b3c61e5de704588879c581e1065d189304652dd24722b5edc3cc45d13",
+      "html_sha256": "97ff5491d8625fbf290b637fb34192b6d8ecac2befba12ea322e4d8211e872a7",
       "authored_body_sha256": "b9d2c48c74e621617783026d2c30e4977006cc011a3cdc78ce5f7711b5692559",
-      "metadata_sha256": "2a0f093f3911f341572d7a88fd1d6e2ed0da698525cb2beb19c8dab675044625",
+      "metadata_sha256": "530d3fd5d051681bb46f65d45c42b8f72e27e3d7257a0c0e683906d8d1e74778",
       "h1_count": 1,
       "sections": 9,
       "exercises": 6,
@@ -83,9 +83,9 @@
     },
     {
       "file": "lecture-04-adversarial-robustness-and-generative-models.html",
-      "html_sha256": "e39a554aa59bf1c73c83dcc5a30b2e160898feb01d89820a74882b34a4ceffff",
+      "html_sha256": "fdcd3fbbf6c8e6f6ddcbcb8c789fcd3ee8c4d2202513425a3a73fb64f74e3ded",
       "authored_body_sha256": "346212b9d06e641c232584c3dcbe16645058020c160188679c8adc92f0889eee",
-      "metadata_sha256": "6ef9d923874d52bb43fbfa49a151e7da7314a782d77b56120ed995fe800dbb0b",
+      "metadata_sha256": "9006f4f6fe4483095de8c24babd47d87188b599271e0c79e64e0bcc2cff710ce",
       "h1_count": 1,
       "sections": 19,
       "exercises": 6,
@@ -105,9 +105,9 @@
     },
     {
       "file": "lecture-05-deep-reinforcement-learning.html",
-      "html_sha256": "feca923f498512fed600a86b1d249ca719041289984f870bc7ecb3d4f592be92",
+      "html_sha256": "a4eb1c338ebb17dcf1c3ced6e17c9217fe0e18616b2e742f6412ba195f468518",
       "authored_body_sha256": "532a926590267fe25a19b3c9bf93a5b27a2e1e11bc0e9d296a0409357f9103ae",
-      "metadata_sha256": "c6b77103b429848ea0377de1665e0ce5a89ff7f8b1cd82f61e313f3be3470a0f",
+      "metadata_sha256": "1a4a55108826daa48ce1762a0342605e44b1a097529122a00e6ebb84b4cbbfe6",
       "h1_count": 1,
       "sections": 16,
       "exercises": 6,
@@ -127,9 +127,9 @@
     },
     {
       "file": "lecture-06-ai-project-strategy.html",
-      "html_sha256": "acd4030cbf965d04a2391ee0cfa4b6db00083cf02d2c6018dfaeb29b2253b3e7",
+      "html_sha256": "ef8b5e7f58f0024435d03bdd64cb74dfb34117934b7443614ba9295fe3e3e736",
       "authored_body_sha256": "0f43975f4c5b58f8c444f3cdb57a88fc2a35a9bdf90571da17d58b9bf3bedce7",
-      "metadata_sha256": "811c2c55ee53d4233b0d84d750e0945dd75a31865464f777cfa27e2af9921f45",
+      "metadata_sha256": "cb17de9127967a9668d4a7ba9914ba908449922b414a4e0dec4c7f05bca4c53a",
       "h1_count": 1,
       "sections": 13,
       "exercises": 6,
@@ -149,9 +149,9 @@
     },
     {
       "file": "lecture-07-agents-prompts-and-rag.html",
-      "html_sha256": "8329007cf394f7865adcd5b42fb864279fd590eaa1f835ae038e2e404266279f",
+      "html_sha256": "02ea80c8eaef01e68488adb5b40a85d855446f03339127dfbcb9820427e25c38",
       "authored_body_sha256": "cd30182cc6ac934a7ec22cb33b4aa044f2cd728dcc4a370c9efb25dbfb3bee71",
-      "metadata_sha256": "1550e622f8f4b0050d3752c0ed5ba70bbee4c762a870913b3d9859f56037d95c",
+      "metadata_sha256": "6468630d3bd719cd87b7f4a0376e7b55797876865f062dbc2589ae8e51867608",
       "h1_count": 1,
       "sections": 16,
       "exercises": 6,
@@ -171,9 +171,9 @@
     },
     {
       "file": "lecture-08-career-advice-in-ai.html",
-      "html_sha256": "57456514d0ff05e73ce3127a12484dfab05a998b23630e32f9250361982b9abf",
+      "html_sha256": "4a2dfe0b1ad967f8db0c69ee5d5397e462e729339cfae74ba725fd24bdc6dabb",
       "authored_body_sha256": "a65741afb0eae9e43f86fcee6caf45c6774c97777566f1694896686c18134993",
-      "metadata_sha256": "36e78831f655b4f9644188ab36e6797568fcfd165c32bfe247c9514f09b145b9",
+      "metadata_sha256": "75b3343a6b841d4e67a5fd78ba5a0d8d2f4c9ac29345892bfb7c7dedec419b3d",
       "h1_count": 1,
       "sections": 18,
       "exercises": 5,
@@ -193,9 +193,9 @@
     },
     {
       "file": "lecture-09-whats-going-on-inside-my-model.html",
-      "html_sha256": "f6d31ef64f873ef91abe5fa1b2c2190fba25730bc77698d5c4a6d1e007ba1c84",
+      "html_sha256": "92dd6ca39432e133569fd9d70248c0824809b811315001a72cfe5b3e0d0f7d2b",
       "authored_body_sha256": "00388990c32d0c510f09d9bb683122bed0d94916d63290c9794428de81fe266d",
-      "metadata_sha256": "dcb8ed49db77b36108f99eb58de0b67a2e2b18c1d1b03112c3a41e3ef2234220",
+      "metadata_sha256": "c536a4d62adf4fade1fbe674a7b63c0eee2f13a30aafb5547a7558c6f3057736",
       "h1_count": 1,
       "sections": 20,
       "exercises": 6,
@@ -342,76 +342,9 @@
       "recognition_accuracy": "Not established by hashes or interval checks"
     }
   ],
-  "post_validation_metadata_descriptor_updates": [
-    {
-      "chapter": 6,
-      "before_metadata_sha256": "571eb9f713c988f0d55f11312d8915d6db35be5172153dd86ab37f0e9f84dd55",
-      "after_metadata_sha256": "a204e11eff9085158c092980ea0e45765bbfa2c669a5b0cb3a2851a7bad4fbfa",
-      "scope": "Two administrative source/notation descriptors only; historical strings preserved; source spans, HTML, code and reader inputs unchanged"
-    },
-    {
-      "chapter": 8,
-      "before_metadata_sha256": "891c1fb283d4d7eb1a83bff7baf5bee621765087bc42e672024492cfda7d319c",
-      "after_metadata_sha256": "7bed92ce98372be2db4d2576dfd68f2dfcf3b7a1dd5528bc3085e3b0d98b5b3e",
-      "scope": "Two administrative source/notation descriptors only; historical strings preserved; source spans, HTML, code and reader inputs unchanged"
-    }
-  ],
-  "post_validation_metadata_checkpoint_status_updates": [
-    {
-      "file": "lecture-01-introduction-to-deep-learning.meta.json",
-      "before_metadata_sha256": "a6c972ac4bd89f0d15c770d482bc0958248c78cf3086a6b5fd4efdc14817cc1a",
-      "after_metadata_sha256": "62cacef7b57e600e4b4201688ff7699a2b33405a7ab237e8c683a1733aa5aa2a",
-      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
-    },
-    {
-      "file": "lecture-02-supervised-self-supervised-and-weakly-supervised-learning.meta.json",
-      "before_metadata_sha256": "442f94644d75d70abccf0db8e8968abcd9a65baf8e3fef8c7bd7ef29d66d3791",
-      "after_metadata_sha256": "60f6726d859b0ac1759c634b2295d5b062987861c5c42256cec4b45737b37cfc",
-      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
-    },
-    {
-      "file": "lecture-03-full-cycle-of-a-deep-learning-project.meta.json",
-      "before_metadata_sha256": "37f8460bcc7fbaf493e4c16b37fc42e36f7ca19e17fa5bff730f25996874a71c",
-      "after_metadata_sha256": "2a0f093f3911f341572d7a88fd1d6e2ed0da698525cb2beb19c8dab675044625",
-      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
-    },
-    {
-      "file": "lecture-04-adversarial-robustness-and-generative-models.meta.json",
-      "before_metadata_sha256": "1f433b319db17a9ec73f38989a20288f2c62b992b79a59cb83291dfec79b00f0",
-      "after_metadata_sha256": "6ef9d923874d52bb43fbfa49a151e7da7314a782d77b56120ed995fe800dbb0b",
-      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
-    },
-    {
-      "file": "lecture-05-deep-reinforcement-learning.meta.json",
-      "before_metadata_sha256": "78c993e3734e1ff35819f9bd08dbcdcc4e870d6e8702bc84cf809360b44858c5",
-      "after_metadata_sha256": "c6b77103b429848ea0377de1665e0ce5a89ff7f8b1cd82f61e313f3be3470a0f",
-      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
-    },
-    {
-      "file": "lecture-06-ai-project-strategy.meta.json",
-      "before_metadata_sha256": "a204e11eff9085158c092980ea0e45765bbfa2c669a5b0cb3a2851a7bad4fbfa",
-      "after_metadata_sha256": "811c2c55ee53d4233b0d84d750e0945dd75a31865464f777cfa27e2af9921f45",
-      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
-    },
-    {
-      "file": "lecture-07-agents-prompts-and-rag.meta.json",
-      "before_metadata_sha256": "724787c580a3ecc31caddc1ff21cd7fc83c18f91c75c887a4b0702620face4c7",
-      "after_metadata_sha256": "1550e622f8f4b0050d3752c0ed5ba70bbee4c762a870913b3d9859f56037d95c",
-      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
-    },
-    {
-      "file": "lecture-08-career-advice-in-ai.meta.json",
-      "before_metadata_sha256": "7bed92ce98372be2db4d2576dfd68f2dfcf3b7a1dd5528bc3085e3b0d98b5b3e",
-      "after_metadata_sha256": "36e78831f655b4f9644188ab36e6797568fcfd165c32bfe247c9514f09b145b9",
-      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
-    },
-    {
-      "file": "lecture-09-whats-going-on-inside-my-model.meta.json",
-      "before_metadata_sha256": "16c28ec8b953bd59081137d933665981c31c48758dba538721a63ff9038004b6",
-      "after_metadata_sha256": "dcb8ed49db77b36108f99eb58de0b67a2e2b18c1d1b03112c3a41e3ef2234220",
-      "scope": "Only current status loses transient uncommitted suffix; scientific content, source spans, history and reader inputs unchanged"
-    }
-  ],
+  "post_validation_metadata_descriptor_updates": [],
+  "post_validation_metadata_checkpoint_status_updates": [],
+  "post_validation_reader_title_updates": [],
   "cumulative_lab": {
     "status": "passed",
     "code_sha256": "62a05936e8602b7f788af586ef4f0911163bba59fdc998f2a9c8562447664967",
@@ -467,11 +400,11 @@
     "renderer_recovery": "Preinstalled Chromium loader failed 0x7E; separate official headless task bundle used, with HTTP/HTTPS blocked"
   },
   "artifacts_sha256": {
-    "source-manifest.json": "2a62dbed1a1012f01ea82f7df21e51813a687a4d0385f28c98414f824754f2ae",
-    "source-map.json": "0ba4274468147c8a57f748b28b52731425a1eee86bbccb09ae1cb48224822da9",
-    "index.html": "126929e181e414224631d5f9fbdd556c6ef5e59d8452ea7b7d1b4844be58b991",
-    "references.html": "239e020f9037ecd04ceb0679c7362ba114558e4d6dcd4ac9dda1cb0621f7c30d",
-    "source-map.html": "2750cc5b401168babbe077652ff7f511a0ca882ab11b2acfe928a02f55c7f102",
+    "source-manifest.json": "7f00581cd4de8c5d4f40310a1b49d9640246599ac4458fae9445303346131489",
+    "source-map.json": "bdd4f4709e1a2f1eddd122c8f69806379c37c0a5bdadeb55192ffaf281f1b3c1",
+    "index.html": "1e7c13d81c276d22f042d884f03dbb0bb8304fb4f4893d9249322b6a423a18ed",
+    "references.html": "70f83bb6915188648f66c42d5a119ab82cdeef70137de9e03a5a5b4e9864a964",
+    "source-map.html": "f295b258ae0fc7bf93edbf41b1eeafe3396a5f23ce6d1176857e3c8dc0c0dcd2",
     "numerical-lab.html": "1ba5f11baf2b8710e6999f44fd586e78752b5458717d525b30920bf66e51ad87",
     "numerical_lab.py": "62a05936e8602b7f788af586ef4f0911163bba59fdc998f2a9c8562447664967",
     "chapter09.py": "79d6921ba6d0cfaf0b19c7d22c81d0e2e67d4170809ac33a19041fd2eaa7f440",

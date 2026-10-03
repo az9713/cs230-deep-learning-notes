@@ -760,7 +760,7 @@
     "Common-cause probability p_com (rule 5 scalar probability).",
     "chi used in the definition of the running case as well as in proofs (NOTATION section 5 row says 'inside a proof'); proposed extension in ch01.md."
   ],
-  "privacy_note": "No verbatim recording sentences; recording statements are paraphrased with timestamps. Short phrases are quoted only from slides and whiteboard frames. The downloaded video, frames and re-transcribed audio segments stay in the private sources and scratch folders.",
+  "privacy_note": "Reader files exclude private paths, credentials, raw transcripts and media. Source and accessibility limits remain explicit.",
   "production_notes_removed_from_text": [
     "ASR spellings (see asr_uncertainties) are not in the reader text.",
     "The re-transcription of two audio segments with a larger model is recorded here, not in the text."
@@ -886,9 +886,10 @@
     "reviewed_authored_body_sha256": "0ecdd137ebb463fd0bd95942bf1717f6e9bd7faa9135b14b1a29ecf94214eadb",
     "historical_evidence": "Earlier gate hashes/statuses remain historical; current body identity is recorded here",
     "reader_and_execution_evidence": "validation-summary.json and reader-validation.json",
-    "publication": "local only; no publication authorization exercised",
+    "publication": "Public GitHub reading edition; source-access and accessibility limits remain recorded",
     "course_completion": "incomplete: original archive gaps and human screen-reader review outstanding",
     "original_archive_gaps": [],
     "human_screen_reader_review": "not performed"
-  }
+  },
+  "historical_privacy_note_before_publication": "No verbatim recording sentences; recording statements are paraphrased with timestamps. Short phrases are quoted only from slides and whiteboard frames. The downloaded video, frames and re-transcribed audio segments stay in the private sources and scratch folders."
 }

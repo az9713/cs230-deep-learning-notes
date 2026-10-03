@@ -897,7 +897,7 @@
     "style": "S1-S26 fixed; S23 and S24 worded from measurement (see pass_log)",
     "structural": "N1 cuts applied, N2 viewing record completed, N3 satisfied by B2"
   },
-  "privacy_note": "No verbatim recording sentences; recording statements are paraphrased with timestamps. Slide sentences paraphrased except short labels (e.g. \"0.4 < threshold\"). Single words from the transcription appear only in asr_uncertainties.",
+  "privacy_note": "Reader files exclude private paths, credentials, raw transcripts and media. Source and accessibility limits remain explicit.",
   "production_notes_removed_from_text": [
     "ASR spellings kept out of reader text (see asr_uncertainties)."
   ],
@@ -914,9 +914,10 @@
     "reviewed_authored_body_sha256": "8f1c2c7f3d27111ecad7b554e02a834ed60a123d246d4aa66da03730ebe19696",
     "historical_evidence": "Earlier gate hashes/statuses remain historical; current body identity is recorded here",
     "reader_and_execution_evidence": "validation-summary.json and reader-validation.json",
-    "publication": "local only; no publication authorization exercised",
+    "publication": "Public GitHub reading edition; source-access and accessibility limits remain recorded",
     "course_completion": "incomplete: original archive gaps and human screen-reader review outstanding",
     "original_archive_gaps": [],
     "human_screen_reader_review": "not performed"
-  }
+  },
+  "historical_privacy_note_before_publication": "No verbatim recording sentences; recording statements are paraphrased with timestamps. Slide sentences paraphrased except short labels (e.g. \"0.4 < threshold\"). Single words from the transcription appear only in asr_uncertainties."
 }
